@@ -63,7 +63,17 @@ function getAdmiralData() {
         admiralCard("Precision Shots", 20, "russian"),
         admiralCard("Quick Crew Deployment", 30, "russian"),
         admiralCard("Double Shifts", 40, "russian"),
-        admiralCard("Master of Repair", 50, "russian")
+        admiralCard("Master of Repair", 50, "russian"),
+        admiralCard("Makeshift Engine", 10, "french"),
+        admiralCard("High-Impact Torpedoes", 20, "french"),
+        admiralCard("Torpedo Crews", 30, "french"),
+        admiralCard("Torpedo Sights", 40, "french"),
+        admiralCard("Engineering Expert", 50, "french"),
+        admiralCard("Focused Gunners", 10, "german"),
+        admiralCard("Hard Burn", 20, "german"),
+        admiralCard("Armored Hulls", 30, "german"),
+        admiralCard("Chaff Experts", 40, "german"),
+        admiralCard("Balanced Vessels", 50, "german")
     ].sort((a,b) => a.points == b.points ? a.name.localeCompare(b.name) : a.points - b.points);
 }
 
