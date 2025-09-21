@@ -342,16 +342,21 @@ function getDisplayElements(item, button) {
     return element;
 }
 
+function addButton(component) {
+    let add = document.createElement('button');
+    add.title = "Add to fleet";
+    add.type = "button";
+    add.innerText = "+";
+    add.addEventListener("click", () => addToFleet(component));
+    return add;
+}
+
 function updateAvailableUnits() {
     let leviathans = document.getElementById("levs-list");
     leviathans.innerHTML = '';
     getLeviathanData().forEach((lev) => {
         if (lev.faction == 'any' || lev.faction == document.getElementById("faction-select").value) {
-            let add = document.createElement('button');
-            add.innerText = "+";
-            add.addEventListener("click", () => addToFleet(lev));
-
-            leviathans.appendChild(getDisplayElements(lev, add));
+            leviathans.appendChild(getDisplayElements(lev, addButton(lev)));
         }
     });
 
@@ -359,11 +364,7 @@ function updateAvailableUnits() {
     admirals.innerHTML = '';
     getAdmiralData().forEach((admiral) => {
         if (admiral.faction == 'any' || admiral.faction == document.getElementById("faction-select").value) {
-            let add = document.createElement('button');
-            add.innerText = "+";
-            add.addEventListener("click", () => addToFleet(admiral));
-
-            admirals.appendChild(getDisplayElements(admiral, add));
+            admirals.appendChild(getDisplayElements(admiral, addButton(admiral)));
         }
     });
 
@@ -371,32 +372,20 @@ function updateAvailableUnits() {
     captains.innerHTML = '';
     getCaptainData().forEach((captain) => {
         if (captain.faction == 'any' || captain.faction == document.getElementById("faction-select").value) {
-            let add = document.createElement('button');
-            add.innerText = "+";
-            add.addEventListener("click", () => addToFleet(captain));
-
-            captains.appendChild(getDisplayElements(captain, add));
+            captains.appendChild(getDisplayElements(captain, addButton(captain)));
         }
     });
 
     let planes = document.getElementById("planes-list");
     planes.innerHTML = '';
     getPlaneData().forEach((plane) => {
-        let add = document.createElement('button');
-        add.innerText = "+";
-        add.addEventListener("click", () => addToFleet(plane));
-
-        planes.appendChild(getDisplayElements(plane, add));
+        planes.appendChild(getDisplayElements(plane, addButton(plane)));
     });
 
     let guns = document.getElementById("al-list");
     guns.innerHTML = '';
     getALGunData().forEach((gun) => {
-        let add = document.createElement('button');
-        add.innerText = "+";
-        add.addEventListener("click", () => addToFleet(gun));
-
-        guns.appendChild(getDisplayElements(gun, add));
+        guns.appendChild(getDisplayElements(gun, addButton(gun)));
     });
 }
 
@@ -424,6 +413,8 @@ function updateCurrentFleet() {
         let item = document.createElement('li');
 
         let remove = document.createElement('button');
+        remove.title = "Remove from fleet";
+        remove.type = "button";
         remove.innerText = "-";
         remove.addEventListener("click", () => removeFromFleet(i));
 
