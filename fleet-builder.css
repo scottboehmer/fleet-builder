@@ -23,12 +23,17 @@
     --border: #98aeb1;
     --accent: #9f1c1f;
     --accent-hover: #d12529;
-    --accent-text: fcfef0;
+    --accent-text: #fcfef0;
   }
 }
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--header);
+}
+
+button {
+    border-width: 1px;
+    border-color: var(--border);
 }
 
 ul.item-list {
@@ -52,3 +57,4 @@ ul.fleet:empty::after {
 .error li strong {
     color: var(--accent);
 }
+
