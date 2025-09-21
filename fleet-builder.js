@@ -480,13 +480,13 @@ function listBuildingErrors() {
         }
     });
     if (type3Count + type4Count <= 0) {
-        errors.push("A fleet must have a capital ship.");
+        errors.push("A fleet must have a capital ship (battleship or battle cruiser).");
     }
     if (type4Count > 1) {
-        errors.push("A fleet may only have one Type 4.");
+        errors.push("A fleet may only have one battleship.");
     }
     if (type3Count > 1) {
-        errors.push("A fleet may only have one Type 3.");
+        errors.push("A fleet may only have one battle cruiser.");
     }
     if (admiralCount > 1) {
         errors.push("Only a single Admiral Card may be included.");
