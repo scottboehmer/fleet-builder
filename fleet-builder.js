@@ -349,9 +349,11 @@ function updateCurrentFleet() {
     let errorList = document.getElementById("error-list");
     errorList.innerHTML = '';
     errors.forEach((error) => {
-        let message = document.createElement('li');
+        let listItem = document.createElement('li');
+        let message = document.createElement('strong');
         message.innerText = error;
-        errorList.appendChild(message);
+        listItem.appendChild(message);
+        errorList.appendChild(listItem);
     });
 }
 
