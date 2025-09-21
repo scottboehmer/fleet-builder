@@ -19,7 +19,7 @@
     --accent-bg: #5A5C5C;
     --text: #dcdcdc;
     --text-light: #ababab;
-    --header: #9f1c1f;
+    --header: #98aeb1;
     --border: #98aeb1;
     --accent: #9f1c1f;
     --accent-hover: #d12529;
@@ -29,32 +29,45 @@
 
 h1, h2, h3, h4, h5, h6 {
   color: var(--header);
+  margin-bottom: 8px;
+}
+
+p {
+  margin-top: 0;
 }
 
 button {
-    border-width: 1px;
-    border-color: var(--border);
+  border-width: 1px;
+  border-color: var(--border);
 }
 
 ul.item-list {
-    list-style: none;
-    padding-inline-start: 0px;
+  list-style: none;
+  padding-inline-start: 0px;
 }
 
 ul.item-list button {
-    margin-right: 8px;
-    width: 40px;
+  margin-right: 8px;
+  width: 40px;
+}
+
+ul.item-list em {
+  color: var(--text-light);
 }
 
 ul.available:empty::after {
-    content: "No items available"
+  content: "No items available";
+  color: var(--text-light);
+  font-style: italic;
 }
 
 ul.fleet:empty::after {
-    content: "No items selected"
+  content: "No items selected";
+  color: var(--text-light);
+  font-style: italic;
 }
 
 .error li strong {
-    color: var(--accent);
+  color: var(--accent);
 }
 
