@@ -1,0 +1,22 @@
+ul.item-list {
+    list-style: none;
+    padding-inline-start: 0px;
+}
+
+ul.item-list button {
+    margin-right: 8px;
+    width: 40px;
+}
+
+ul.available:empty::after {
+    content: "No items available"
+}
+
+ul.fleet:empty::after {
+    content: "No items selected"
+}
+
+.error li {
+    color: red;
+    font-weight: bold;
+}
