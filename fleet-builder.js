@@ -277,63 +277,67 @@ function getFactionLongName(faction) {
 }
 
 function getDisplayElements(item, button) {
-    let element = document.createElement('div');
+    let element = document.createElement('li');
     if (button) {
         element.append(button);
     }
+    let text = document.createElement('div');
+
     let nameSpan = document.createElement('strong');
     nameSpan.innerText = item.name;
-    element.append(nameSpan);
+    text.append(nameSpan);
 
     let divider = document.createElement('span');
     divider.innerText = " - ";
-    element.append(divider);
+    text.append(divider);
 
     if (item.type == "leviathan") {
         let description = document.createElement('em');
         description.innerText = `${getClassName(item.shipClass)} ${shipTypeName(item.shipType)}`;
-        element.append(description);
+        text.append(description);
 
         let divider2 = document.createElement('span');
         divider2.innerText = " - ";
-        element.append(divider2);
+        text.append(divider2);
     } else if (item.type == "admiral") {
         let description = document.createElement('em');
         description.innerText = `${getFactionLongName(item.faction)} Admiral Card`;
-        element.append(description);
+        text.append(description);
 
         let divider2 = document.createElement('span');
         divider2.innerText = " - ";
-        element.append(divider2);
+        text.append(divider2);
     } else if (item.type == "captain") {
         let description = document.createElement('em');
         description.innerText = `${getClassName(item.shipClass)} Captain Card`;
-        element.append(description);
+        text.append(description);
 
         let divider2 = document.createElement('span');
         divider2.innerText = " - ";
-        element.append(divider2);
+        text.append(divider2);
     } else if (item.type == "airplane") {
         let description = document.createElement('em');
         description.innerText = "Airplane";
-        element.append(description);
+        text.append(description);
 
         let divider2 = document.createElement('span');
         divider2.innerText = " - ";
-        element.append(divider2);
+        text.append(divider2);
     } else if (item.type == "al-gun") {
         let description = document.createElement('em');
         description.innerText = "Anti-Leviathan Gun";
-        element.append(description);
+        text.append(description);
 
         let divider2 = document.createElement('span');
         divider2.innerText = " - ";
-        element.append(divider2);
+        text.append(divider2);
     }
 
     let pointsSpan = document.createElement('span');
     pointsSpan.innerText = `${item.points}`;
-    element.append(pointsSpan);
+    text.append(pointsSpan);
+
+    element.append(text);
 
     return element;
 }
