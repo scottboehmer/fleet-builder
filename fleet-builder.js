@@ -21,6 +21,18 @@ function getPlaneData() {
     ].sort((a,b) => a.points == b.points ? a.name.localeCompare(b.name) : a.points - b.points);
 }
 
+function alGunCard(name, points) {
+    return { name: name, type: "al-gun", faction: "any", points: points };
+}
+
+function getALGunData() {
+    return [
+        alGunCard("Semi-Mobile AL Gun", 20),
+        alGunCard("Mobile AL Gun", 20),
+        alGunCard("High-Mobility AL Gun", 20)
+    ].sort((a,b) => a.points == b.points ? a.name.localeCompare(b.name) : a.points - b.points);
+}
+
 function admiralCard(name, points, faction) {
     return { name: name, type: "admiral", faction: (faction ? faction : "any"), points: points };
 }
@@ -169,6 +181,8 @@ function getLeviathanData() {
         leviathanCard("SML Lübeck", "Greif", 2, "german", 210),
         leviathanCard("SML Hamburg", "Greif", 2, "german", 240),
         leviathanCard("SML Danzig", "Greif", 2, "german", 220),
+        leviathanCard("SML Rheinland", "Koenigsberg", 2, "german", 230),
+        leviathanCard("SML Königsberg", "Koenigsberg", 2, "german", 200),
         leviathanCard("SML Löwe", "Falke", 1, "german", 180),
         leviathanCard("SML Seelöwe", "Falke", 1, "german", 160),
         leviathanCard("SML Dachs", "Falke", 1, "german", 190),
@@ -297,6 +311,14 @@ function getDisplayElements(item, button) {
         let divider2 = document.createElement('span');
         divider2.innerText = " - ";
         element.append(divider2);
+    } else if (item.type == "al-gun") {
+        let description = document.createElement('em');
+        description.innerText = "Anti-Leviathan Gun";
+        element.append(description);
+
+        let divider2 = document.createElement('span');
+        divider2.innerText = " - ";
+        element.append(divider2);
     }
 
     let pointsSpan = document.createElement('span');
@@ -351,6 +373,16 @@ function updateAvailableUnits() {
         add.addEventListener("click", () => addToFleet(plane));
 
         planes.appendChild(getDisplayElements(plane, add));
+    });
+
+    let guns = document.getElementById("al-list");
+    guns.innerHTML = '';
+    getALGunData().forEach((gun) => {
+        let add = document.createElement('button');
+        add.innerText = "+";
+        add.addEventListener("click", () => addToFleet(gun));
+
+        guns.appendChild(getDisplayElements(gun, add));
     });
 }
 
@@ -430,6 +462,7 @@ function listBuildingErrors() {
     let type4Count = 0;
     let type3Count = 0;
     let admiralCount = 0;
+    let alGunCount = 0;
     let captains = [];
     currentFleet.forEach((component) => {
         if (component.type == "leviathan") {
@@ -442,6 +475,8 @@ function listBuildingErrors() {
             admiralCount += 1;
         } else if (component.type == "captain") {
             captains.push(component);
+        } else if (component.type == "al-gun") {
+            alGunCount += 1;
         }
     });
     if (type3Count + type4Count <= 0) {
@@ -454,7 +489,10 @@ function listBuildingErrors() {
         errors.push("A fleet may only have one Type 3.");
     }
     if (admiralCount > 1) {
-        errors.push("Only a single Admiral Card may be purchased.");
+        errors.push("Only a single Admiral Card may be included.");
+    }
+    if (alGunCount > 2) {
+        errors.push("A fleet may have at most two AL guns.");
     }
 
     captains.forEach((captainCard) => {
