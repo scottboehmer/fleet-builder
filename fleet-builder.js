@@ -276,67 +276,64 @@ function getFactionLongName(faction) {
     }
 }
 
-function getDisplayElements(item, button) {
-    let element = document.createElement('li');
-    if (button) {
-        element.append(button);
-    }
+function assembleListText(name, points, description) {
     let text = document.createElement('div');
 
     let nameSpan = document.createElement('strong');
-    nameSpan.innerText = item.name;
+    nameSpan.innerText = name;
     text.append(nameSpan);
 
     let divider = document.createElement('span');
     divider.innerText = " - ";
     text.append(divider);
 
-    if (item.type == "leviathan") {
-        let description = document.createElement('em');
-        description.innerText = `${getClassName(item.shipClass)} ${shipTypeName(item.shipType)}`;
-        text.append(description);
+    if (description.length > 0) {
+        let desc = document.createElement('em');
+        desc.innerText = description;
+        desc.className = "desktop";
+        text.append(desc);
 
         let divider2 = document.createElement('span');
         divider2.innerText = " - ";
-        text.append(divider2);
-    } else if (item.type == "admiral") {
-        let description = document.createElement('em');
-        description.innerText = `${getFactionLongName(item.faction)} Admiral Card`;
-        text.append(description);
-
-        let divider2 = document.createElement('span');
-        divider2.innerText = " - ";
-        text.append(divider2);
-    } else if (item.type == "captain") {
-        let description = document.createElement('em');
-        description.innerText = `${getClassName(item.shipClass)} Captain Card`;
-        text.append(description);
-
-        let divider2 = document.createElement('span');
-        divider2.innerText = " - ";
-        text.append(divider2);
-    } else if (item.type == "airplane") {
-        let description = document.createElement('em');
-        description.innerText = "Airplane";
-        text.append(description);
-
-        let divider2 = document.createElement('span');
-        divider2.innerText = " - ";
-        text.append(divider2);
-    } else if (item.type == "al-gun") {
-        let description = document.createElement('em');
-        description.innerText = "Anti-Leviathan Gun";
-        text.append(description);
-
-        let divider2 = document.createElement('span');
-        divider2.innerText = " - ";
+        divider2.className = "desktop";
         text.append(divider2);
     }
 
     let pointsSpan = document.createElement('span');
-    pointsSpan.innerText = `${item.points}`;
+    pointsSpan.innerText = `${points}`;
     text.append(pointsSpan);
 
+    if (description.length > 0) {
+        let desc = document.createElement('em');
+        desc.innerText = description;
+        desc.className = "mobile small";
+        text.append(document.createElement('br'));
+        text.append(desc);
+    }
+
+    return text;
+}
+
+function getDisplayElements(item, button) {
+    let element = document.createElement('li');
+    if (button) {
+        element.append(button);
+    }
+    let description = "";
+
+    if (item.type == "leviathan") {
+        description = `${getClassName(item.shipClass)} ${shipTypeName(item.shipType)}`;
+    } else if (item.type == "admiral") {
+        description = `${getFactionLongName(item.faction)} Admiral Card`;
+    } else if (item.type == "captain") {
+        description = `${getClassName(item.shipClass)} Captain Card`;
+    } else if (item.type == "airplane") {
+        description = "Airplane";
+    } else if (item.type == "al-gun") {
+        description = "Anti-Leviathan Gun";
+    }
+
+    let text = assembleListText(item.name, item.points, description);
     element.append(text);
 
     return element;
