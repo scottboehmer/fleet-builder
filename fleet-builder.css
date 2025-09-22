@@ -27,6 +27,24 @@
   }
 }
 
+.printable {
+  display: none;
+}
+
+@media print {
+  .printable {
+    display: unset;
+  }
+  
+  body > :not(.printable) {
+    display: none;
+  }
+}
+
+.printable > table {
+  width: 100%;
+}
+
 .mobile {
   display: none;
 }

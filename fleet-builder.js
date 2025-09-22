@@ -328,11 +328,7 @@ function assembleListText(name, points, description) {
     return text;
 }
 
-function getDisplayElements(item, button) {
-    let element = document.createElement('li');
-    if (button) {
-        element.append(button);
-    }
+function getComponentDescription(item) {
     let description = "";
 
     if (item.type == "leviathan") {
@@ -346,6 +342,16 @@ function getDisplayElements(item, button) {
     } else if (item.type == "al-gun") {
         description = "Anti-Leviathan Gun";
     }
+
+    return description;
+}
+
+function getDisplayElements(item, button) {
+    let element = document.createElement('li');
+    if (button) {
+        element.append(button);
+    }
+    let description = getComponentDescription(item);
 
     let text = assembleListText(item.name, item.points, description);
     element.append(text);
@@ -411,6 +417,59 @@ function addToFleet(item) {
 function removeFromFleet(index) {
     currentFleet.splice(index, 1);
     updateCurrentFleet();
+}
+
+function headerRow(headers) {
+    let headerRow = document.createElement("tr");
+    headers.forEach((text) => {
+        let header = document.createElement("th");
+        header.innerText = text;
+        headerRow.append(header);
+    });
+    return headerRow;
+}
+
+function dataRow(values) {
+    let dataRow = document.createElement("tr");
+    values.forEach((text) => {
+        let data = document.createElement("td");
+        data.innerText = text;
+        dataRow.append(data);
+    });
+    return dataRow;
+}
+
+function clearPrintDisplay() {
+    let printArea = document.getElementById("print-area");
+    printArea.innerHTML = '';
+}
+
+function updatePrintDisplay() {
+    let totalPoints = 0;
+
+    let printArea = document.getElementById("print-area");
+    printArea.innerHTML = '';
+
+    let printHeader = document.createElement("h2");
+    printHeader.innerText = "Leviathans Fleet";
+    printArea.append(printHeader);
+
+    let printDescription = document.createElement("em");
+    printDescription.innerText = "Create with the Leviathans Fleet Builder";
+    printArea.append(printDescription);
+
+    let table = document.createElement("table");
+    table.append(headerRow(["Name", "Description", "Points"]));
+    currentFleet.forEach((component) => {
+        totalPoints += component.points;
+        table.append(dataRow([component.name, getComponentDescription(component), component.points]));
+    });
+    table.append(dataRow(["","", totalPoints]));
+    printArea.append(table);
+
+    let printFooter = document.createElement("code");
+    printFooter.innerText = "https://scottboehmer.github.io/fleet-builder/";
+    printArea.append(printFooter);
 }
 
 function updateCurrentFleet() {
@@ -557,6 +616,13 @@ let factionSelect = document.getElementById("faction-select");
     factionSelect.appendChild(item);
 });
 factionSelect.addEventListener("change", () => updateAvailableUnits());
+
+let printButton = document.getElementById("print-button");
+printButton.addEventListener("click", () => {
+    updatePrintDisplay();
+    window.print();
+    clearPrintDisplay();
+});
 
 updateAvailableUnits();
 updateCurrentFleet();

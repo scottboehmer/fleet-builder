@@ -12,10 +12,14 @@
             <h1>Leviathans Fleet Builder</h1>
         </header>
         <h2>Selected Fleet</h2>
+        <div>
+            <button id="print-button" type="button" title="Print fleet list">Print List</button>
+        </div>
         <p><strong>Points: </strong><span id="fleet-points">0</span></p>
         <ul id="current-fleet" class="item-list fleet"></ul>
         <ul id="error-list" class="error">
         </ul>
+        <div id="print-area" class="printable"></div>
         <h2>Available Components</h2>
         <label for="faction-select">Faction:</label>
         <select id="faction-select">
