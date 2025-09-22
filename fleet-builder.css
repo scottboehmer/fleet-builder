@@ -39,6 +39,10 @@
   body > :not(.printable) {
     display: none;
   }
+
+  body {
+    background-color: unset;
+  }
 }
 
 .printable > table {

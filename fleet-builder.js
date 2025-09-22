@@ -504,6 +504,31 @@ function updateCurrentFleet() {
         listItem.appendChild(message);
         errorList.appendChild(listItem);
     });
+
+    updateMarkdownDisplay();
+}
+
+function updateMarkdownDisplay() {
+    if (markdownVisible) {
+        let totalPoints = 0;
+
+        let markdown = document.getElementById("markdown-pre");
+        markdown.innerHTML = '';
+
+        let markdownText = "# Leviathans Fleet\n\n";
+
+        currentFleet.forEach((component, i) => {
+            totalPoints += component.points;
+
+            let description = getComponentDescription(component);
+
+            markdownText += `- **${component.name}** - _${description}_ - ${component.points}\n`;
+        });
+
+        markdownText += `\n**Total Points:** ${totalPoints}\n`
+        
+        markdown.innerText = markdownText;
+    }
 }
 
 function listBuildingErrors() {
@@ -638,8 +663,10 @@ markdownButton.addEventListener("click", () => {
 
         let markdownArea = document.getElementById("markdown-area");
         let pre = document.createElement("pre");
-        pre.innerText = "# Howdy!";
+        pre.id = "markdown-pre";
         markdownArea.append(pre);
+
+        updateMarkdownDisplay();
     }
 });
 
