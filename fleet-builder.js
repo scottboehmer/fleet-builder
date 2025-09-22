@@ -623,5 +623,25 @@ printButton.addEventListener("click", () => {
     window.print();
 });
 
+let markdownVisible = false;
+let markdownButton = document.getElementById("toggle-md-button");
+markdownButton.addEventListener("click", () => {
+    if (markdownVisible) {
+        markdownVisible = false;
+        markdownButton.innerText = "Show Text Version";
+
+        let markdownArea = document.getElementById("markdown-area");
+        markdownArea.innerHTML = '';
+    } else {
+        markdownVisible = true;
+        markdownButton.innerText = "Hide Text Version";
+
+        let markdownArea = document.getElementById("markdown-area");
+        let pre = document.createElement("pre");
+        pre.innerText = "# Howdy!";
+        markdownArea.append(pre);
+    }
+});
+
 updateAvailableUnits();
 updateCurrentFleet();
