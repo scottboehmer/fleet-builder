@@ -504,6 +504,31 @@ function updateCurrentFleet() {
         listItem.appendChild(message);
         errorList.appendChild(listItem);
     });
+
+    updateMarkdownDisplay();
+}
+
+function updateMarkdownDisplay() {
+    if (markdownVisible) {
+        let totalPoints = 0;
+
+        let markdown = document.getElementById("markdown-pre");
+        markdown.innerHTML = '';
+
+        let markdownText = "# Leviathans Fleet\n\n";
+
+        currentFleet.forEach((component, i) => {
+            totalPoints += component.points;
+
+            let description = getComponentDescription(component);
+
+            markdownText += `- **${component.name}** - _${description}_ - ${component.points}\n`;
+        });
+
+        markdownText += `\n**Total Points:** ${totalPoints}\n`
+        
+        markdown.innerText = markdownText;
+    }
 }
 
 function listBuildingErrors() {
@@ -621,6 +646,28 @@ let printButton = document.getElementById("print-button");
 printButton.addEventListener("click", () => {
     updatePrintDisplay();
     window.print();
+});
+
+let markdownVisible = false;
+let markdownButton = document.getElementById("toggle-md-button");
+markdownButton.addEventListener("click", () => {
+    if (markdownVisible) {
+        markdownVisible = false;
+        markdownButton.innerText = "Show Text Version";
+
+        let markdownArea = document.getElementById("markdown-area");
+        markdownArea.innerHTML = '';
+    } else {
+        markdownVisible = true;
+        markdownButton.innerText = "Hide Text Version";
+
+        let markdownArea = document.getElementById("markdown-area");
+        let pre = document.createElement("pre");
+        pre.id = "markdown-pre";
+        markdownArea.append(pre);
+
+        updateMarkdownDisplay();
+    }
 });
 
 updateAvailableUnits();
