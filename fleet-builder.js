@@ -348,14 +348,15 @@ function getComponentDescription(item) {
 
 function getDisplayElements(item, button) {
     let element = document.createElement('li');
-    if (button) {
-        element.append(button);
-    }
     let description = getComponentDescription(item);
 
     let text = assembleListText(item.name, item.points, description);
     element.append(text);
 
+    if (button) {
+        element.append(button);
+    }
+    
     return element;
 }
 
@@ -363,7 +364,12 @@ function addButton(component) {
     let add = document.createElement('button');
     add.title = "Add to fleet";
     add.type = "button";
-    add.innerText = "+";
+
+    let span = document.createElement('span');
+    span.className = "material-symbols-outlined";
+    span.innerText = "add";
+    add.appendChild(span);
+
     add.addEventListener("click", () => addToFleet(component));
     return add;
 }
@@ -480,17 +486,18 @@ function updateCurrentFleet() {
     currentFleet.forEach((component, i) => {
         totalPoints += component.points;
 
-        let item = document.createElement('li');
-
         let remove = document.createElement('button');
         remove.title = "Remove from fleet";
         remove.type = "button";
-        remove.innerText = "-";
+        
+        let span = document.createElement('span');
+        span.className = "material-symbols-outlined";
+        span.innerText = "delete";
+        remove.appendChild(span);
+
         remove.addEventListener("click", () => removeFromFleet(i));
 
-        item.append(getDisplayElements(component, remove));
-
-        fleetList.appendChild(item);
+        fleetList.append(getDisplayElements(component, remove));
     });
     document.getElementById("fleet-points").innerText = totalPoints;
 

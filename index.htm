@@ -18,6 +18,7 @@
         <meta name="twitter:image" content="https://scottboehmer.github.io/fleet-builder/assets/og-1200-630.png">
         <link rel="icon" href="https://scottboehmer.github.io/fleet-builder/assets/icon-256.png" type="image/png">
 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&icon_names=add,delete" />
         <link rel="stylesheet" href="simple.css">
         <link rel="stylesheet" href="fleet-builder.css">
         <title>Leviathans Fleet Builder</title>
@@ -32,7 +33,9 @@
             <button id="toggle-md-button" type="button" title="Toggle markdown display">Show Text Version</button>
         </div>
         <p><strong>Points: </strong><span id="fleet-points">0</span></p>
-        <ul id="current-fleet" class="item-list fleet"></ul>
+        <div class="accent-box">
+            <ul id="current-fleet" class="item-list fleet"></ul>
+        </div>
         <ul id="error-list" class="error">
         </ul>
         <div id="markdown-area"></div>

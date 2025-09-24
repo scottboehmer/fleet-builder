@@ -1,7 +1,10 @@
 :root {
+  --standard-border-radius: 3px;
+
   /* Default (light) theme */
   --bg: #f0f1f2;
   --accent-bg: #f6f7f1;
+  --accent-shaded-bg: #e4e5e0;
   --text: #212121;
   --text-light: #585858;
   --header: #700000;
@@ -17,6 +20,7 @@
     color-scheme: dark;
     --bg: #212121;
     --accent-bg: #5A5C5C;
+    --accent-shaded-bg: #4a4c4c;
     --text: #dcdcdc;
     --text-light: #ababab;
     --header: #98aeb1;
@@ -85,21 +89,49 @@ button {
   border-color: var(--border);
 }
 
+.accent-box {
+  background-color: var(--accent-bg);
+  border-width: var(--border-width);
+  border-color: var(--border);
+  border-style: solid;
+  border-radius: var(--standard-border-radius);
+  padding: 0.5rem 1rem;
+}
+
+.accent-box > *:first-child {
+  margin-top: 0;
+}
+
+.accent-box > *:last-child {
+  margin-bottom: 0;
+}
+
 ul.item-list {
   list-style: none;
   padding-inline-start: 0px;
+  width: 100%;
 }
 
 ul.item-list li {
   display: flex;
   flex-direction: row;
+  padding: 8px;
+}
+
+ul.item-list li:nth-child(even) {
+  background-color: var(--accent-shaded-bg);
 }
 
 ul.item-list button {
   margin-right: 8px;
-  max-width: 40px;
-  min-width: 40px;
-  height: 40px;
+  max-width: 44px;
+  min-width: 44px;
+  height: 44px;
+  margin: 0;
+}
+
+ul.item-list li > div {
+  flex: 1
 }
 
 ul.item-list em {
