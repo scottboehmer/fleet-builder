@@ -78,6 +78,11 @@
 h1, h2, h3, h4, h5, h6 {
   color: var(--header);
   margin-bottom: 8px;
+  font-family: "Grenze", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir,
+    "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
+    "Helvetica Neue", sans-serif;;
+  font-weight: 700;
+  font-style: normal;
 }
 
 p {
