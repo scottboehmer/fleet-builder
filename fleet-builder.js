@@ -346,11 +346,35 @@ function getComponentDescription(item) {
     return description;
 }
 
+function getTag(item) {
+    if (item.type == "leviathan") {
+        switch (item.shipType) {
+            case 1: return "D";
+            case 2: return "C";
+            case 3: return "BC";
+            case 4: return "B";
+        }
+    } else if (item.type == "airplane") {
+        return "AIR";
+    } else if (item.type == "al-gun") {
+        return "AL";
+    } else if (item.type == "admiral") {
+        return "ADM";
+    } else if (item.type == "captain") {
+        return "CAPT";
+    }
+}
+
 function getDisplayElements(item, button) {
     let element = document.createElement('li');
     let description = getComponentDescription(item);
 
     let text = assembleListText(item.name, item.points, description);
+    text.className = "tagged";
+    var tag = getTag(item);
+    if (tag) {
+        text.dataset.tag = tag;
+    }
     element.append(text);
 
     if (button) {
