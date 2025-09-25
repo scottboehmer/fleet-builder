@@ -684,13 +684,18 @@ let markdownButton = document.getElementById("toggle-md-button");
 markdownButton.addEventListener("click", () => {
     if (markdownVisible) {
         markdownVisible = false;
-        markdownButton.innerText = "Show Text Version";
+        let buttonContent = document.getElementById("toggle-md-button-content");
+        buttonContent.innerText = "markdown";
 
         let markdownArea = document.getElementById("markdown-area");
         markdownArea.innerHTML = '';
+
+        let listArea = document.getElementById("list-area");
+        listArea.classList.remove("hidden");
     } else {
         markdownVisible = true;
-        markdownButton.innerText = "Hide Text Version";
+        let buttonContent = document.getElementById("toggle-md-button-content");
+        buttonContent.innerText = "table_rows";
 
         let markdownArea = document.getElementById("markdown-area");
         let pre = document.createElement("pre");
@@ -698,6 +703,9 @@ markdownButton.addEventListener("click", () => {
         markdownArea.append(pre);
 
         updateMarkdownDisplay();
+
+        let listArea = document.getElementById("list-area");
+        listArea.classList.add("hidden");
     }
 });
 

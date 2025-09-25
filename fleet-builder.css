@@ -35,6 +35,18 @@
   }
 }
 
+body > header {
+  padding: 0 0.5rem;
+}
+
+body > header h1 {
+  margin: 0.5rem auto;
+}
+
+body > header > *:only-child {
+  margin-block-start: 0;
+}
+
 .printable {
   display: none;
 }
@@ -73,6 +85,15 @@
   .mobile {
     display: unset;
   }
+}
+
+.hidden {
+  display: none;
+}
+
+pre {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {
