@@ -193,7 +193,7 @@ const levData = sortByPointsAndName([
     leviathanCard("SML Friedrich der Große", "Kaiser", 4, "german", 410),
     leviathanCard("SML Wilhelm", "Kaiser", 4, "german", 430),
     leviathanCard("SML Sachsen", "Saxony", 3, "german", 290),
-    leviathanCard("SML Frankfurt", "Saxony", 3, "german", 290),
+    leviathanCard("SML Frankfurt", "Saxony", 3, "german", 280),
     leviathanCard("SML Von Zieten", "Saxony", 3, "german", 290),
     leviathanCard("SML Greif", "Greif", 2, "german", 250),
     leviathanCard("SML Brandenburg", "Greif", 2, "german", 200),
