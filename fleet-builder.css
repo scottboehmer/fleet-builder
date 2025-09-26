@@ -1,6 +1,8 @@
 :root {
   --standard-border-radius: 3px;
 
+  --dcolor-border-radius: 50%;
+
   /* Default (light) theme */
   --bg: #f0f1f2;
   --accent-bg: #f6f7f1;
@@ -16,6 +18,8 @@
   --tag-bg: darkslategrey;
   --tag-border: black;
   --tag-text: white;
+
+  --dcolor-border: black;
 }
 
 /* Dark theme */
@@ -99,6 +103,7 @@ pre {
 h1, h2, h3, h4, h5, h6 {
   color: var(--header);
   margin-bottom: 8px;
+  margin-top: 24px;
   font-family: "Grenze", -apple-system, BlinkMacSystemFont, "Avenir Next", Avenir,
     "Nimbus Sans L", Roboto, "Noto Sans", "Segoe UI", Arial, Helvetica,
     "Helvetica Neue", sans-serif;;
@@ -171,6 +176,11 @@ ul.item-list em {
   color: var(--text-light);
 }
 
+ul.summary-list {
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
 ul.available:empty::after {
   content: "No items available";
   color: var(--text-light);
@@ -204,4 +214,81 @@ ul.fleet:empty::after {
   .tagged[data-tag]:before {
     vertical-align: middle;
   }
+}
+
+.dcolor-g {
+  font-size: 0.7rem;
+  vertical-align: middle;
+  font-weight: bolder;
+  border: var(--dcolor-border) var(--border-width) solid;
+  padding: 1px 4px;
+  margin: 0px 2px;
+  border-radius: var(--dcolor-border-radius);
+  background-color: green;
+  color: white;
+}
+
+.dcolor-u {
+  font-size: 0.7rem;
+  vertical-align: middle;
+  font-weight: bolder;
+  border: var(--dcolor-border) var(--border-width) solid;
+  padding: 1px 4px;
+  margin: 0px 2px;
+  border-radius: var(--dcolor-border-radius);
+  background-color: blue;
+  color: white;
+}
+
+.dcolor-y {
+  font-size: 0.7rem;
+  vertical-align: middle;
+  font-weight: bolder;
+  border: var(--dcolor-border) var(--border-width) solid;
+  padding: 1px 4px;
+  margin: 0px 2px;
+  border-radius: var(--dcolor-border-radius);
+  background-color: yellow;
+  color: black;
+}
+
+.dcolor-r {
+  font-size: 0.7rem;
+  vertical-align: middle;
+  font-weight: bolder;
+  border: var(--dcolor-border) var(--border-width) solid;
+  padding: 1px 4px;
+  margin: 0px 2px;
+  border-radius: var(--dcolor-border-radius);
+  background-color: red;
+  color: white;
+}
+
+.dcolor-b {
+  font-size: 0.7rem;
+  vertical-align: middle;
+  font-weight: bolder;
+  border: var(--dcolor-border) var(--border-width) solid;
+  padding: 1px 4px;
+  margin: 0px 2px;
+  border-radius: var(--dcolor-border-radius);
+  background-color: black;
+  color: white;
+}
+
+.column {
+  float:left;
+  width: 50%;
+}
+
+@media only screen and (max-width: 720px) {
+  .column {
+    width: 100%;
+  }
+}
+
+.column-host:after {
+  content: "";
+  display: table;
+  clear: both;
 }
