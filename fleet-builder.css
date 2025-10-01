@@ -168,7 +168,7 @@ ul.item-list button {
   margin: 0;
 }
 
-ul.item-list li > div {
+.primary-list-item {
   flex: 1
 }
 
