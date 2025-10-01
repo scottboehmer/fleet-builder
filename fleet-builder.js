@@ -586,12 +586,14 @@ document.getElementById("select-all-sources").addEventListener("click", () => {
     selectedSources = buildSourceList();
     setupSourceList();
     saveSourceList();
+    updateAvailableUnits();
 });
 
 document.getElementById("clear-sources").addEventListener("click", () => {
     selectedSources = [];
     setupSourceList();
     saveSourceList();
+    updateAvailableUnits();
 });
 
 let selectedSources = buildSourceList();
