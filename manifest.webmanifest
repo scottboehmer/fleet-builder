@@ -1,0 +1,10 @@
+{
+  "name": "Leviathans Fleet Builder",
+  "start_url": "index.htm",
+  "display": "standalone",
+  "icons": [
+    { "src": "assets/icon-192.png", "type": "image/png", "sizes": "192x192" },
+    { "src": "assets/icon-maskable-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" },
+    { "src": "assets/icon-512.png", "type": "image/png", "sizes": "512x512" }
+  ]
+}
