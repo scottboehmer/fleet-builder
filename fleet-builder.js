@@ -527,23 +527,47 @@ function saveSourceList() {
 }
 
 let factionSelect = document.getElementById("faction-select");
+let majorFactionsGroup = document.createElement('optgroup');
+majorFactionsGroup.label = "Major Factions";
+factionSelect.append(majorFactionsGroup);
 [
-    "austro-hungarian", 
     "british", 
     "french", 
     "german", 
-    "japanese",
     "italian",  
     "russian", 
-    "scandinavian", 
-    "swiss",
+].forEach((factionId) => {
+    let item = document.createElement('option');
+    item.value = factionId;
+    item.innerText = getFactionLongName(factionId);
+    majorFactionsGroup.appendChild(item);
+});
+let futureFactionsGroup = document.createElement('optgroup');
+futureFactionsGroup.label = "Major Factions (Upcoming)";
+factionSelect.append(futureFactionsGroup);
+[
+    "austro-hungarian", 
+    "japanese",
     "american", 
 ].forEach((factionId) => {
     let item = document.createElement('option');
     item.value = factionId;
     item.innerText = getFactionLongName(factionId);
-    factionSelect.appendChild(item);
+    futureFactionsGroup.appendChild(item);
 });
+let minorFactionsGroup = document.createElement('optgroup');
+minorFactionsGroup.label = "Minor Factions";
+factionSelect.append(minorFactionsGroup);
+[
+    "scandinavian", 
+    "swiss",
+].forEach((factionId) => {
+    let item = document.createElement('option');
+    item.value = factionId;
+    item.innerText = getFactionLongName(factionId);
+    minorFactionsGroup.appendChild(item);
+});
+
 factionSelect.addEventListener("change", () => updateAvailableUnits());
 
 let printButton = document.getElementById("print-button");
