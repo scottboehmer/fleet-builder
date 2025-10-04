@@ -56,7 +56,7 @@ function assembleListText(name, points, description) {
     }
 
     let pointsSpan = document.createElement('span');
-    pointsSpan.innerText = `${points}`;
+    pointsSpan.innerText = points > 0 ? `${points}` : "Unknown";
     text.append(pointsSpan);
 
     if (description.length > 0) {
@@ -253,10 +253,14 @@ function updatePrintDisplay() {
     let table = document.createElement("table");
     table.append(headerRow(["Name", "Description", "Points"]));
     currentFleet.forEach((component) => {
-        totalPoints += component.points;
-        table.append(dataRow([component.name, getComponentDescription(component), component.points]));
+        if (component.points > 0 && totalPoints != -1) {
+            totalPoints += component.points;
+        } else {
+            totalPoints = -1;
+        }
+        table.append(dataRow([component.name, getComponentDescription(component), component.points > 0 ? component.points : "Unknown"]));
     });
-    table.append(dataRow(["","", totalPoints]));
+    table.append(dataRow(["","", totalPoints >= 0 ? totalPoints : "Unknown"]));
     printArea.append(table);
 
     let printFooter = document.createElement("code");
@@ -270,7 +274,11 @@ function updateCurrentFleet() {
     let fleetList = document.getElementById("current-fleet");
     fleetList.innerHTML = '';
     currentFleet.forEach((component, i) => {
-        totalPoints += component.points;
+        if (totalPoints != -1 && component.points > 0) {
+            totalPoints += component.points;
+        } else {
+            totalPoints = -1;
+        }
 
         let remove = document.createElement('button');
         remove.title = "Remove from fleet";
@@ -285,7 +293,7 @@ function updateCurrentFleet() {
 
         fleetList.append(getDisplayElements(component, remove));
     });
-    document.getElementById("fleet-points").innerText = totalPoints;
+    document.getElementById("fleet-points").innerText = totalPoints >= 0 ? totalPoints : "Unknown";
 
     let errors = listBuildingErrors();
     let errorList = document.getElementById("error-list");
@@ -311,14 +319,18 @@ function updateMarkdownDisplay() {
         let markdownText = "# Leviathans Fleet\n\n";
 
         currentFleet.forEach((component, i) => {
-            totalPoints += component.points;
+            if (totalPoints != -1 && component.points > 0) {
+                totalPoints += component.points;
+            } else {
+                totalPoints = -1;
+            }
 
             let description = getComponentDescription(component);
 
-            markdownText += `- **${component.name}** - _${description}_ - ${component.points}\n`;
+            markdownText += `- **${component.name}** - _${description}_ - ${(component.points > 0 ? component.points : "Unknown")}\n`;
         });
 
-        markdownText += `\n**Total Points:** ${totalPoints}\n`
+        markdownText += `\n**Total Points:** ${(totalPoints >= 0 ? totalPoints : "Unknown")}\n`
         
         markdown.innerText = markdownText;
     }
@@ -340,13 +352,20 @@ function listBuildingErrors() {
     let totalPoints = 0;
     let planePoints = 0;
     currentFleet.forEach((component) => {
-        totalPoints += component.points;
+        if (totalPoints != -1 && component.points > 0) {
+            totalPoints += component.points;
+        } else {
+            totalPoints = -1;
+        }
         if (component.type == "airplane") {
             planePoints += component.points;
         }
     });
     if (totalPoints > 1000) {
         errors.push("A fleet may have a maximum point value of 1000 points.");
+    }
+    if (totalPoints < 0) {
+        errors.push("Fleet contains an element without an offical points value.");
     }
     if (planePoints > 100) {
         errors.push("A maximum of 100 points may be spent on planes.");
