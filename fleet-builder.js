@@ -95,6 +95,7 @@ function getTag(item) {
             case 2: return "C";
             case 3: return "BC";
             case 4: return "B";
+            case 8: return "AP";
         }
     } else if (item.type == "airplane") {
         return "AIR";
@@ -107,7 +108,7 @@ function getTag(item) {
     }
 }
 
-function getDisplayElements(item, button) {
+function getDisplayElements(item, button, link) {
     let element = document.createElement('li');
     let description = getComponentDescription(item);
 
@@ -119,6 +120,10 @@ function getDisplayElements(item, button) {
         text.dataset.tag = tag;
     }
     element.append(text);
+
+    if (link) {
+        element.append(link);
+    }
 
     if (button) {
         element.append(button);
@@ -141,6 +146,27 @@ function addButton(component) {
     return add;
 }
 
+function linkToElement(component) {
+    const params = new URLSearchParams(window.location.search);
+    const preview = params.get("preview");
+    if (preview != "true") {
+        return null;
+    }
+
+    if (component.link) {
+        let link = document.createElement('a');
+        link.href = component.link;
+        link.target = "_blank";
+        let span = document.createElement('span');
+        span.classList.add("material-symbols-outlined");
+        span.classList.add("more-info-link");
+        span.innerText = "article";
+        link.appendChild(span);
+        return link;
+    }
+    return null;
+}
+
 function isElementAvailable(element, allowedFaction, allowedSources) {
     let available = false;
     if (element.faction == "any" || element.faction == allowedFaction) {
@@ -161,7 +187,7 @@ function updateAvailableUnits() {
 
     getLeviathanData().forEach((lev) => {
         if (isElementAvailable(lev, currentFaction, selectedSources)) {
-            leviathans.appendChild(getDisplayElements(lev, addButton(lev)));
+            leviathans.appendChild(getDisplayElements(lev, addButton(lev), linkToElement(lev)));
         }
     });
 
@@ -169,7 +195,7 @@ function updateAvailableUnits() {
     admirals.innerHTML = '';
     getAdmiralData().forEach((admiral) => {
         if (isElementAvailable(admiral, currentFaction, selectedSources)) {
-            admirals.appendChild(getDisplayElements(admiral, addButton(admiral)));
+            admirals.appendChild(getDisplayElements(admiral, addButton(admiral), linkToElement(admiral)));
         }
     });
 
@@ -177,7 +203,7 @@ function updateAvailableUnits() {
     captains.innerHTML = '';
     getCaptainData().forEach((captain) => {
         if (isElementAvailable(captain, currentFaction, selectedSources)) {
-            captains.appendChild(getDisplayElements(captain, addButton(captain)));
+            captains.appendChild(getDisplayElements(captain, addButton(captain), linkToElement(captain)));
         }
     });
 
@@ -185,7 +211,7 @@ function updateAvailableUnits() {
     planes.innerHTML = '';
     getPlaneData().forEach((plane) => {
         if (isElementAvailable(plane, currentFaction, selectedSources)) {
-            planes.appendChild(getDisplayElements(plane, addButton(plane)));
+            planes.appendChild(getDisplayElements(plane, addButton(plane), linkToElement(plane)));
         }
     });
 
@@ -193,7 +219,7 @@ function updateAvailableUnits() {
     guns.innerHTML = '';
     getALGunData().forEach((gun) => {
         if (isElementAvailable(gun, currentFaction, selectedSources)) {
-            guns.appendChild(getDisplayElements(gun, addButton(gun)));
+            guns.appendChild(getDisplayElements(gun, addButton(gun), linkToElement(gun)));
         }
     });
 }
@@ -291,7 +317,7 @@ function updateCurrentFleet() {
 
         remove.addEventListener("click", () => removeFromFleet(i));
 
-        fleetList.append(getDisplayElements(component, remove));
+        fleetList.append(getDisplayElements(component, remove, linkToElement(component)));
     });
     document.getElementById("fleet-points").innerText = totalPoints >= 0 ? totalPoints : "Unknown";
 

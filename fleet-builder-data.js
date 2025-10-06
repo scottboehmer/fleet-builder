@@ -103,8 +103,8 @@ function getCaptainData() {
     return captainData;
 }
 
-function leviathanCard(name, shipClass, shipType, faction, points, sources) {
-    return { name: name, type: "leviathan", shipClass: shipClass, shipType: shipType, faction: faction, points: points, sources: sources };
+function leviathanCard(name, shipClass, shipType, faction, points, sources, link) {
+    return { name: name, type: "leviathan", shipClass: shipClass, shipType: shipType, faction: faction, points: points, sources: sources, link: link };
 }
 
 const levData = sortByPointsAndName([
@@ -199,16 +199,16 @@ const levData = sortByPointsAndName([
     leviathanCard("SML Frankfurt", "Saxony", 3, "german", 280, ["Saxony Battlecruiser Pack"]),
     leviathanCard("SML Von Zieten", "Saxony", 3, "german", 290, ["Kickstarter Ship Cards"]),
     leviathanCard("SML Greif", "Greif", 2, "german", 250, ["Red Baron Cruiser Pack"]),
-    leviathanCard("SML Brandenburg", "Greif", 2, "german", 200, ["Starter Box"]),
-    leviathanCard("SML Hannover", "Greif", 2, "german", 190, ["Starter Box"]),
+    leviathanCard("SML Brandenburg", "Greif", 2, "german", 200, ["Starter Box"], "elements/2.htm"),
+    leviathanCard("SML Hannover", "Greif", 2, "german", 190, ["Starter Box"], "elements/1.htm"),
     leviathanCard("SML Bayern", "Greif", 2, "german", 220, ["German Fleet Box"]),
     leviathanCard("SML Lübeck", "Greif", 2, "german", 210, ["German Fleet Box"]),
     leviathanCard("SML Hamburg", "Greif", 2, "german", 240, ["Greif Cruiser Pack"]),
     leviathanCard("SML Danzig", "Greif", 2, "german", 220, ["Greif Cruiser Pack"]),
     leviathanCard("SML Rheinland", "Koenigsburg", 2, "german", 230, ["Koenigsberg Cruiser Pack"]),
     leviathanCard("SML Königsberg", "Koenigsburg", 2, "german", 200, ["Koenigsberg Cruiser Pack"]),
-    leviathanCard("SML Löwe", "Falke", 1, "german", 180, ["Starter Box"]),
-    leviathanCard("SML Seelöwe", "Falke", 1, "german", 160, ["Starter Box"]),
+    leviathanCard("SML Löwe", "Falke", 1, "german", 180, ["Starter Box"], "elements/7.htm"),
+    leviathanCard("SML Seelöwe", "Falke", 1, "german", 160, ["Starter Box"], "elements/8.htm"),
     leviathanCard("SML Dachs", "Falke", 1, "german", 190, ["German Fleet Box"]),
     leviathanCard("SML Vielfraß", "Falke", 1, "german", 180, ["German Fleet Box"]),
     leviathanCard("SML Geier", "Falke", 1, "german", 190, ["German Fleet Box"]),
@@ -227,8 +227,8 @@ const levData = sortByPointsAndName([
     leviathanCard("Ardent", "Conquent", 3, "french", 300, ["Conquent Battlecruiser Pack", "2012 Ship Cards"]),
     leviathanCard("La Fantasque", "Conquent", 3, "french", -1, ["2012 Ship Cards"]),
     leviathanCard("Legion d'Honneur", "Faucon", 2, "french", 230, ["Rene Fonck Cruiser Pack"]),
-    leviathanCard("Jeanne d'Arc", "Faucon", 2, "french", 200, ["Starter Box"]),
-    leviathanCard("Bretagne", "Faucon", 2, "french", 220, ["Starter Box"]),
+    leviathanCard("Jeanne d'Arc", "Faucon", 2, "french", 200, ["Starter Box"], "elements/5.htm"),
+    leviathanCard("Bretagne", "Faucon", 2, "french", 220, ["Starter Box"], "elements/3.htm"),
     leviathanCard("Borgnet", "Faucon", 2, "french", 210, ["Kickstarter Ship Cards"]),
     leviathanCard("Epervier", "Faucon", 2, "french", 250, ["French Fleet Box"]),
     leviathanCard("Chasseuse", "Faucon", 2, "french", 220, ["French Fleet Box"]),
@@ -238,8 +238,8 @@ const levData = sortByPointsAndName([
     leviathanCard("Pontbriand", "Liberté", 2, "french", 250, ["Liberte Cruiser Pack", "2012 Ship Cards"]),
     leviathanCard("Barracuda", "Poisson", 1, "french", 150, ["Poisson Destroyer Pack"]),
     leviathanCard("Faulx", "Poisson", 1, "french", 160, ["Poisson Destroyer Pack"]),
-    leviathanCard("La Gloire", "Grenouille", 1, "french", 170, ["Starter Box", "2012 Ship Cards"]),
-    leviathanCard("Aquitaine", "Grenouille", 1, "french", 170, ["Starter Box", "2012 Ship Cards"]),
+    leviathanCard("La Gloire", "Grenouille", 1, "french", 170, ["Starter Box", "2012 Ship Cards"], "elements/6.htm"),
+    leviathanCard("Aquitaine", "Grenouille", 1, "french", 170, ["Starter Box", "2012 Ship Cards"], "elements/1.htm"),
     leviathanCard("Normandie", "Grenouille", 1, "french", 170, ["French Fleet Box", "2012 Ship Cards"]),
     leviathanCard("L'Honneur", "Grenouille", 1, "french", 180, ["French Fleet Box", "2012 Ship Cards"]),
     leviathanCard("Pelletier", "Grenouille", 1, "french", 170, ["French Fleet Box", "2012 Ship Cards"]),
