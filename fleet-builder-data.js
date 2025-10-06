@@ -2,25 +2,25 @@ function sortByPointsAndName(components) {
     return components.sort((a,b) => a.points == b.points ? a.name.localeCompare(b.name) : b.points - a.points);
 }
 
-function planeCard(type, skill, points, sources) {
-    return { name: `${type}, ${skill}`, type: "airplane", faction: "any", points: points, sources: sources};
+function planeCard(name, points, sources) {
+    return { name: name, type: "airplane", faction: "any", points: points, sources: sources};
 }
 
 const planeData = sortByPointsAndName([
-    planeCard("Fighter", "Green", 20, ["Starter Box", "Plane Token Pack"]),
-    planeCard("Fighter", "Veteran", 30, ["Starter Box", "Plane Token Pack"]),
-    planeCard("Bomber", "Green", 20, ["Starter Box", "Plane Token Pack"]),
-    planeCard("Bomber", "Veteran", 40, ["Starter Box", "Plane Token Pack"]),
-    planeCard("Spotter", "Green", 30, ["Plane Token Pack"]),
-    planeCard("Spotter", "Veteran", 40, ["Plane Token Pack"]),
-    planeCard("Heavy Bomber", "Green", 40, ["Plane Token Pack"]),
-    planeCard("Heavy Bomber", "Veteran", 60, ["Plane Token Pack"]),
-    planeCard("Turret Fighter", "Green", 20, ["Plane Token Pack"]),
-    planeCard("Turret Fighter", "Veteran", 30, ["Plane Token Pack"]),
-    planeCard("Interceptor", "Green", 20, ["Plane Token Pack"]),
-    planeCard("Interceptor", "Veteran", 30, ["Plane Token Pack"]),
-    planeCard("Torpedo Bomber", "Green", 30, ["Plane Token Pack"]),
-    planeCard("Torpedo Bomber", "Veteran", 40, ["Plane Token Pack"])
+    planeCard("Fighter, Green", 20, ["Starter Box", "Plane Token Pack"]),
+    planeCard("Fighter, Veteran", 30, ["Starter Box", "Plane Token Pack"]),
+    planeCard("Bomber, Green", 20, ["Starter Box", "Plane Token Pack"]),
+    planeCard("Bomber, Veteran", 40, ["Starter Box", "Plane Token Pack"]),
+    planeCard("Spotter, Green", 30, ["Plane Token Pack"]),
+    planeCard("Spotter, Veteran", 40, ["Plane Token Pack"]),
+    planeCard("Heavy Bomber, Green", 40, ["Plane Token Pack"]),
+    planeCard("Heavy Bomber, Veteran", 60, ["Plane Token Pack"]),
+    planeCard("Turret Fighter, Green", 20, ["Plane Token Pack"]),
+    planeCard("Turret Fighter, Veteran", 30, ["Plane Token Pack"]),
+    planeCard("Interceptor, Green", 20, ["Plane Token Pack"]),
+    planeCard("Interceptor, Veteran", 30, ["Plane Token Pack"]),
+    planeCard("Torpedo Bomber, Green", 30, ["Plane Token Pack"]),
+    planeCard("Torpedo Bomber, Veteran", 40, ["Plane Token Pack"])
 ]);
 
 function getPlaneData() {
@@ -32,9 +32,9 @@ function alGunCard(name, points, sources) {
 }
 
 const alGunData = sortByPointsAndName([
-    alGunCard("Semi-Mobile AL Gun", 20, ["Operation Hannibal", "Operation Ragnar"]),
-    alGunCard("Mobile AL Gun", 20, ["Operation Hannibal", "Operation Ragnar"]),
-    alGunCard("High-Mobility AL Gun", 20, ["Operation Hannibal", "Operation Ragnar"])
+    alGunCard("Semi-Mobile Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"]),
+    alGunCard("Mobile Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"]),
+    alGunCard("High-Mobility Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"])
 ]);
 
 function getALGunData() {
@@ -72,7 +72,7 @@ const admiralData = sortByPointsAndName([
     admiralCard("Double Shifts", 40, "russian", ["Russian Fleet Box"]),
     admiralCard("Master of Repair", 50, "russian", ["Russian Fleet Box"]),
     admiralCard("Makeshift Engine", 10, "french", ["French Fleet Box"]),
-    admiralCard("High-Impact Torpedoes", 20, "french", ["French Fleet Box"]),
+    admiralCard("High Impact Torpedos", 20, "french", ["French Fleet Box"]),
     admiralCard("Torpedo Crews", 30, "french", ["French Fleet Box"]),
     admiralCard("Torpedo Sights", 40, "french", ["French Fleet Box"]),
     admiralCard("Engineering Expert", 50, "french", ["French Fleet Box"]),
@@ -95,8 +95,8 @@ const captainData = sortByPointsAndName([
     captainCard("Anastasia Romanova", 10, "russian", "Kiev", ["Anastasia Cruiser Pack"]),
     captainCard("Amil Dhar", 20, "british", "Destrier", ["Amil Dhar Cruiser Pack"]),
     captainCard("Rene Fonck", 20, "french", "Faucon", ["Rene Fonck Cruiser Pack"]),
-    captainCard("Manfred von Richtofen", 30, "german", "Greif", ["Red Baron Cruiser Pack"]),
-    captainCard("Castillo Romano", 20, "italian", "Avventuriero", ["Castillo Cruiser Pack"])
+    captainCard("Manfred von Richthofen", 30, "german", "Greif", ["Red Baron Cruiser Pack"]),
+    captainCard("Castillo Romano", 20, "italian", "Avventuriero", ["Castillo Romano Cruiser Pack"])
 ]);
 
 function getCaptainData() {
@@ -205,8 +205,8 @@ const levData = sortByPointsAndName([
     leviathanCard("SML Lübeck", "Greif", 2, "german", 210, ["German Fleet Box"]),
     leviathanCard("SML Hamburg", "Greif", 2, "german", 240, ["Greif Cruiser Pack"]),
     leviathanCard("SML Danzig", "Greif", 2, "german", 220, ["Greif Cruiser Pack"]),
-    leviathanCard("SML Rheinland", "Koenigsberg", 2, "german", 230, ["Koenigsberg Cruiser Pack"]),
-    leviathanCard("SML Königsberg", "Koenigsberg", 2, "german", 200, ["Koenigsberg Cruiser Pack"]),
+    leviathanCard("SML Rheinland", "Koenigsburg", 2, "german", 230, ["Koenigsberg Cruiser Pack"]),
+    leviathanCard("SML Königsberg", "Koenigsburg", 2, "german", 200, ["Koenigsberg Cruiser Pack"]),
     leviathanCard("SML Löwe", "Falke", 1, "german", 180, ["Starter Box"]),
     leviathanCard("SML Seelöwe", "Falke", 1, "german", 160, ["Starter Box"]),
     leviathanCard("SML Dachs", "Falke", 1, "german", 190, ["German Fleet Box"]),
@@ -223,7 +223,7 @@ const levData = sortByPointsAndName([
     leviathanCard("Louvois", "Bastille", 4, "french", 430, ["French Fleet Box"]),
     leviathanCard("Calais", "Bastille", 4, "french", 420, ["Bastille Battleship Pack"]),
     leviathanCard("Bellegarde", "Bastille", 4, "french", 410, ["Bastille Battleship Pack"]),
-    leviathanCard("Bearn", "Conquent", 3, "french", 320, ["Conquent Battlecruiser Pack", "2012 Ship Cards"]),
+    leviathanCard("Béarn", "Conquent", 3, "french", 320, ["Conquent Battlecruiser Pack", "2012 Ship Cards"]),
     leviathanCard("Ardent", "Conquent", 3, "french", 300, ["Conquent Battlecruiser Pack", "2012 Ship Cards"]),
     leviathanCard("La Fantasque", "Conquent", 3, "french", -1, ["2012 Ship Cards"]),
     leviathanCard("Legion d'Honneur", "Faucon", 2, "french", 230, ["Rene Fonck Cruiser Pack"]),
@@ -234,8 +234,8 @@ const levData = sortByPointsAndName([
     leviathanCard("Chasseuse", "Faucon", 2, "french", 220, ["French Fleet Box"]),
     leviathanCard("Corse", "Faucon", 2, "french", 200, ["Faucon Cruiser Pack"]),
     leviathanCard("Geneve", "Faucon", 2, "french", 220, ["Faucon Cruiser Pack"]),
-    leviathanCard("Lave", "Liberte", 2, "french", 200, ["Liberte Cruiser Pack", "2012 Ship Cards"]),
-    leviathanCard("Pontbriand", "Liberte", 2, "french", 250, ["Liberte Cruiser Pack", "2012 Ship Cards"]),
+    leviathanCard("Lave", "Liberté", 2, "french", 200, ["Liberte Cruiser Pack", "2012 Ship Cards"]),
+    leviathanCard("Pontbriand", "Liberté", 2, "french", 250, ["Liberte Cruiser Pack", "2012 Ship Cards"]),
     leviathanCard("Barracuda", "Poisson", 1, "french", 150, ["Poisson Destroyer Pack"]),
     leviathanCard("Faulx", "Poisson", 1, "french", 160, ["Poisson Destroyer Pack"]),
     leviathanCard("La Gloire", "Grenouille", 1, "french", 170, ["Starter Box", "2012 Ship Cards"]),
@@ -250,10 +250,11 @@ const levData = sortByPointsAndName([
     leviathanCard("HSwML Ulfbert", "Viking", 2, "scandinavian", 220, ["Operation Ragnar"]),
     leviathanCard("HSwML Åland", "Baltiska", 1, "scandinavian", 180, ["Operation Ragnar"]),
     leviathanCard("HSwML Gotland", "Baltiska", 1, "scandinavian", 160, ["Operation Ragnar"]),
-    leviathanCard("Speer", "Koenigsberg", 2, "swiss", 220, ["Operation Hannibal"]),
-    leviathanCard("Morgenstern", "Koenigsberg", 2, "swiss", 230, ["Operation Hannibal"]),
+    leviathanCard("Speer", "Koenigsburg", 2, "swiss", 220, ["Operation Hannibal"]),
+    leviathanCard("Morgenstern", "Koenigsburg", 2, "swiss", 230, ["Operation Hannibal"]),
     leviathanCard("Schwert", "Falke", 1, "swiss", 180, ["Operation Hannibal"]),
     leviathanCard("Lanze", "Falke", 1, "swiss", 200, ["Operation Hannibal"]),
+    leviathanCard("Troop Transport", "Hansa", 8, "any", -1, ["Operation Ragnar"])
 ]);
 
 function getLeviathanData() {
