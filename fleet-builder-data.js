@@ -6,23 +6,6 @@ function planeCard(name, points, sources) {
     return { name: name, type: "airplane", faction: "any", points: points, sources: sources};
 }
 
-const planeData = sortByPointsAndName([
-    planeCard("Fighter, Green", 20, ["Starter Box", "Plane Token Pack"]),
-    planeCard("Fighter, Veteran", 30, ["Starter Box", "Plane Token Pack"]),
-    planeCard("Bomber, Green", 20, ["Starter Box", "Plane Token Pack"]),
-    planeCard("Bomber, Veteran", 40, ["Starter Box", "Plane Token Pack"]),
-    planeCard("Spotter, Green", 30, ["Plane Token Pack"]),
-    planeCard("Spotter, Veteran", 40, ["Plane Token Pack"]),
-    planeCard("Heavy Bomber, Green", 40, ["Plane Token Pack"]),
-    planeCard("Heavy Bomber, Veteran", 60, ["Plane Token Pack"]),
-    planeCard("Turret Fighter, Green", 20, ["Plane Token Pack"]),
-    planeCard("Turret Fighter, Veteran", 30, ["Plane Token Pack"]),
-    planeCard("Interceptor, Green", 20, ["Plane Token Pack"]),
-    planeCard("Interceptor, Veteran", 30, ["Plane Token Pack"]),
-    planeCard("Torpedo Bomber, Green", 30, ["Plane Token Pack"]),
-    planeCard("Torpedo Bomber, Veteran", 40, ["Plane Token Pack"])
-]);
-
 function getPlaneData() {
     return planeData;
 }
@@ -30,12 +13,6 @@ function getPlaneData() {
 function alGunCard(name, points, sources) {
     return { name: name, type: "al-gun", faction: "any", points: points, sources: sources };
 }
-
-const alGunData = sortByPointsAndName([
-    alGunCard("Semi-Mobile Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"]),
-    alGunCard("Mobile Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"]),
-    alGunCard("High-Mobility Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"])
-]);
 
 function getALGunData() {
     return alGunData;
@@ -45,44 +22,6 @@ function admiralCard(name, points, faction, sources) {
     return { name: name, type: "admiral", faction: (faction ? faction : "any"), points: points, sources: sources };
 }
 
-const admiralData = sortByPointsAndName([
-    admiralCard("Airman", 10, "any", ["Kickstarter Admiral Cards"]),
-    admiralCard("Lieutenant", 20, "any", ["Kickstarter Admiral Cards"]),
-    admiralCard("Commander", 30, "any", ["Kickstarter Admiral Cards"]),
-    admiralCard("Rear Admiral", 40, "any", ["Kickstarter Admiral Cards"]),
-    admiralCard("Sky Admiral", 50, "any", ["Kickstarter Admiral Cards"]),
-    admiralCard("Improved Keel", 10, "any", ["Starter Box"]),
-    admiralCard("Breaking the Keel", 20, "any", ["Starter Box"]),
-    admiralCard("Type Reduction", 30, "any", ["Starter Box"]),
-    admiralCard("Tesla Support", 40, "any", ["Starter Box"]),
-    admiralCard("Repair Bonus", 50, "any", ["Starter Box"]),
-    admiralCard("Reinforced Keel", 10, "italian", ["Italian Fleet Box"]),
-    admiralCard("Positioning Expert", 20, "italian", ["Italian Fleet Box"]),
-    admiralCard("Maneuvering Expert", 30, "italian", ["Italian Fleet Box"]),
-    admiralCard("Torpedo Monitor", 40, "italian", ["Italian Fleet Box"]),
-    admiralCard("Master of Torpedoes", 50, "italian", ["Italian Fleet Box"]),
-    admiralCard("Extra Airmen", 10, "british", ["British Fleet Box"]),
-    admiralCard("Tight Spin Evasions", 20, "british", ["British Fleet Box"]),
-    admiralCard("Keel Cracking", 30, "british", ["British Fleet Box"]),
-    admiralCard("Artillery Expert", 40, "british", ["British Fleet Box"]),
-    admiralCard("Master of Weapons", 50, "british", ["British Fleet Box"]),
-    admiralCard("Rapid Repair", 10, "russian", ["Russian Fleet Box"]),
-    admiralCard("Precision Shots", 20, "russian", ["Russian Fleet Box"]),
-    admiralCard("Quick Crew Deployment", 30, "russian", ["Russian Fleet Box"]),
-    admiralCard("Double Shifts", 40, "russian", ["Russian Fleet Box"]),
-    admiralCard("Master of Repair", 50, "russian", ["Russian Fleet Box"]),
-    admiralCard("Makeshift Engine", 10, "french", ["French Fleet Box"]),
-    admiralCard("High Impact Torpedos", 20, "french", ["French Fleet Box"]),
-    admiralCard("Torpedo Crews", 30, "french", ["French Fleet Box"]),
-    admiralCard("Torpedo Sights", 40, "french", ["French Fleet Box"]),
-    admiralCard("Engineering Expert", 50, "french", ["French Fleet Box"]),
-    admiralCard("Focused Gunners", 10, "german", ["German Fleet Box"]),
-    admiralCard("Hard Burn", 20, "german", ["German Fleet Box"]),
-    admiralCard("Armored Hulls", 30, "german", ["German Fleet Box"]),
-    admiralCard("Chaff Experts", 40, "german", ["German Fleet Box"]),
-    admiralCard("Balanced Vessels", 50, "german", ["German Fleet Box"])
-]);
-
 function getAdmiralData() {
     return admiralData;
 }
@@ -91,20 +30,16 @@ function captainCard(name, points, faction, shipClass, sources) {
     return { name: name, type: "captain", faction: faction, shipClass: shipClass, points: points, sources: sources };
 }
 
-const captainData = sortByPointsAndName([
-    captainCard("Anastasia Romanova", 10, "russian", "Kiev", ["Anastasia Cruiser Pack"]),
-    captainCard("Amil Dhar", 20, "british", "Destrier", ["Amil Dhar Cruiser Pack"]),
-    captainCard("Rene Fonck", 20, "french", "Faucon", ["Rene Fonck Cruiser Pack"]),
-    captainCard("Manfred von Richthofen", 30, "german", "Greif", ["Red Baron Cruiser Pack"]),
-    captainCard("Castillo Romano", 20, "italian", "Avventuriero", ["Castillo Romano Cruiser Pack"])
-]);
-
 function getCaptainData() {
     return captainData;
 }
 
 function leviathanCard(name, shipClass, shipType, faction, points, sources, link) {
     return { name: name, type: "leviathan", shipClass: shipClass, shipType: shipType, faction: faction, points: points, sources: sources, link: link };
+}
+
+function getLeviathanData() {
+    return levData;
 }
 
 const levData = sortByPointsAndName([
@@ -257,6 +192,71 @@ const levData = sortByPointsAndName([
     leviathanCard("Troop Transport", "Hansa", 8, "any", -1, ["Operation Ragnar"])
 ]);
 
-function getLeviathanData() {
-    return levData;
-}
+const planeData = sortByPointsAndName([
+    planeCard("Fighter, Green", 20, ["Starter Box", "Plane Token Pack"]),
+    planeCard("Fighter, Veteran", 30, ["Starter Box", "Plane Token Pack"]),
+    planeCard("Bomber, Green", 20, ["Starter Box", "Plane Token Pack"]),
+    planeCard("Bomber, Veteran", 40, ["Starter Box", "Plane Token Pack"]),
+    planeCard("Spotter, Green", 30, ["Plane Token Pack"]),
+    planeCard("Spotter, Veteran", 40, ["Plane Token Pack"]),
+    planeCard("Heavy Bomber, Green", 40, ["Plane Token Pack"]),
+    planeCard("Heavy Bomber, Veteran", 60, ["Plane Token Pack"]),
+    planeCard("Turret Fighter, Green", 20, ["Plane Token Pack"]),
+    planeCard("Turret Fighter, Veteran", 30, ["Plane Token Pack"]),
+    planeCard("Interceptor, Green", 20, ["Plane Token Pack"]),
+    planeCard("Interceptor, Veteran", 30, ["Plane Token Pack"]),
+    planeCard("Torpedo Bomber, Green", 30, ["Plane Token Pack"]),
+    planeCard("Torpedo Bomber, Veteran", 40, ["Plane Token Pack"])
+]);
+
+const captainData = sortByPointsAndName([
+    captainCard("Anastasia Romanova", 10, "russian", "Kiev", ["Anastasia Cruiser Pack"]),
+    captainCard("Amil Dhar", 20, "british", "Destrier", ["Amil Dhar Cruiser Pack"]),
+    captainCard("Rene Fonck", 20, "french", "Faucon", ["Rene Fonck Cruiser Pack"]),
+    captainCard("Manfred von Richthofen", 30, "german", "Greif", ["Red Baron Cruiser Pack"]),
+    captainCard("Castillo Romano", 20, "italian", "Avventuriero", ["Castillo Romano Cruiser Pack"])
+]);
+
+const admiralData = sortByPointsAndName([
+    admiralCard("Airman", 10, "any", ["Kickstarter Admiral Cards"]),
+    admiralCard("Lieutenant", 20, "any", ["Kickstarter Admiral Cards"]),
+    admiralCard("Commander", 30, "any", ["Kickstarter Admiral Cards"]),
+    admiralCard("Rear Admiral", 40, "any", ["Kickstarter Admiral Cards"]),
+    admiralCard("Sky Admiral", 50, "any", ["Kickstarter Admiral Cards"]),
+    admiralCard("Improved Keel", 10, "any", ["Starter Box"]),
+    admiralCard("Breaking the Keel", 20, "any", ["Starter Box"]),
+    admiralCard("Type Reduction", 30, "any", ["Starter Box"]),
+    admiralCard("Tesla Support", 40, "any", ["Starter Box"]),
+    admiralCard("Repair Bonus", 50, "any", ["Starter Box"]),
+    admiralCard("Reinforced Keel", 10, "italian", ["Italian Fleet Box"]),
+    admiralCard("Positioning Expert", 20, "italian", ["Italian Fleet Box"]),
+    admiralCard("Maneuvering Expert", 30, "italian", ["Italian Fleet Box"]),
+    admiralCard("Torpedo Monitor", 40, "italian", ["Italian Fleet Box"]),
+    admiralCard("Master of Torpedoes", 50, "italian", ["Italian Fleet Box"]),
+    admiralCard("Extra Airmen", 10, "british", ["British Fleet Box"]),
+    admiralCard("Tight Spin Evasions", 20, "british", ["British Fleet Box"]),
+    admiralCard("Keel Cracking", 30, "british", ["British Fleet Box"]),
+    admiralCard("Artillery Expert", 40, "british", ["British Fleet Box"]),
+    admiralCard("Master of Weapons", 50, "british", ["British Fleet Box"]),
+    admiralCard("Rapid Repair", 10, "russian", ["Russian Fleet Box"]),
+    admiralCard("Precision Shots", 20, "russian", ["Russian Fleet Box"]),
+    admiralCard("Quick Crew Deployment", 30, "russian", ["Russian Fleet Box"]),
+    admiralCard("Double Shifts", 40, "russian", ["Russian Fleet Box"]),
+    admiralCard("Master of Repair", 50, "russian", ["Russian Fleet Box"]),
+    admiralCard("Makeshift Engine", 10, "french", ["French Fleet Box"]),
+    admiralCard("High Impact Torpedos", 20, "french", ["French Fleet Box"]),
+    admiralCard("Torpedo Crews", 30, "french", ["French Fleet Box"]),
+    admiralCard("Torpedo Sights", 40, "french", ["French Fleet Box"]),
+    admiralCard("Engineering Expert", 50, "french", ["French Fleet Box"]),
+    admiralCard("Focused Gunners", 10, "german", ["German Fleet Box"]),
+    admiralCard("Hard Burn", 20, "german", ["German Fleet Box"]),
+    admiralCard("Armored Hulls", 30, "german", ["German Fleet Box"]),
+    admiralCard("Chaff Experts", 40, "german", ["German Fleet Box"]),
+    admiralCard("Balanced Vessels", 50, "german", ["German Fleet Box"])
+]);
+
+const alGunData = sortByPointsAndName([
+    alGunCard("Semi-Mobile Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"]),
+    alGunCard("Mobile Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"]),
+    alGunCard("High-Mobility Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"])
+]);
