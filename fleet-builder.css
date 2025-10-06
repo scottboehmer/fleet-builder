@@ -295,4 +295,5 @@ ul.fleet:empty::after {
 
 .more-info-link {
   padding: 10px;
+  color: var(--text);
 }
