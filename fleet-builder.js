@@ -1,9 +1,17 @@
+function isPreviewEnabled() {
+    const params = new URLSearchParams(window.location.search);
+    const preview = params.get("preview");
+    return preview === "true";
+}
+
 function shipTypeName(shipType) {
     switch (shipType) {
         case 1: return "destroyer";
         case 2: return "cruiser";
         case 3: return "battlecruiser";
         case 4: return "battleship";
+        case 5: return "fortress";
+        case 8: return "transport";
         default: return "ship";
     }
 }
@@ -95,6 +103,7 @@ function getTag(item) {
             case 2: return "C";
             case 3: return "BC";
             case 4: return "B";
+            case 5: return "FORT";
             case 8: return "AP";
         }
     } else if (item.type == "airplane") {
@@ -147,12 +156,6 @@ function addButton(component) {
 }
 
 function linkToElement(component) {
-    const params = new URLSearchParams(window.location.search);
-    const preview = params.get("preview");
-    if (preview != "true") {
-        return null;
-    }
-
     if (component.link) {
         let link = document.createElement('a');
         link.href = component.link;

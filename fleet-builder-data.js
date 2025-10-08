@@ -189,7 +189,9 @@ const levData = sortByPointsAndName([
     leviathanCard("Morgenstern", "Koenigsburg", 2, "swiss", 230, ["Operation Hannibal"], "elements/144.htm"),
     leviathanCard("Schwert", "Falke", 1, "swiss", 180, ["Operation Hannibal"], "elements/145.htm"),
     leviathanCard("Lanze", "Falke", 1, "swiss", 200, ["Operation Hannibal"], "elements/146.htm"),
-    leviathanCard("Troop Transport", "Hansa", 8, "any", -1, ["Operation Ragnar"], "elements/147.htm")
+    leviathanCard("Troop Transport", "Hansa", 8, "any", -1, ["Operation Ragnar"], "elements/147.htm"),
+    leviathanCard("Aerial Fortress", "Hindenburg", 5, "german", -1, ["Operation Hannibal"], "elements/205.htm"),
+    leviathanCard("Aerial Fortress", "Vauban", 5, "french", -1, ["Operation Hannibal"], "elements/206.htm")
 ]);
 
 const planeData = sortByPointsAndName([
