@@ -28,6 +28,16 @@ function initializeNavMenu() {
         catalog.href = `${prefix}catalog.htm`;
     }
     nav.append(catalog);
+
+    let news = document.createElement("a");
+    news.innerText = "News";
+    if (nav.dataset.current == "news") {
+        news.href = "#";
+        news.ariaCurrent = "page";
+    } else {
+        news.href = `${prefix}news.htm`;
+    }
+    nav.append(news);
 }
 
 initializeNavMenu();
