@@ -4,6 +4,13 @@ function isPreviewEnabled() {
     return preview === "true";
 }
 
+function isAppMode() {
+    if (window.matchMedia('(display-mode: minimal-ui)').matches) {
+        return true;
+    }
+    return false;
+}
+
 function shipTypeName(shipType) {
     switch (shipType) {
         case 1: return "destroyer";
@@ -335,7 +342,40 @@ function updateCurrentFleet() {
         errorList.appendChild(listItem);
     });
 
+    saveFleetToStorage();
+
     updateMarkdownDisplay();
+}
+
+function saveFleetToStorage() {
+    try {
+        const json = JSON.stringify(currentFleet);
+        if (isAppMode()) {
+            localStorage.setItem("fleet", json);
+        } else {
+            sessionStorage.setItem("fleet", json);
+        }
+    } catch (ex) {
+        console.log("Unable to save fleet.");
+    }
+}
+
+function loadFleetFromStorage() {
+    try {
+        if (isAppMode()) {
+            const json = localStorage.getItem("fleet");
+            if (json) {
+                currentFleet = JSON.parse(json);
+            }
+        } else {
+            const json = sessionStorage.getItem("fleet");
+            if (json) {
+                currentFleet = JSON.parse(json);
+            }
+        }
+    } catch (ex) {
+        console.log("Unable to load saved fleet.");
+    }
 }
 
 function updateMarkdownDisplay() {
@@ -554,26 +594,51 @@ function setupSourceList() {
 }
 
 function loadStoredSourceList() {
-    var storageValue = localStorage.getItem("selectedSources");
-    if (storageValue) {
-        const knownSources = buildSourceList();
-        selectedSources = [];
-        storageValue.split(",").map(s => s.trim()).forEach(storedSource => {
-            if (knownSources.includes(storedSource)) {
-                selectedSources.push(storedSource);
-            }
-        });
+    try {
+        var storageValue = localStorage.getItem("selectedSources");
+        if (storageValue) {
+            const knownSources = buildSourceList();
+            selectedSources = [];
+            storageValue.split(",").map(s => s.trim()).forEach(storedSource => {
+                if (knownSources.includes(storedSource)) {
+                    selectedSources.push(storedSource);
+                }
+            });
+        }
+    } catch(ex) {
+        console.log("Unable to load previously selected source list.");
     }
 }
 
 function saveSourceList() {
-    var storageValue = selectedSources.join(",");
-    if (!storageValue) {
-        storageValue = "empty";
+    try {
+        var storageValue = selectedSources.join(",");
+        if (!storageValue) {
+            storageValue = "empty";
+        }
+        localStorage.setItem("selectedSources", storageValue);
+    } catch (ex) {
+        console.log("Unable to save source list.");
     }
-    localStorage.setItem("selectedSources", storageValue);
 }
 
+function saveFactionPreference(factionId) {
+    try {
+        localStorage.setItem("faction", factionId);
+    } catch (ex) {
+        console.log("Unable to save faction selection.");
+    }
+}
+
+function getFactionPreference() {
+    try {
+        return localStorage.getItem("faction");
+    } catch (ex) {
+        console.log("Unable to load previous faction selection.");
+    }
+}
+
+const lastSelectedFaction = getFactionPreference();
 let factionSelect = document.getElementById("faction-select");
 let majorFactionsGroup = document.createElement('optgroup');
 majorFactionsGroup.label = "Major Factions";
@@ -588,6 +653,9 @@ factionSelect.append(majorFactionsGroup);
     let item = document.createElement('option');
     item.value = factionId;
     item.innerText = getFactionLongName(factionId);
+    if (item.value == lastSelectedFaction) {
+        item.selected = true;
+    }
     majorFactionsGroup.appendChild(item);
 });
 let futureFactionsGroup = document.createElement('optgroup');
@@ -601,6 +669,9 @@ factionSelect.append(futureFactionsGroup);
     let item = document.createElement('option');
     item.value = factionId;
     item.innerText = getFactionLongName(factionId);
+    if (item.value == lastSelectedFaction) {
+        item.selected = true;
+    }
     futureFactionsGroup.appendChild(item);
 });
 let minorFactionsGroup = document.createElement('optgroup');
@@ -613,10 +684,16 @@ factionSelect.append(minorFactionsGroup);
     let item = document.createElement('option');
     item.value = factionId;
     item.innerText = getFactionLongName(factionId);
+    if (item.value == lastSelectedFaction) {
+        item.selected = true;
+    }
     minorFactionsGroup.appendChild(item);
 });
 
-factionSelect.addEventListener("change", () => updateAvailableUnits());
+factionSelect.addEventListener("change", () => {
+    saveFactionPreference(factionSelect.options[factionSelect.selectedIndex].value);
+    updateAvailableUnits();
+});
 
 let printButton = document.getElementById("print-button");
 printButton.addEventListener("click", () => {
@@ -672,4 +749,6 @@ let selectedSources = buildSourceList();
 loadStoredSourceList();
 setupSourceList();
 updateAvailableUnits();
+
+loadFleetFromStorage();
 updateCurrentFleet();

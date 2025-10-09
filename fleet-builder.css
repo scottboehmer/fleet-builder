@@ -331,3 +331,13 @@ ul.slots li {
   padding: 10px;
   color: var(--text);
 }
+
+header nav a:hover,
+header nav a.current,
+header nav a[aria-current="page"],
+header nav a[aria-current="true"] {
+  background: var(--accent-shaded-bg);
+  border-color: var(--accent);
+  color: var(--text);
+  cursor: pointer;
+}
