@@ -74,6 +74,30 @@
         </details>
         <h2>Settings</h2>
         <details>
+            <summary id="rules-summary">Fleet Building Rules</summary>
+            <button id="set-to-standard-play" type="button">Set to Standard Play</button>
+            <p><label>
+                <input type="checkbox" id="chkSingleFactionFleet">
+                The ships in a fleet must all be from the same faction.
+            </label></p>
+            <p><label>
+                <input type="checkbox" id="chkPointsLimit">
+                A fleet must total no more than <input id="numPointsLimit" type="number" value="1000"> points.
+            </label></p>
+            <p><label>
+                <input type="checkbox" id="chkRequireCapitalShip">
+                A fleet must contain a capital ship.
+            </label></p>
+            <p><label>
+                <input type="checkbox" id="chkShipsAreUnique">
+                Each ship may only be included once.
+            </label></p>
+            <p><label>
+                <input type="checkbox" id="chkCaptainsAreUnique">
+                Each captain may only be included once.
+            </label></p>
+        </details>
+        <details>
             <summary id="sources-summary">Sources</summary>
             <button id="select-all-sources" type="button">Select All</button>
             <button id="clear-sources" type="button">Clear All</button>

@@ -331,6 +331,14 @@ function updateCurrentFleet() {
     });
     document.getElementById("fleet-points").innerText = totalPoints >= 0 ? totalPoints : "Unknown";
 
+    updateErrorList();
+
+    saveFleetToStorage();
+
+    updateMarkdownDisplay();
+}
+
+function updateErrorList() {
     let errors = listBuildingErrors();
     let errorList = document.getElementById("error-list");
     errorList.innerHTML = '';
@@ -341,10 +349,6 @@ function updateCurrentFleet() {
         listItem.appendChild(message);
         errorList.appendChild(listItem);
     });
-
-    saveFleetToStorage();
-
-    updateMarkdownDisplay();
 }
 
 function saveFleetToStorage() {
@@ -405,18 +409,43 @@ function updateMarkdownDisplay() {
     }
 }
 
+let fleetBuildingRules = {};
+resetFleetBuildingRules();
+
+function resetFleetBuildingRules() {
+    fleetBuildingRules = {
+        singleFaction: true,
+        pointsLimit: 1000,
+        maxPointsOnPlanes: 100,
+        requireCapitalShip: true,
+        maxType4: 1,
+        maxType3: 1,
+        maxAdmirals: 1,
+        maxALGuns: 2,
+        shipsAreUnique: true,
+        captainsAreUnique: true
+    };
+}
+
 function listBuildingErrors() {
     let errors = [];
-    let fleetFaction = "any";
-    currentFleet.forEach((component) => {
-        if (component.faction != "any" && component.faction != fleetFaction) {
-            if (fleetFaction == "any") {
-                fleetFaction = component.faction;
-            } else {
-                errors.push("All components must be of the same faction.")
+
+    let singleFaction = true;
+    if (fleetBuildingRules.singleFaction) {
+        let fleetFaction = "any";
+        currentFleet.forEach((component) => {
+            if (component.faction != "any" && component.faction != fleetFaction) {
+                if (fleetFaction == "any") {
+                    fleetFaction = component.faction;
+                } else {
+                    if (singleFaction) {
+                        errors.push("All components must be of the same faction.");
+                        singleFaction = false;
+                    }
+                }
             }
-        }
-    });
+        });
+    }
 
     let totalPoints = 0;
     let planePoints = 0;
@@ -430,13 +459,13 @@ function listBuildingErrors() {
             planePoints += component.points;
         }
     });
-    if (totalPoints > 1000) {
-        errors.push("A fleet may have a maximum point value of 1000 points.");
+    if (totalPoints > fleetBuildingRules.pointsLimit && fleetBuildingRules.pointsLimit >= 0) {
+        errors.push(`A fleet may have a maximum point value of ${fleetBuildingRules.pointsLimit} points.`);
     }
-    if (totalPoints < 0) {
+    if (totalPoints < 0 && fleetBuildingRules.pointsLimit >= 0) {
         errors.push("Fleet contains an element without an offical points value.");
     }
-    if (planePoints > 100) {
+    if (planePoints > fleetBuildingRules.maxPointsOnPlanes && fleetBuildingRules.maxPointsOnPlanes >= 0) {
         errors.push("A maximum of 100 points may be spent on planes.");
     }
 
@@ -460,19 +489,19 @@ function listBuildingErrors() {
             alGunCount += 1;
         }
     });
-    if (type3Count + type4Count <= 0) {
+    if (type3Count + type4Count <= 0 && fleetBuildingRules.requireCapitalShip) {
         errors.push("A fleet must have a capital ship (battleship or battle cruiser).");
     }
-    if (type4Count > 1) {
+    if (type4Count > fleetBuildingRules.maxType4 && fleetBuildingRules.maxType4 >= 0) {
         errors.push("A fleet may only have one battleship.");
     }
-    if (type3Count > 1) {
+    if (type3Count > fleetBuildingRules.maxType3 && fleetBuildingRules.maxType3 >= 0) {
         errors.push("A fleet may only have one battle cruiser.");
     }
-    if (admiralCount > 1) {
+    if (admiralCount > fleetBuildingRules.maxAdmirals && fleetBuildingRules.maxAdmirals >= 0) {
         errors.push("Only a single Admiral Card may be included.");
     }
-    if (alGunCount > 2) {
+    if (alGunCount > fleetBuildingRules.maxALGuns && fleetBuildingRules.maxALGuns >= 0) {
         errors.push("A fleet may have at most two AL guns.");
     }
 
@@ -488,16 +517,30 @@ function listBuildingErrors() {
         }
     });
 
-    currentFleet.forEach((component, i) => {
-        if (component.type == "leviathan" || component.type == "captain") {
-            for (let j = i + 1; j < currentFleet.length; j++) {
-                if (component.name == currentFleet[j].name) {
-                    errors.push("Only one of a given Ship or Captain Card may be included.");
-                    return;
+    let duplicateShips = false;
+    let duplicateCaptains = false;
+    if (fleetBuildingRules.captainsAreUnique || fleetBuildingRules.shipsAreUnique) {
+        currentFleet.forEach((component, i) => {
+            if ((component.type == "leviathan" && fleetBuildingRules.shipsAreUnique) 
+               || (component.type == "captain" && fleetBuildingRules.captainsAreUnique)) {
+                for (let j = i + 1; j < currentFleet.length; j++) {
+                    if (component.name == currentFleet[j].name) {
+                        if (component.type == "leviathan") {
+                            if (!duplicateShips) {
+                                errors.push("Only one of a given Ship Card may be included.");
+                            }
+                            duplicateShips = true;
+                        } else if (component.type == "captain") {
+                            if (!duplicateCaptains) {
+                                errors.push("Only one of a given Captain Card may be included.");
+                            }
+                            duplicateCaptains = true;
+                        }
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
 
     return errors;
@@ -745,10 +788,50 @@ document.getElementById("clear-sources").addEventListener("click", () => {
     updateAvailableUnits();
 });
 
+function initializeRulesOptions() {
+    initializeRulesOptionCheckbox("chkSingleFactionFleet", "singleFaction");
+    initializeRulesOptionCheckbox("chkRequireCapitalShip", "requireCapitalShip");
+    initializeRulesOptionCheckbox("chkShipsAreUnique", "shipsAreUnique");
+    initializeRulesOptionCheckbox("chkCaptainsAreUnique", "captainsAreUnique");
+    initializeRulesOptionWithNumber("chkPointsLimit", "numPointsLimit", "pointsLimit");
+}
+
+function initializeRulesOptionCheckbox(checkboxId, propertyName) {
+    let checkbox = document.getElementById(checkboxId);
+    checkbox.checked = fleetBuildingRules[propertyName];
+    checkbox.addEventListener("change", () => {
+        fleetBuildingRules[propertyName] = checkbox.checked;
+        updateErrorList();
+    });
+}
+
+function initializeRulesOptionWithNumber(checkboxId, numberId, propertyName) {
+    let checkbox = document.getElementById(checkboxId);
+    let field = document.getElementById(numberId);
+    checkbox.checked = fleetBuildingRules[propertyName] >= 0;
+    field.value = fleetBuildingRules[propertyName];
+    field.disabled = !checkbox.checked;
+    if (field.disabled) {
+        field.value = 1000;
+    }
+    checkbox.addEventListener("change", () => {
+        fleetBuildingRules[propertyName] = checkbox.checked ? field.value : -1;
+        field.disabled = !checkbox.checked;
+        updateErrorList();
+    });
+    field.addEventListener("change", () => {
+        if (checkbox.checked) {
+            fleetBuildingRules[propertyName] = field.value;
+            updateErrorList();
+        }
+    });
+}
+
 let selectedSources = buildSourceList();
 loadStoredSourceList();
 setupSourceList();
 updateAvailableUnits();
+initializeRulesOptions();
 
 loadFleetFromStorage();
 updateCurrentFleet();
