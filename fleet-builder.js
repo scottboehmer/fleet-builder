@@ -461,13 +461,18 @@ function updateMarkdownDisplay() {
 
 function listBuildingErrors() {
     let errors = [];
+
+    let factionMismatchReported = false;
     let fleetFaction = "any";
     currentFleet.forEach((component) => {
-        if (component.faction != "any" && component.faction != fleetFaction) {
-            if (fleetFaction == "any") {
-                fleetFaction = component.faction;
-            } else {
-                errors.push("All components must be of the same faction.")
+        if (!factionMismatchReported) {
+            if (component.faction != "any" && component.faction != fleetFaction) {
+                if (fleetFaction == "any") {
+                    fleetFaction = component.faction;
+                } else {
+                    errors.push("All components must be of the same faction.");
+                    factionMismatchReported = true;
+                }
             }
         }
     });
@@ -515,19 +520,19 @@ function listBuildingErrors() {
         }
     });
     if (type3Count + type4Count <= 0) {
-        errors.push("A fleet must have a capital ship (battleship or battle cruiser).");
+        errors.push("A fleet must have a capital ship (battleship or battlecruiser).");
     }
     if (type4Count > 1) {
         errors.push("A fleet may only have one battleship.");
     }
     if (type3Count > 1) {
-        errors.push("A fleet may only have one battle cruiser.");
+        errors.push("A fleet may only have one battlecruiser.");
     }
     if (admiralCount > 1) {
         errors.push("Only a single Admiral Card may be included.");
     }
     if (alGunCount > 2) {
-        errors.push("A fleet may have at most two AL guns.");
+        errors.push("A fleet may have at most two anti-leviathan guns.");
     }
 
     captains.forEach((captainCard) => {
@@ -542,11 +547,22 @@ function listBuildingErrors() {
         }
     });
 
+    let duplicateCaptainReported = false;
+    let duplicateShipReported = false;
     currentFleet.forEach((component, i) => {
-        if ((component.type == "leviathan" || component.type == "captain") && !component.generic) {
+        if (component.type == "leviathan" && !component.generic && !duplicateShipReported) {
             for (let j = i + 1; j < currentFleet.length; j++) {
                 if (component.name == currentFleet[j].name) {
-                    errors.push("Only one of a given Ship or Captain Card may be included.");
+                    errors.push("Only one of a given Ship Card may be included.");
+                    duplicateShipReported = true;
+                    return;
+                }
+            }
+        } else if (component.type == "captain" && !component.generic && !duplicateCaptainReported) {
+            for (let j = i + 1; j < currentFleet.length; j++) {
+                if (component.name == currentFleet[j].name) {
+                    errors.push("Only one of a given Captain Card may be included.");
+                    duplicateCaptainReported = true;
                     return;
                 }
             }
