@@ -381,3 +381,8 @@ input[type="checkbox"],
 input[type="radio"] {
   position: unset;
 }
+
+.post-date {
+  font-style: italic;
+  color: var(--text-light);
+}
