@@ -39,7 +39,15 @@
             <button id="print-button" type="button" title="Print fleet list"><span class="material-symbols-outlined">print</span></button>
             <button id="toggle-md-button" type="button" title="Toggle markdown display"><span id="toggle-md-button-content" class="material-symbols-outlined">markdown</span></button>
         </div>
-        <p><strong>Points: </strong><span id="fleet-points">0</span></p>
+        <div class="sticky accent-box fleet-summary">
+            <div class="inline-on-desktop">
+                <strong>Points: </strong><span id="fleet-points">0</span>
+            </div>
+            <div class="inline-on-desktop">
+                <strong>Components: </strong><span id="fleet-tags"></span>
+                <span id="error-indicator"></span>
+            </div>
+        </div>
         <div id="list-area" class="accent-box">
             <ul id="current-fleet" class="item-list fleet"></ul>
         </div>

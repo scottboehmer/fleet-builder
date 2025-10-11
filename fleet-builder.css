@@ -81,6 +81,10 @@ body > header > *:only-child {
   font-size: 0.9rem;
 }
 
+.inline-on-desktop {
+  display: inline;
+}
+
 @media only screen and (max-width: 720px) {
   .desktop {
     display: none;
@@ -88,6 +92,10 @@ body > header > *:only-child {
   
   .mobile {
     display: unset;
+  }
+
+  .inline-on-desktop {
+    display: block;
   }
 }
 
@@ -172,7 +180,7 @@ ul.item-list button {
   flex: 1
 }
 
-ul.item-list em {
+ul.item-list .description {
   color: var(--text-light);
 }
 
@@ -197,12 +205,29 @@ ul.fleet:empty::after {
   color: var(--accent);
 }
 
+.error-indicator {
+  color: var(--accent);
+  font-weight: bold;
+}
+
 .tagged[data-tag]:before {
   content: attr(data-tag);
   font-size: 0.7rem;
   vertical-align: top;
   font-weight: bolder;
   margin-right: 4px;
+  color: var(--tag-text);
+  background-color: var(--tag-bg);
+  border: var(--tag-border) var(--border-width) solid;
+  padding: 0px 2px;
+  border-radius: var(--standard-border-radius);
+}
+
+.tag {
+  font-size: 0.7rem;
+  font-weight: bolder;
+  position: relative;
+  top: -3px;
   color: var(--tag-text);
   background-color: var(--tag-bg);
   border: var(--tag-border) var(--border-width) solid;
@@ -340,4 +365,19 @@ header nav a[aria-current="true"] {
   border-color: var(--accent);
   color: var(--text);
   cursor: pointer;
+}
+
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
+.fleet-summary {
+  margin-bottom: 8px;
+}
+
+/* Unset this from simple css to avoid overlapping sticky header */
+input[type="checkbox"],
+input[type="radio"] {
+  position: unset;
 }

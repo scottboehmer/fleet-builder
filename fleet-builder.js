@@ -51,7 +51,7 @@ function assembleListText(name, points, description) {
     let text = document.createElement('div');
 
     let nameSpan = document.createElement('strong');
-    nameSpan.innerText = name;
+    nameSpan.innerHTML = name;
     text.append(nameSpan);
 
     let divider = document.createElement('span');
@@ -60,6 +60,7 @@ function assembleListText(name, points, description) {
 
     if (description.length > 0) {
         let desc = document.createElement('em');
+        desc.classList.add("description");
         desc.innerText = description;
         desc.className = "desktop";
         text.append(desc);
@@ -78,6 +79,7 @@ function assembleListText(name, points, description) {
         let desc = document.createElement('em');
         desc.innerText = description;
         desc.className = "mobile small";
+        desc.classList.add("description");
         text.append(document.createElement('br'));
         text.append(desc);
     }
@@ -116,7 +118,7 @@ function getTag(item) {
     } else if (item.type == "airplane") {
         return "AIR";
     } else if (item.type == "al-gun") {
-        return "AL";
+        return "ALG";
     } else if (item.type == "admiral") {
         return "ADM";
     } else if (item.type == "captain") {
@@ -124,11 +126,33 @@ function getTag(item) {
     }
 }
 
+function getShipNameWithStyling(ship, markdown) {
+    if (ship.generic) {
+        return ship.name;
+    }
+    let startItalics = markdown ? "_" : "<em>";
+    let endItalics = markdown ? "_" : "</em>";
+    const prefixes = ["HML ", "SML ", "USG ", "HSwML "];
+    for(let i = 0; i < prefixes.length; i++) {
+        if (ship.name.startsWith(prefixes[i]))
+        {
+            return `${prefixes[i]}${startItalics}${ship.name.substr(prefixes[i].length)}${endItalics}`
+        }
+    }
+
+    return `${startItalics}${ship.name}${endItalics}`;  
+}
+
 function getDisplayElements(item, button, link) {
     let element = document.createElement('li');
     let description = getComponentDescription(item);
 
-    let text = assembleListText(item.name, item.points, description);
+    let nameHtml = item.name;
+    if (item.type == "leviathan") {
+        nameHtml = getShipNameWithStyling(item);
+    }
+
+    let text = assembleListText(nameHtml, item.points, description);
     text.classList.add("tagged");
     text.classList.add("primary-list-item");
     var tag = getTag(item);
@@ -261,7 +285,7 @@ function dataRow(values) {
     let dataRow = document.createElement("tr");
     values.forEach((text) => {
         let data = document.createElement("td");
-        data.innerText = text;
+        data.innerHTML = text;
         dataRow.append(data);
     });
     return dataRow;
@@ -294,7 +318,11 @@ function updatePrintDisplay() {
         } else {
             totalPoints = -1;
         }
-        table.append(dataRow([component.name, getComponentDescription(component), component.points > 0 ? component.points : "Unknown"]));
+        let name = component.name;
+        if (component.type == "leviathan") {
+            name = getShipNameWithStyling(component);
+        }
+        table.append(dataRow([name, getComponentDescription(component), component.points > 0 ? component.points : "Unknown"]));
     });
     table.append(dataRow(["","", totalPoints >= 0 ? totalPoints : "Unknown"]));
     printArea.append(table);
@@ -309,6 +337,10 @@ function updateCurrentFleet() {
 
     let fleetList = document.getElementById("current-fleet");
     fleetList.innerHTML = '';
+
+    let fleetTags = document.getElementById("fleet-tags");
+    fleetTags.innerHTML = '';
+
     currentFleet.forEach((component, i) => {
         if (totalPoints != -1 && component.points > 0) {
             totalPoints += component.points;
@@ -328,8 +360,18 @@ function updateCurrentFleet() {
         remove.addEventListener("click", () => removeFromFleet(i));
 
         fleetList.append(getDisplayElements(component, remove, linkToElement(component)));
+
+        let tag = document.createElement('span');
+        tag.className = "tag";
+        tag.innerText = getTag(component);
+        fleetTags.append(tag);
+        fleetTags.append(" ");
     });
     document.getElementById("fleet-points").innerText = totalPoints >= 0 ? totalPoints : "Unknown";
+
+    if (currentFleet.length == 0) {
+        fleetTags.innerText = "None";
+    }
 
     let errors = listBuildingErrors();
     let errorList = document.getElementById("error-list");
@@ -341,6 +383,13 @@ function updateCurrentFleet() {
         listItem.appendChild(message);
         errorList.appendChild(listItem);
     });
+
+    let errorIndicator = document.getElementById("error-indicator");
+    if (errors.length > 0) {
+        errorIndicator.innerHTML = " <span class=\"error-indicator\">!</span>";
+    } else {
+        errorIndicator.innerHTML = '';
+    }
 
     saveFleetToStorage();
 
@@ -396,7 +445,12 @@ function updateMarkdownDisplay() {
 
             let description = getComponentDescription(component);
 
-            markdownText += `- **${component.name}** - _${description}_ - ${(component.points > 0 ? component.points : "Unknown")}\n`;
+            let styledName = component.name;
+            if (component.type == "leviathan") {
+                styledName = getShipNameWithStyling(component, true);
+            }
+
+            markdownText += `- **${styledName}** - _${description}_ - ${(component.points > 0 ? component.points : "Unknown")}\n`;
         });
 
         markdownText += `\n**Total Points:** ${(totalPoints >= 0 ? totalPoints : "Unknown")}\n`
@@ -489,7 +543,7 @@ function listBuildingErrors() {
     });
 
     currentFleet.forEach((component, i) => {
-        if (component.type == "leviathan" || component.type == "captain") {
+        if ((component.type == "leviathan" || component.type == "captain") && !component.generic) {
             for (let j = i + 1; j < currentFleet.length; j++) {
                 if (component.name == currentFleet[j].name) {
                     errors.push("Only one of a given Ship or Captain Card may be included.");
