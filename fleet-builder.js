@@ -189,7 +189,7 @@ function addButton(component) {
 function linkToElement(component) {
     if (component.link) {
         let link = document.createElement('a');
-        link.href = component.link;
+        link.href = `${component.link}#builder`;
         link.target = "_blank";
         let span = document.createElement('span');
         span.classList.add("material-symbols-outlined");

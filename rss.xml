@@ -6,6 +6,12 @@
   <description>Updates about the Leviathans Fleet Builder</description>
   <language>en-us</language>
   <item>
+    <title>News Improvements</title>
+    <link>https://scottboehmer.github.io/fleet-builder/posts/3.htm</link>
+    <description>News posts now have their own pages plus RSS.</description>
+    <pubDate>10/12/2025</pubDate>
+  </item>
+  <item>
     <title>Proper Names &amp; Fleet Summary</title>
     <link>https://scottboehmer.github.io/fleet-builder/posts/2.htm</link>
     <description>The Leviathans Fleet Builder site now italicizes ship names and has a sticky header.</description>

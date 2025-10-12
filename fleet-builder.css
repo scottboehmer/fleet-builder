@@ -386,3 +386,27 @@ input[type="radio"] {
   font-style: italic;
   color: var(--text-light);
 }
+
+body > nav.crumbs {
+  background-color: var(--accent);
+  color: var(--accent-text);
+  border-bottom: var(--border-width) solid var(--border);
+  padding: 0 0.5rem 0rem 0.5rem;
+  grid-column: 1 / -1;
+  font-size: 0.8rem;
+}
+
+body > nav.crumbs > * {
+  max-width: min(45rem, 90%);
+  margin: 0 auto;
+}
+
+body > nav.crumbs a {
+  color: var(--accent-text);
+  text-decoration: none;
+}
+
+body > nav.crumbs a:hover {
+  color: var(--accent-text);
+  text-decoration: underline;
+}
