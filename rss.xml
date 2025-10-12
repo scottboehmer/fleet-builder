@@ -6,9 +6,9 @@
   <description>Updates about the Leviathans Fleet Builder</description>
   <language>en-us</language>
   <item>
-    <title>News Improvements</title>
+    <title>Crumbs &amp; RSS</title>
     <link>https://scottboehmer.github.io/fleet-builder/posts/3.htm</link>
-    <description>News posts now have their own pages plus RSS.</description>
+    <description>Breadcrumb navigation and RSS for news posts</description>
     <pubDate>10/12/2025</pubDate>
   </item>
   <item>
