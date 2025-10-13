@@ -60,9 +60,8 @@ function assembleListText(name, points, description) {
 
     if (description.length > 0) {
         let desc = document.createElement('em');
-        desc.classList.add("description");
         desc.innerText = description;
-        desc.className = "desktop";
+        desc.className = "desktop description";
         text.append(desc);
 
         let divider2 = document.createElement('span');
@@ -75,15 +74,15 @@ function assembleListText(name, points, description) {
     pointsSpan.innerText = points > 0 ? `${points}` : "Unknown";
     text.append(pointsSpan);
 
-    if (description.length > 0) {
-        let desc = document.createElement('em');
-        desc.innerText = description;
-        desc.className = "mobile small";
-        desc.classList.add("description");
-        text.append(document.createElement('br'));
-        text.append(desc);
-    }
+    return text;
+}
 
+function assembleListSecondaryText(description) {
+    let text = document.createElement('div');
+    text.className = "mobile small description";
+    let em = document.createElement('em');
+    em.innerText = description;
+    text.append(em);
     return text;
 }
 
@@ -154,12 +153,19 @@ function getDisplayElements(item, button, link) {
 
     let text = assembleListText(nameHtml, item.points, description);
     text.classList.add("tagged");
-    text.classList.add("primary-list-item");
+    
     var tag = getTag(item);
     if (tag) {
         text.dataset.tag = tag;
     }
-    element.append(text);
+
+    let secondary = assembleListSecondaryText(description);
+
+    let content = document.createElement('div');
+    content.classList.add("primary-list-item");
+    content.append(text);
+    content.append(secondary);
+    element.append(content);
 
     if (link) {
         element.append(link);
