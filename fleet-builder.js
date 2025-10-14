@@ -209,10 +209,17 @@ function linkToElement(component) {
 
 function isElementAvailable(element, allowedFaction, allowedSources) {
     let available = false;
-    if (element.faction == "any" || element.faction == allowedFaction) {
+    if (element.faction == "any" || allowedFaction == "*" || element.faction == allowedFaction) {
         element.sources.forEach((source) => {
             if (allowedSources.includes(source)) {
                 available = true;
+                if (element.type == "leviathan" && requiredSlots.length > 0) {
+                    requiredSlots.forEach((rs) => {
+                        if (element.slots.findIndex(x => x == rs) == -1) {
+                            available = false;
+                        }
+                    });
+                }
             }
         });
     }
@@ -765,6 +772,25 @@ factionSelect.append(minorFactionsGroup);
     }
     minorFactionsGroup.appendChild(item);
 });
+if (isPreviewEnabled()) {
+    let miscGroup = document.createElement('optgroup');
+    miscGroup.label = "Other Filters";
+    let wildCard = document.createElement('option');
+    wildCard.value = "*";
+    wildCard.innerText = "All Components";
+    if (wildCard.value == lastSelectedFaction) {
+        wildCard.selected = true;
+    }
+    miscGroup.appendChild(wildCard);
+    let generic = document.createElement('option');
+    generic.value = "any";
+    generic.innerText = "Generic Components";
+    if (generic.value == lastSelectedFaction) {
+        generic.selected = true;
+    }
+    miscGroup.appendChild(generic);
+    factionSelect.append(miscGroup);
+}
 
 factionSelect.addEventListener("change", () => {
     saveFactionPreference(factionSelect.options[factionSelect.selectedIndex].value);
@@ -821,6 +847,84 @@ document.getElementById("clear-sources").addEventListener("click", () => {
     updateAvailableUnits();
 });
 
+let requiredSlots = [];
+
+let potentialSlotFilters = [
+    { id: "adv-fire-control", display: "Advanced Fire Control" },
+    { id: "artillery-guns", display: "Artillery Guns" },
+    { id: "bracket-crew", display: "Bracketing Crew" },
+    { id: "chaff", display: "Chaff" },
+    { id: "edison", display: "Edison Coil Trim Tank" },
+    { id: "he-torpedo", display: "HE Torpedo" },
+    { id: "imp-steering-gear", display: "Improved Steering Gear" },
+    { id: "mine-layer", display: "Mine Layer" },
+    { id: "precision-crew", display: "Precision Crew" },
+    { id: "ram", display: "Ram" },
+    { id: "ram-engine", display: "Ram Engine" },
+    { id: "repair-crew", display: "Repair Crew" },
+    { id: "saturation-crew", display: "Saturation Crew" },
+    { id: "saturation-guns", display: "Saturation Guns" },
+    { id: "screen-crew", display: "Screening Crew" },
+    { id: "shot-cannon", display: "Shot Cannon" },
+    { id: "slip-shaft", display: "Slip Shaft" },
+    { id: "sniper-guns", display: "Sniper Guns"},
+    { id: "steering-gear", display: "Steering Gear" },
+    { id: "ted-guns", display: "TED Guns" },
+    { id: "torpedo", display: "Torpedo" },
+];
+
+function setupLeviathanFilters()
+{
+    if (isPreviewEnabled())
+    {
+        let levsDetails = document.getElementById("levs-details");
+
+        let filters = document.createElement("details");
+        let filterSummary = document.createElement("summary");
+        filterSummary.innerText = "Required Slots";
+        filters.append(filterSummary);
+        filters.classList.add("column-host");
+        let filterNotes = document.createElement("p");
+        filterNotes.innerText = "Filter out leviathans that do not have all of the selected slot types. Leviathans without card data in the fleet builder will also be hidden.";
+        filterNotes.className = "note small";
+        filters.append(filterNotes);
+
+        let column1 = document.createElement("div");
+        column1.classList.add("column");
+        let column2 = document.createElement("div");
+        column2.classList.add("column");
+        filters.append(column1);
+        filters.append(column2);
+
+        potentialSlotFilters.forEach((filter, index) => {
+            let filterLabel = document.createElement("label");
+            let filterCheckbox = document.createElement("input");
+            filterCheckbox.type = "checkbox";
+            filterCheckbox.id = `chk-${filter.id}`;
+            filterCheckbox.addEventListener("change", () => {
+                if (filterCheckbox.checked) {
+                    requiredSlots.push(filter.id);
+                } else {
+                    const index = requiredSlots.findIndex(x => x == filter.id);
+                    if (index >= 0) {
+                        requiredSlots.splice(index, 1);
+                    }
+                }
+                updateAvailableUnits();
+            });
+            filterLabel.append(filterCheckbox);
+            filterLabel.append(filter.display);
+            if (index >= Math.round(potentialSlotFilters.length / 2.0)) {
+                column2.append(filterLabel);
+            } else {
+                column1.append(filterLabel);
+            }
+        });
+
+        levsDetails.insertBefore(filters, levsDetails.childNodes[1]);
+    }
+}
+
 let selectedSources = buildSourceList();
 loadStoredSourceList();
 setupSourceList();
@@ -828,3 +932,4 @@ updateAvailableUnits();
 
 loadFleetFromStorage();
 updateCurrentFleet();
+setupLeviathanFilters();

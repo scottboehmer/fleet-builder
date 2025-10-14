@@ -414,3 +414,16 @@ body > nav.crumbs a:hover {
   color: var(--accent-text);
   text-decoration: underline;
 }
+
+details > details {
+  background-color: var(--accent-shaded-bg);
+}
+
+details[open] > summary {
+  margin-bottom: 0;
+}
+
+.note {
+  font-style: italic;
+  color: var(--text-light);
+}
