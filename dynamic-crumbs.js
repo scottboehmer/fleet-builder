@@ -1,5 +1,21 @@
 function overrideCrumbs()
 {
+    var isRunningInAppMode = function () {
+        if (window.matchMedia('(display-mode: minimal-ui)').matches ||
+            window.matchMedia('(display-mode: standalone)').matches) {
+            return true;
+        }
+        try {
+            var debug = localStorage.getItem("debug-app-mode");
+            if (debug == "true") {
+                return true;
+            }
+        } catch (ex) {
+            console.log("Error accessing local storage.");
+        }
+        return false;
+    }
+
     const override = window.location.hash;
     if (override) {
         let crumbs = document.getElementById("crumbs-links");
@@ -27,8 +43,7 @@ function overrideCrumbs()
         switch (override) {
             case "#builder":
                 // Only override crumbs to link back to builder in app mode
-                if (window.matchMedia('(display-mode: minimal-ui)').matches ||
-                    window.matchMedia('(display-mode: standalone)').matches) {
+                if (isRunningInAppMode()) {
                     crumbs.innerHTML = '';
                     let builderLink = document.createElement("a");
                     builderLink.innerText = "Fleet Builder";

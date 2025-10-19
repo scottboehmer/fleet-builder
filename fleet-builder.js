@@ -1,4 +1,12 @@
 function isPreviewEnabled() {
+    try {
+        var p = localStorage.getItem("preview-mode");
+        if (p === "true") {
+            return true;
+        }
+    } catch (ex) {
+        console.log("Error accessing local storage.");
+    }
     const params = new URLSearchParams(window.location.search);
     const preview = params.get("preview");
     return preview === "true";
@@ -8,6 +16,14 @@ function isAppMode() {
     if (window.matchMedia('(display-mode: minimal-ui)').matches ||
         window.matchMedia('(display-mode: standalone)').matches) {
         return true;
+    }
+    try {
+        var debug = localStorage.getItem("debug-app-mode");
+        if (debug == "true") {
+            return true;
+        }
+    } catch (ex) {
+        console.log("Error accessing local storage.");
     }
     return false;
 }
@@ -443,6 +459,30 @@ function loadFleetFromStorage() {
     }
 }
 
+function saveFiltersToStorage() {
+    if (isAppMode()) {
+        try {
+            const json = JSON.stringify(requiredSlots);
+            sessionStorage.setItem("slot-filters", json);
+        } catch (ex) {
+            console.log("Unable to save slot filters.");
+        }
+    }
+}
+
+function loadFiltersFromStorage() {
+    if (isAppMode()) {
+        try {
+            const json = sessionStorage.getItem("slot-filters");
+            if (json) {
+                requiredSlots = JSON.parse(json);
+            }
+        } catch (ex) {
+            console.log("Unable to load slot filters.");
+        }
+    }
+}
+
 function updateMarkdownDisplay() {
     if (markdownVisible) {
         let totalPoints = 0;
@@ -679,6 +719,35 @@ function setupSourceList() {
     updateSourcesSummary();
 }
 
+function setupSettings() {
+    if (isPreviewEnabled() || isAppMode()) {
+        var settingsArea = document.getElementById("main-settings");
+        var label = document.createElement("label");
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        label.append(checkbox);
+        label.append("Enable preview features");
+        settingsArea.append(label);
+
+        try {
+            var p = localStorage.getItem("preview-mode");
+            if (p === "true") {
+                checkbox.checked = true;
+            }
+        } catch (ex) {
+            console.log("Error accessing local storage.");
+        }
+
+        checkbox.addEventListener("change", () => {
+            try {
+                localStorage.setItem("preview-mode", checkbox.checked ? "true" : "false");
+            } catch (ex) {
+                console.log("Error writing to local storage.");
+            }
+        });
+    }
+}
+
 function loadStoredSourceList() {
     try {
         var storageValue = localStorage.getItem("selectedSources");
@@ -880,6 +949,8 @@ function setupLeviathanFilters()
 {
     if (isPreviewEnabled())
     {
+        loadFiltersFromStorage();
+
         let levsDetails = document.getElementById("levs-details");
 
         let filters = document.createElement("details");
@@ -904,6 +975,9 @@ function setupLeviathanFilters()
             let filterCheckbox = document.createElement("input");
             filterCheckbox.type = "checkbox";
             filterCheckbox.id = `chk-${filter.id}`;
+            if (requiredSlots.indexOf(filter.id) != -1) {
+                filterCheckbox.checked = true;
+            }
             filterCheckbox.addEventListener("change", () => {
                 if (filterCheckbox.checked) {
                     requiredSlots.push(filter.id);
@@ -913,6 +987,7 @@ function setupLeviathanFilters()
                         requiredSlots.splice(index, 1);
                     }
                 }
+                saveFiltersToStorage();
                 updateAvailableUnits();
             });
             filterLabel.append(filterCheckbox);
@@ -931,8 +1006,9 @@ function setupLeviathanFilters()
 let selectedSources = buildSourceList();
 loadStoredSourceList();
 setupSourceList();
+setupLeviathanFilters();
 updateAvailableUnits();
 
 loadFleetFromStorage();
 updateCurrentFleet();
-setupLeviathanFilters();
+setupSettings();
