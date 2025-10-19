@@ -7,6 +7,10 @@ function isPreviewEnabled() {
     } catch (ex) {
         console.log("Error accessing local storage.");
     }
+    return false;
+}
+
+function isPreviewRequested() {
     const params = new URLSearchParams(window.location.search);
     const preview = params.get("preview");
     return preview === "true";
@@ -720,7 +724,7 @@ function setupSourceList() {
 }
 
 function setupSettings() {
-    if (isPreviewEnabled() || isAppMode()) {
+    if (isPreviewEnabled() || isAppMode() || isPreviewRequested()) {
         var settingsArea = document.getElementById("main-settings");
         var label = document.createElement("label");
         var checkbox = document.createElement("input");
@@ -741,6 +745,7 @@ function setupSettings() {
         checkbox.addEventListener("change", () => {
             try {
                 localStorage.setItem("preview-mode", checkbox.checked ? "true" : "false");
+                window.location.reload();
             } catch (ex) {
                 console.log("Error writing to local storage.");
             }
