@@ -27,7 +27,8 @@ function overrideCrumbs()
         switch (override) {
             case "#builder":
                 // Only override crumbs to link back to builder in app mode
-                if (window.matchMedia('(display-mode: minimal-ui)').matches) {
+                if (window.matchMedia('(display-mode: minimal-ui)').matches ||
+                    window.matchMedia('(display-mode: standalone)').matches) {
                     crumbs.innerHTML = '';
                     let builderLink = document.createElement("a");
                     builderLink.innerText = "Fleet Builder";

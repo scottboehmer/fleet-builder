@@ -5,9 +5,8 @@ function isPreviewEnabled() {
 }
 
 function isAppMode() {
-    if (window.matchMedia('(display-mode: minimal-ui)').matches) {
-        return true;
-    } else if (window.matchMedia('(display-mode: standalone)').matches) {
+    if (window.matchMedia('(display-mode: minimal-ui)').matches ||
+        window.matchMedia('(display-mode: standalone)').matches) {
         return true;
     }
     return false;
