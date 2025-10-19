@@ -7,6 +7,8 @@ function isPreviewEnabled() {
 function isAppMode() {
     if (window.matchMedia('(display-mode: minimal-ui)').matches) {
         return true;
+    } else if (window.matchMedia('(display-mode: standalone)').matches) {
+        return true;
     }
     return false;
 }
@@ -196,7 +198,9 @@ function linkToElement(component) {
     if (component.link) {
         let link = document.createElement('a');
         link.href = `${component.link}#builder`;
-        link.target = "_blank";
+        if (!isAppMode()) {
+            link.target = "_blank";
+        }
         let span = document.createElement('span');
         span.classList.add("material-symbols-outlined");
         span.classList.add("more-info-link");
