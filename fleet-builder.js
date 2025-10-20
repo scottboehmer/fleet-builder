@@ -633,56 +633,63 @@ function listBuildingErrors() {
     return errors;
 }
 
+let assembledSourceList = [];
+
 function buildSourceList() {
-    var sources = [];
+    if (assembledSourceList.length == 0) {
+        let sources = [];
 
-    getLeviathanData().forEach((item) => {
-        item.sources.forEach((source) => {
-            if (!sources.includes(source)) {
-                sources.push(source);
-            }
+        getLeviathanData().forEach((item) => {
+            item.sources.forEach((source) => {
+                if (!sources.includes(source)) {
+                    sources.push(source);
+                }
+            });
         });
-    });
 
-    getAdmiralData().forEach((item) => {
-        item.sources.forEach((source) => {
-            if (!sources.includes(source)) {
-                sources.push(source);
-            }
+        getAdmiralData().forEach((item) => {
+            item.sources.forEach((source) => {
+                if (!sources.includes(source)) {
+                    sources.push(source);
+                }
+            });
         });
-    });
 
-    getCaptainData().forEach((item) => {
-        item.sources.forEach((source) => {
-            if (!sources.includes(source)) {
-                sources.push(source);
-            }
+        getCaptainData().forEach((item) => {
+            item.sources.forEach((source) => {
+                if (!sources.includes(source)) {
+                    sources.push(source);
+                }
+            });
         });
-    });
 
-    getPlaneData().forEach((item) => {
-        item.sources.forEach((source) => {
-            if (!sources.includes(source)) {
-                sources.push(source);
-            }
+        getPlaneData().forEach((item) => {
+            item.sources.forEach((source) => {
+                if (!sources.includes(source)) {
+                    sources.push(source);
+                }
+            });
         });
-    });
 
-    getALGunData().forEach((item) => {
-        item.sources.forEach((source) => {
-            if (!sources.includes(source)) {
-                sources.push(source);
-            }
+        getALGunData().forEach((item) => {
+            item.sources.forEach((source) => {
+                if (!sources.includes(source)) {
+                    sources.push(source);
+                }
+            });
         });
-    });
 
-    return sources.sort();
+        assembledSourceList = sources.sort();
+    }
+    
+    return assembledSourceList;
 }
 
 function updateSourcesSummary() {
     let summary = document.getElementById("sources-summary");
+    const total = buildSourceList().length;
     const count = selectedSources.length;
-    summary.innerText = `Sources (${count} Selected)`
+    summary.innerText = `Sources (${count} of ${total} Selected)`
 }
 
 function setupSourceList() {
