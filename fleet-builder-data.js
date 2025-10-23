@@ -113,7 +113,7 @@ const levData = sortByPointsAndName([
     leviathanCard("Giovanno Caboto", "Avventuriero", 2, "italian", false , 220, ["Italian Fleet Box"], "elements/68.htm", ["torpedo", "imp-steering-gear"]),
     leviathanCard("Cristoforo Colombo", "Avventuriero", 2, "italian", false , 200, ["Avventuriero Cruiser Pack"], "elements/69.htm", ["torpedo"]),
     leviathanCard("Amerigo Vespucci", "Avventuriero", 2, "italian", false , 230, ["Avventuriero Cruiser Pack"], "elements/70.htm", []),
-    leviathanCard("Irredentismo", "Avventuriero", 2, "italian", false , 240, ["Castillo Cruiser Pack"], "elements/71.htm", ["torpedo", "imp-steering-gear"]),
+    leviathanCard("Irredentismo", "Avventuriero", 2, "italian", false , 240, ["Castillo Romano Cruiser Pack"], "elements/71.htm", ["torpedo", "imp-steering-gear"]),
     leviathanCard("Augustus", "Gloria", 2, "italian", false , 220, ["Gloria Cruiser Pack"], "elements/72.htm", ["torpedo", "steering-gear"]),
     leviathanCard("Julius", "Gloria", 2, "italian", false , 230, ["Gloria Cruiser Pack"], "elements/73.htm", ["saturation-guns", "imp-steering-gear"]),
     leviathanCard("Andromeda", "Constellazione", 1, "italian", false , 180, ["Italian Fleet Box"], "elements/74.htm", ["torpedo"]),
