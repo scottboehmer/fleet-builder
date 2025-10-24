@@ -856,25 +856,23 @@ factionSelect.append(minorFactionsGroup);
     }
     minorFactionsGroup.appendChild(item);
 });
-if (isPreviewEnabled()) {
-    let miscGroup = document.createElement('optgroup');
-    miscGroup.label = "Other Filters";
-    let wildCard = document.createElement('option');
-    wildCard.value = "*";
-    wildCard.innerText = "All Components";
-    if (wildCard.value == lastSelectedFaction) {
-        wildCard.selected = true;
-    }
-    miscGroup.appendChild(wildCard);
-    let generic = document.createElement('option');
-    generic.value = "any";
-    generic.innerText = "Generic Components";
-    if (generic.value == lastSelectedFaction) {
-        generic.selected = true;
-    }
-    miscGroup.appendChild(generic);
-    factionSelect.append(miscGroup);
+let miscGroup = document.createElement('optgroup');
+miscGroup.label = "Other Filters";
+let wildCard = document.createElement('option');
+wildCard.value = "*";
+wildCard.innerText = "All Components";
+if (wildCard.value == lastSelectedFaction) {
+    wildCard.selected = true;
 }
+miscGroup.appendChild(wildCard);
+let generic = document.createElement('option');
+generic.value = "any";
+generic.innerText = "Generic Components";
+if (generic.value == lastSelectedFaction) {
+    generic.selected = true;
+}
+miscGroup.appendChild(generic);
+factionSelect.append(miscGroup);
 
 factionSelect.addEventListener("change", () => {
     saveFactionPreference(factionSelect.options[factionSelect.selectedIndex].value);
@@ -959,60 +957,57 @@ let potentialSlotFilters = [
 
 function setupLeviathanFilters()
 {
-    if (isPreviewEnabled())
-    {
-        loadFiltersFromStorage();
+    loadFiltersFromStorage();
 
-        let levsDetails = document.getElementById("levs-details");
+    let levsDetails = document.getElementById("levs-details");
 
-        let filters = document.createElement("details");
-        let filterSummary = document.createElement("summary");
-        filterSummary.innerText = "Required Slots";
-        filters.append(filterSummary);
-        filters.classList.add("column-host");
-        let filterNotes = document.createElement("p");
-        filterNotes.innerText = "Filter out leviathans that do not have all of the selected slot types. Leviathans without card data in the fleet builder will also be hidden.";
-        filterNotes.className = "note small";
-        filters.append(filterNotes);
+    let filters = document.createElement("details");
+    let filterSummary = document.createElement("summary");
+    filterSummary.innerText = "Required Slots";
+    filters.append(filterSummary);
+    filters.classList.add("column-host");
+    let filterNotes = document.createElement("p");
+    filterNotes.innerText = "Filter out leviathans that do not have all of the selected slot types.";
+    filterNotes.className = "note small";
+    filters.append(filterNotes);
 
-        let column1 = document.createElement("div");
-        column1.classList.add("column");
-        let column2 = document.createElement("div");
-        column2.classList.add("column");
-        filters.append(column1);
-        filters.append(column2);
+    let column1 = document.createElement("div");
+    column1.classList.add("column");
+    let column2 = document.createElement("div");
+    column2.classList.add("column");
+    filters.append(column1);
+    filters.append(column2);
 
-        potentialSlotFilters.forEach((filter, index) => {
-            let filterLabel = document.createElement("label");
-            let filterCheckbox = document.createElement("input");
-            filterCheckbox.type = "checkbox";
-            filterCheckbox.id = `chk-${filter.id}`;
-            if (requiredSlots.indexOf(filter.id) != -1) {
-                filterCheckbox.checked = true;
-            }
-            filterCheckbox.addEventListener("change", () => {
-                if (filterCheckbox.checked) {
-                    requiredSlots.push(filter.id);
-                } else {
-                    const index = requiredSlots.findIndex(x => x == filter.id);
-                    if (index >= 0) {
-                        requiredSlots.splice(index, 1);
-                    }
-                }
-                saveFiltersToStorage();
-                updateAvailableUnits();
-            });
-            filterLabel.append(filterCheckbox);
-            filterLabel.append(filter.display);
-            if (index >= Math.round(potentialSlotFilters.length / 2.0)) {
-                column2.append(filterLabel);
+    potentialSlotFilters.forEach((filter, index) => {
+        let filterLabel = document.createElement("label");
+        let filterCheckbox = document.createElement("input");
+        filterCheckbox.type = "checkbox";
+        filterCheckbox.id = `chk-${filter.id}`;
+        if (requiredSlots.indexOf(filter.id) != -1) {
+            filterCheckbox.checked = true;
+        }
+        filterCheckbox.addEventListener("change", () => {
+            if (filterCheckbox.checked) {
+                requiredSlots.push(filter.id);
             } else {
-                column1.append(filterLabel);
+                const index = requiredSlots.findIndex(x => x == filter.id);
+                if (index >= 0) {
+                    requiredSlots.splice(index, 1);
+                }
             }
+            saveFiltersToStorage();
+            updateAvailableUnits();
         });
+        filterLabel.append(filterCheckbox);
+        filterLabel.append(filter.display);
+        if (index >= Math.round(potentialSlotFilters.length / 2.0)) {
+            column2.append(filterLabel);
+        } else {
+            column1.append(filterLabel);
+        }
+    });
 
-        levsDetails.insertBefore(filters, levsDetails.childNodes[1]);
-    }
+    levsDetails.insertBefore(filters, levsDetails.childNodes[1]);
 }
 
 let selectedSources = buildSourceList();

@@ -6,6 +6,12 @@
   <description>Updates about the Leviathans Fleet Builder</description>
   <language>en-us</language>
   <item>
+    <title>Required Slots</title>
+    <link>https://scottboehmer.github.io/fleet-builder/posts/5.htm</link>
+    <description>The fleet builder now has support for filtering the list of leviathans.</description>
+    <pubDate>10/23/2025</pubDate>
+  </item>
+  <item>
     <title>Completed the Catalog</title>
     <link>https://scottboehmer.github.io/fleet-builder/posts/4.htm</link>
     <description>The fleet builder now has data for all of cards.</description>
