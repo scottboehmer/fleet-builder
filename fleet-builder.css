@@ -162,6 +162,10 @@ ul.item-list li {
   line-height: 44px;
 }
 
+ul.item-list li.preview {
+  line-height: 22px;
+}
+
 @media only screen and (max-width: 720px) {
   ul.item-list li {
     line-height: 1;
