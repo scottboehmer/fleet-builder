@@ -487,35 +487,34 @@ function loadFiltersFromStorage() {
     }
 }
 
+function getMarkdownForFleet() {
+    let totalPoints = 0;
+    let markdownText = "# Leviathans Fleet\n\n";
+    currentFleet.forEach((component, i) => {
+        if (totalPoints != -1 && component.points > 0) {
+            totalPoints += component.points;
+        } else {
+            totalPoints = -1;
+        }
+
+        let description = getComponentDescription(component);
+
+        let styledName = component.name;
+        if (component.type == "leviathan") {
+            styledName = getShipNameWithStyling(component, true);
+        }
+
+        markdownText += `- **${styledName}** - _${description}_ - ${(component.points > 0 ? component.points : "Unknown")}\n`;
+    });
+    markdownText += `\n**Total Points:** ${(totalPoints >= 0 ? totalPoints : "Unknown")}\n`
+
+    return markdownText;
+}
+
 function updateMarkdownDisplay() {
     if (markdownVisible) {
-        let totalPoints = 0;
-
         let markdown = document.getElementById("markdown-pre");
-        markdown.innerHTML = '';
-
-        let markdownText = "# Leviathans Fleet\n\n";
-
-        currentFleet.forEach((component, i) => {
-            if (totalPoints != -1 && component.points > 0) {
-                totalPoints += component.points;
-            } else {
-                totalPoints = -1;
-            }
-
-            let description = getComponentDescription(component);
-
-            let styledName = component.name;
-            if (component.type == "leviathan") {
-                styledName = getShipNameWithStyling(component, true);
-            }
-
-            markdownText += `- **${styledName}** - _${description}_ - ${(component.points > 0 ? component.points : "Unknown")}\n`;
-        });
-
-        markdownText += `\n**Total Points:** ${(totalPoints >= 0 ? totalPoints : "Unknown")}\n`
-        
-        markdown.innerText = markdownText;
+        markdown.innerText = getMarkdownForFleet();
     }
 }
 
@@ -914,6 +913,19 @@ markdownButton.addEventListener("click", () => {
         listArea.classList.add("hidden");
     }
 });
+
+document.getElementById("copy-md-button").addEventListener("click", () => {
+    const md = getMarkdownForFleet();
+    navigator.clipboard.writeText(md);
+    document.getElementById("command-status").innerText = "Copied!";
+    setTimeout(() => {
+        document.getElementById("command-status").innerHTML = "";
+    }, 3000);
+});
+
+if (isPreviewEnabled()) {
+    document.getElementById("copy-md-button").className = "";
+}
 
 document.getElementById("select-all-sources").addEventListener("click", () => {
     selectedSources = buildSourceList();

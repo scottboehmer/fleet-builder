@@ -427,3 +427,9 @@ details[open] > summary {
   font-style: italic;
   color: var(--text-light);
 }
+
+.status-text {
+  display: inline-block;
+  padding: 0.5rem;
+  color: var(--text-light);
+}
