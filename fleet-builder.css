@@ -64,7 +64,7 @@ body > header > *:only-child {
     display: unset;
   }
   
-  body > :not(.printable) {
+  body.custom-print > :not(.printable) {
     display: none;
   }
 
