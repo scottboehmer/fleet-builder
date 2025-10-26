@@ -959,6 +959,7 @@ let potentialSlotFilters = [
     { id: "saturation-crew", display: "Saturation Crew" },
     { id: "saturation-guns", display: "Saturation Guns" },
     { id: "screen-crew", display: "Screening Crew" },
+    { id: "secondary-engine", display: "Secondary Engine" },
     { id: "shot-cannon", display: "Shot Cannon" },
     { id: "slip-shaft", display: "Slip Shaft" },
     { id: "sniper-guns", display: "Sniper Guns"},
