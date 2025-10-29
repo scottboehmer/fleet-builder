@@ -923,10 +923,6 @@ document.getElementById("copy-md-button").addEventListener("click", () => {
     }, 3000);
 });
 
-if (isPreviewEnabled()) {
-    document.getElementById("copy-md-button").className = "";
-}
-
 document.getElementById("select-all-sources").addEventListener("click", () => {
     selectedSources = buildSourceList();
     setupSourceList();

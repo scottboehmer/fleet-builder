@@ -6,6 +6,12 @@
   <description>Updates about the Leviathans Fleet Builder</description>
   <language>en-us</language>
   <item>
+    <title>Copy Markdown</title>
+    <link>https://scottboehmer.github.io/fleet-builder/posts/6.htm</link>
+    <description>Now featuring a convenient button for copying the current fleet.</description>
+    <pubDate>10/28/2025</pubDate>
+  </item>
+  <item>
     <title>Required Slots</title>
     <link>https://scottboehmer.github.io/fleet-builder/posts/5.htm</link>
     <description>The fleet builder now has support for filtering the list of leviathans.</description>
