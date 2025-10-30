@@ -149,7 +149,7 @@ button {
   margin-bottom: 0;
 }
 
-ul.item-list {
+ul.item-list, ul.source-list {
   list-style: none;
   padding-inline-start: 0px;
   width: 100%;
@@ -162,13 +162,18 @@ ul.item-list li {
   line-height: 44px;
 }
 
+ul.source-list li {
+  padding: 8px;
+}
+
 @media only screen and (max-width: 720px) {
   ul.item-list li {
     line-height: 1;
   }
 }
 
-ul.item-list li:nth-child(even) {
+ul.item-list li:nth-child(even),
+ul.source-list li:nth-child(even) {
   background-color: var(--accent-shaded-bg);
 }
 
@@ -384,6 +389,7 @@ header nav a[aria-current="true"] {
 input[type="checkbox"],
 input[type="radio"] {
   position: unset;
+  margin-right: 8px;
 }
 
 .post-date {

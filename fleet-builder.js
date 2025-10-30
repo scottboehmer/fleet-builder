@@ -716,13 +716,10 @@ function setupSourceList() {
             updateAvailableUnits();
             saveSourceList();
         });
-        var checkboxdiv = document.createElement("div");
-        checkboxdiv.append(checkbox);
-        li.append(checkboxdiv);
-        var div = document.createElement("div");
-        div.classList.add("primary-list-item");
-        div.innerText = source;
-        li.append(div);
+        var label = document.createElement("label");
+        label.append(checkbox);
+        label.append(source)
+        li.append(label);
         sourceList.append(li);
     });
 
