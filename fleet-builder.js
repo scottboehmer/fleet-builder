@@ -209,7 +209,7 @@ function addButton(component) {
     span.innerText = "add";
     add.appendChild(span);
 
-    add.addEventListener("click", () => addToFleet(component));
+    add.addEventListener("click", () => currentFleet.add(component));
     return add;
 }
 
@@ -294,18 +294,88 @@ function updateAvailableUnits() {
     });
 }
 
-let currentFleet = [];
+class Callback {
+    #listeners = [];
 
-function addToFleet(item) {
-    currentFleet.push(item);
-    sortByPointsAndName(currentFleet);
-    updateCurrentFleet();
+    addListener(fn) {
+        this.#listeners.push(fn);
+    }
+
+    removeListener(fn) {
+        const index = this.#listeners.indexOf(fn);
+        this.#listeners.splice(index, 1);
+    }
+
+    execute() {
+        this.#listeners.forEach((fn) => fn());
+    }
 }
 
-function removeFromFleet(index) {
-    currentFleet.splice(index, 1);
-    updateCurrentFleet();
+class Fleet {
+    #list = [];
+    #fleetChanged = new Callback();
+
+    add(item) {
+        this.#list.push(item);
+        sortByPointsAndName(this.#list);
+        this.#fleetChanged.execute();
+    }
+
+    remove(index) {
+        this.#list.splice(index, 1);
+        this.#fleetChanged.execute();
+    }
+
+    forEach(fn) {
+        this.#list.forEach((item, index) => fn(item, index));
+    }
+
+    get count() {
+        return this.#list.length;
+    }
+
+    getItem(index) {
+        return this.#list[index];
+    }
+
+    saveToStorage(useLocalStorage) {
+        try {
+            const json = JSON.stringify(this.#list);
+            if (useLocalStorage) {
+                localStorage.setItem("fleet", json);
+            } else {
+                sessionStorage.setItem("fleet", json);
+            }
+        } catch (ex) {
+            console.log("Unable to save fleet.");
+        }
+    }
+
+    loadFromStorage(useLocalStorage) {
+        try {
+            if (useLocalStorage) {
+                const json = localStorage.getItem("fleet");
+                if (json) {
+                    this.#list = JSON.parse(json);
+                }
+            } else {
+                const json = sessionStorage.getItem("fleet");
+                if (json) {
+                    this.#list = JSON.parse(json);
+                }
+            }
+            this.#fleetChanged.execute();
+        } catch (ex) {
+            console.log("Unable to load saved fleet.");
+        }
+    }
+
+    addListener(fn) {
+        this.#fleetChanged.addListener(fn);
+    }
 }
+
+let currentFleet = new Fleet();
 
 function headerRow(headers) {
     let headerRow = document.createElement("tr");
@@ -393,7 +463,7 @@ function updateCurrentFleet() {
         span.innerText = "delete";
         remove.appendChild(span);
 
-        remove.addEventListener("click", () => removeFromFleet(i));
+        remove.addEventListener("click", () => currentFleet.remove(i));
 
         fleetList.append(getDisplayElements(component, remove, linkToElement(component)));
 
@@ -405,7 +475,7 @@ function updateCurrentFleet() {
     });
     document.getElementById("fleet-points").innerText = totalPoints >= 0 ? totalPoints : "Unknown";
 
-    if (currentFleet.length == 0) {
+    if (currentFleet.count == 0) {
         fleetTags.innerText = "None";
     }
 
@@ -427,40 +497,9 @@ function updateCurrentFleet() {
         errorIndicator.innerHTML = '';
     }
 
-    saveFleetToStorage();
+    currentFleet.saveToStorage(isAppMode());
 
     updateMarkdownDisplay();
-}
-
-function saveFleetToStorage() {
-    try {
-        const json = JSON.stringify(currentFleet);
-        if (isAppMode()) {
-            localStorage.setItem("fleet", json);
-        } else {
-            sessionStorage.setItem("fleet", json);
-        }
-    } catch (ex) {
-        console.log("Unable to save fleet.");
-    }
-}
-
-function loadFleetFromStorage() {
-    try {
-        if (isAppMode()) {
-            const json = localStorage.getItem("fleet");
-            if (json) {
-                currentFleet = JSON.parse(json);
-            }
-        } else {
-            const json = sessionStorage.getItem("fleet");
-            if (json) {
-                currentFleet = JSON.parse(json);
-            }
-        }
-    } catch (ex) {
-        console.log("Unable to load saved fleet.");
-    }
 }
 
 function saveFiltersToStorage() {
@@ -610,16 +649,16 @@ function listBuildingErrors() {
     let duplicateShipReported = false;
     currentFleet.forEach((component, i) => {
         if (component.type == "leviathan" && !component.generic && !duplicateShipReported) {
-            for (let j = i + 1; j < currentFleet.length; j++) {
-                if (component.name == currentFleet[j].name) {
+            for (let j = i + 1; j < currentFleet.count; j++) {
+                if (component.name == currentFleet.getItem(j).name) {
                     errors.push("Only one of a given Ship Card may be included.");
                     duplicateShipReported = true;
                     return;
                 }
             }
         } else if (component.type == "captain" && !component.generic && !duplicateCaptainReported) {
-            for (let j = i + 1; j < currentFleet.length; j++) {
-                if (component.name == currentFleet[j].name) {
+            for (let j = i + 1; j < currentFleet.count; j++) {
+                if (component.name == currentFleet.getItem(j).name) {
                     errors.push("Only one of a given Captain Card may be included.");
                     duplicateCaptainReported = true;
                     return;
@@ -1022,6 +1061,6 @@ setupSourceList();
 setupLeviathanFilters();
 updateAvailableUnits();
 
-loadFleetFromStorage();
-updateCurrentFleet();
+currentFleet.addListener(updateCurrentFleet);
+currentFleet.loadFromStorage(isAppMode());
 setupSettings();
