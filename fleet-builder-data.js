@@ -2,6 +2,39 @@ function sortByPointsAndName(components) {
     return components.sort((a,b) => a.points == b.points ? a.name.localeCompare(b.name) : b.points - a.points);
 }
 
+function getItemByName(list, name) {
+    for (let i = 0; i < list.length; i++) {
+        if (list[i].name == name) {
+            return list[i];
+        }
+    }
+    return null;
+}
+
+function getComponentByName(name) {
+    let match = getItemByName(getLeviathanData(), name);
+    if (match != null) {
+        return match;
+    }
+    match = getItemByName(getAdmiralData(), name);
+    if (match != null) {
+        return match;
+    }
+    match = getItemByName(getPlaneData(), name);
+    if (match != null) {
+        return match;
+    }
+    match = getItemByName(getCaptainData(), name);
+    if (match != null) {
+        return match;
+    }
+    match = getItemByName(getALGunData(), name);
+    if (match != null) {
+        return match;
+    }
+    return null;
+}
+
 function planeCard(name, points, sources, link) {
     return { name: name, type: "airplane", faction: "any", points: points, sources: sources, link: link };
 }

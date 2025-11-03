@@ -340,7 +340,7 @@ class Fleet {
 
     saveToStorage(useLocalStorage) {
         try {
-            const json = JSON.stringify(this.#list);
+            const json = this.#stringifyList();
             if (useLocalStorage) {
                 localStorage.setItem("fleet", json);
             } else {
@@ -355,14 +355,10 @@ class Fleet {
         try {
             if (useLocalStorage) {
                 const json = localStorage.getItem("fleet");
-                if (json) {
-                    this.#list = JSON.parse(json);
-                }
+                this.#parseStoredList(json);
             } else {
                 const json = sessionStorage.getItem("fleet");
-                if (json) {
-                    this.#list = JSON.parse(json);
-                }
+                this.#parseStoredList(json);
             }
             this.#fleetChanged.execute();
         } catch (ex) {
@@ -372,6 +368,37 @@ class Fleet {
 
     addListener(fn) {
         this.#fleetChanged.addListener(fn);
+    }
+
+    #parseStoredList(json) {
+        if (json) {
+            let storedValue = JSON.parse(json);
+            if (Array.isArray(storedValue)) {
+                this.#list = storedValue;
+            } else if (storedValue.version == 1) {
+                this.#list = [];
+                storedValue.components.forEach((component) => {
+                    var match = getComponentByName(component);
+                    if (match != null) {
+                        this.#list.push(match);
+                    }
+                });
+                sortByPointsAndName(this.#list);
+            }
+        }
+    }
+
+    #stringifyList() {
+        if (isPreviewEnabled()) {
+            var saveData = {
+                version: 1,
+                components: this.#list.map((component) => component.name)
+            }
+            return JSON.stringify(saveData);
+        }
+        else {
+            return JSON.stringify(this.#list);
+        }
     }
 }
 
