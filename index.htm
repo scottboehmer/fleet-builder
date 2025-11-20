@@ -21,7 +21,7 @@
         <link rel="apple-touch-icon" href="https://scottboehmer.github.io/fleet-builder/assets/icon-180.png">
         <link rel="manifest" href="https://scottboehmer.github.io/fleet-builder/manifest.webmanifest">
 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&icon_names=add,article,delete,markdown,markdown_copy,print,table_rows" />
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0&icon_names=add,article,delete,file_save,folder_open,markdown,markdown_copy,print,table_rows" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Grenze:wght@700&display=swap" rel="stylesheet">
@@ -37,6 +37,8 @@
         <nav class="crumbs"><p id="crumbs-links"><a href="#">Fleet Builder</a></p></nav>
         <h2>Selected Fleet</h2>
         <div class="toolbar">
+            <button id="open-button" type="button" title="Open list"><span class="material-symbols-outlined">folder_open</span></button>
+            <button id="save-button" type="button" title="Save list"><span class="material-symbols-outlined">file_save</span></button>
             <button id="print-button" type="button" title="Print fleet list"><span class="material-symbols-outlined">print</span></button>
             <button id="toggle-md-button" type="button" title="Toggle markdown display"><span id="toggle-md-button-content" class="material-symbols-outlined">markdown</span></button>
             <button id="copy-md-button" type="button" title="Copy markdown"><span id="copy-md-button-content" class="material-symbols-outlined">markdown_copy</span></button>
@@ -94,6 +96,7 @@
         <footer>
             <p>A fan project built by <a href="https://github.com/scottboehmer">Scott Boehmer</a> for the <a href="https://monstersinthesky.com/">Leviathans: The Great War</a> game by <a href="https://www.catalystgamelabs.com/">Catalyst Game Labs</a></p>
         </footer>
+        <div id="modal" class="modal"></div>
         <script src="fleet-builder-data.js"></script>
         <script src="fleet-builder.js"></script>
         <script src="nav.js"></script>

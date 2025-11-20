@@ -1,6 +1,6 @@
 function isPreviewEnabled() {
     try {
-        var p = localStorage.getItem("preview-mode");
+        let p = localStorage.getItem("preview-mode");
         if (p === "true") {
             return true;
         }
@@ -22,7 +22,7 @@ function isAppMode() {
         return true;
     }
     try {
-        var debug = localStorage.getItem("debug-app-mode");
+        let debug = localStorage.getItem("debug-app-mode");
         if (debug == "true") {
             return true;
         }
@@ -175,7 +175,7 @@ function getDisplayElements(item, button, link) {
     let text = assembleListText(nameHtml, item.points, description);
     text.classList.add("tagged");
     
-    var tag = getTag(item);
+    let tag = getTag(item);
     if (tag) {
         text.dataset.tag = tag;
     }
@@ -312,6 +312,7 @@ class Callback {
 }
 
 class Fleet {
+    #name = "Leviathans Fleet";
     #list = [];
     #fleetChanged = new Callback();
 
@@ -332,6 +333,14 @@ class Fleet {
 
     get count() {
         return this.#list.length;
+    }
+
+    get name() {
+        return this.#name;
+    }
+
+    set name(val) {
+        this.#name = val;
     }
 
     getItem(index) {
@@ -370,6 +379,10 @@ class Fleet {
         this.#fleetChanged.addListener(fn);
     }
 
+    toStorageValue() {
+        return this.#stringifyList();
+    }
+
     #parseStoredList(json) {
         if (json) {
             let storedValue = JSON.parse(json);
@@ -378,20 +391,22 @@ class Fleet {
             } else if (storedValue.version == 1) {
                 this.#list = [];
                 storedValue.components.forEach((component) => {
-                    var match = getComponentByName(component);
+                    let match = getComponentByName(component);
                     if (match != null) {
                         this.#list.push(match);
                     }
                 });
                 sortByPointsAndName(this.#list);
+                this.#name = storedValue.name;
             }
         }
     }
 
     #stringifyList() {
         if (isPreviewEnabled()) {
-            var saveData = {
+            let saveData = {
                 version: 1,
+                name: this.#name,
                 components: this.#list.map((component) => component.name)
             }
             return JSON.stringify(saveData);
@@ -402,7 +417,49 @@ class Fleet {
     }
 }
 
+class SavedFleets {
+    #fleets = [];
+
+    get savedFleets() {
+        let names = [];
+        this.#fleets.forEach((fleet) => {
+            names.push(JSON.parse(fleet).name);
+        });
+        return names;
+    }
+
+    saveFleet(fleet) {
+        let counter = 1;
+        let name = fleet.name;
+        while (this.savedFleets.findIndex(x => x == name) != -1) {
+            name = `${fleet.name} (${counter++})`;
+        }
+        fleet.name = name;
+        this.#fleets.push(fleet.toStorageValue());
+        localStorage.setItem("savedFleets", JSON.stringify(this.#fleets));
+    }
+
+    loadFleet(name) {
+        this.#fleets.forEach((fleet) => {
+            let parsed = JSON.parse(fleet);
+            if (parsed.name == name) {
+                return parsed;
+            }
+        });
+        return null;
+    }
+
+    initializeFromStorage() {
+        const savedFleets = localStorage.getItem("savedFleets");
+        if (savedFleets) {
+            this.#fleets = JSON.parse(savedFleets);
+        }
+    }
+}
+
 let currentFleet = new Fleet();
+let savedFleets = new SavedFleets();
+savedFleets.initializeFromStorage();
 
 function headerRow(headers) {
     let headerRow = document.createElement("tr");
@@ -762,8 +819,8 @@ function setupSourceList() {
     sourceList.innerHTML = '';
 
     buildSourceList().forEach((source) => {
-        var li = document.createElement("li");
-        var checkbox = document.createElement("input");
+        let li = document.createElement("li");
+        let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = selectedSources.includes(source);
         checkbox.name = source;
@@ -782,7 +839,7 @@ function setupSourceList() {
             updateAvailableUnits();
             saveSourceList();
         });
-        var label = document.createElement("label");
+        let label = document.createElement("label");
         label.append(checkbox);
         label.append(source)
         li.append(label);
@@ -794,16 +851,16 @@ function setupSourceList() {
 
 function setupSettings() {
     if (isPreviewEnabled() || isAppMode() || isPreviewRequested()) {
-        var settingsArea = document.getElementById("main-settings");
-        var label = document.createElement("label");
-        var checkbox = document.createElement("input");
+        let settingsArea = document.getElementById("main-settings");
+        let label = document.createElement("label");
+        let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         label.append(checkbox);
         label.append("Enable preview features");
         settingsArea.append(label);
 
         try {
-            var p = localStorage.getItem("preview-mode");
+            let p = localStorage.getItem("preview-mode");
             if (p === "true") {
                 checkbox.checked = true;
             }
@@ -824,7 +881,7 @@ function setupSettings() {
 
 function loadStoredSourceList() {
     try {
-        var storageValue = localStorage.getItem("selectedSources");
+        let storageValue = localStorage.getItem("selectedSources");
         if (storageValue) {
             const knownSources = buildSourceList();
             selectedSources = [];
@@ -841,7 +898,7 @@ function loadStoredSourceList() {
 
 function saveSourceList() {
     try {
-        var storageValue = selectedSources.join(",");
+        let storageValue = selectedSources.join(",");
         if (!storageValue) {
             storageValue = "empty";
         }
@@ -864,6 +921,34 @@ function getFactionPreference() {
         return localStorage.getItem("faction");
     } catch (ex) {
         console.log("Unable to load previous faction selection.");
+    }
+}
+
+const modal = this.document.getElementById("modal");
+
+function showDialog(title, content) {
+    let dialog = document.createElement("div");
+    dialog.className = "modal-content";
+
+    let header = document.createElement("h3");
+    header.innerText = title;
+    dialog.append(header);
+
+    dialog.append(content);
+
+    modal.append(dialog);
+
+    modal.style.display = "block";
+}
+
+function closeDialog() {
+    modal.style.display = "none";
+    modal.innerHTML = "";
+}
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        closeDialog();
     }
 }
 
@@ -984,6 +1069,41 @@ document.getElementById("copy-md-button").addEventListener("click", () => {
     setTimeout(() => {
         document.getElementById("command-status").innerHTML = "";
     }, 3000);
+});
+
+document.getElementById("open-button").addEventListener("click", () => {
+    showDialog("Open List", "TODO...");
+});
+
+document.getElementById("save-button").addEventListener("click", () => {
+    let content = document.createElement("div");
+    let form = document.createElement("div");
+    let label = document.createElement("label");
+    label.innerText = "List Name";
+    let input = document.createElement("input");
+    input.type = "text";
+    input.value = currentFleet.name;
+
+    let cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.innerText = "Cancel";
+    cancel.onclick = () => closeDialog();
+
+    let save = document.createElement("button");
+    save.type = "button";
+    save.innerText = "Save";
+    save.onclick = () => {
+        currentFleet.name = input.value;
+        savedFleets.saveFleet(currentFleet);
+        closeDialog();
+    }
+
+    form.append(label);
+    form.append(input);
+    content.append(form);
+    content.append(save);
+    content.append(cancel);
+    showDialog("Save List", content);
 });
 
 document.getElementById("select-all-sources").addEventListener("click", () => {
