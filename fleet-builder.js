@@ -375,6 +375,19 @@ class Fleet {
         }
     }
 
+    reset(fleet) {
+        this.#list = [];
+        fleet.components.forEach((component) => {
+            let match = getComponentByName(component);
+            if (match != null) {
+                this.#list.push(match);
+            }
+        });
+        sortByPointsAndName(this.#list);
+        this.#name = fleet.name;
+        this.#fleetChanged.execute();
+    }
+
     addListener(fn) {
         this.#fleetChanged.addListener(fn);
     }
@@ -440,13 +453,28 @@ class SavedFleets {
     }
 
     loadFleet(name) {
+        let match = null;
         this.#fleets.forEach((fleet) => {
             let parsed = JSON.parse(fleet);
             if (parsed.name == name) {
-                return parsed;
+                match = parsed;
             }
         });
-        return null;
+        return match;
+    }
+
+    deleteFleet(name) {
+        let toRemove = [];
+        this.#fleets.forEach((fleet, index) => {
+            let parsed = JSON.parse(fleet);
+            if (parsed.name == name) {
+                toRemove.push(index);
+            }
+        })
+        toRemove.forEach((i) => {
+            this.#fleets.splice(i, 1);
+        })
+        localStorage.setItem("savedFleets", JSON.stringify(this.#fleets));
     }
 
     initializeFromStorage() {
@@ -1072,7 +1100,54 @@ document.getElementById("copy-md-button").addEventListener("click", () => {
 });
 
 document.getElementById("open-button").addEventListener("click", () => {
-    showDialog("Open List", "TODO...");
+    let content = document.createElement("div");
+    let list = document.createElement("ul");
+    list.classList.add("item-list");
+    content.append(list);
+    savedFleets.savedFleets.forEach((fleet) => {
+        let li = document.createElement("li");
+
+        let d = document.createElement("div");
+        d.classList.add("primary-list-item");
+        d.innerText = fleet;
+        li.append(d);
+
+        let b = document.createElement("button");
+        let span = document.createElement('span');
+        span.className = "material-symbols-outlined";
+        span.innerText = "file_open";
+        b.appendChild(span);
+        b.type = "button";
+        b.title = "Open saved fleet"
+        b.addEventListener("click", () => {
+            currentFleet.reset(savedFleets.loadFleet(fleet));
+            closeDialog();
+        });
+        li.append(b);
+        
+        let b2 = document.createElement("button");
+        let span2 = document.createElement('span');
+        span2.className = "material-symbols-outlined";
+        span2.innerText = "delete";
+        b2.appendChild(span2);
+        b2.type = "button";
+        b2.title = "Delete saved fleet"
+        b2.addEventListener("click", () => {
+            savedFleets.deleteFleet(fleet);
+            list.removeChild(li);
+        });
+        li.append(b2);
+
+        list.append(li);
+    });
+
+    let cancel = document.createElement("button");
+    cancel.type = "button";
+    cancel.innerText = "Cancel";
+    cancel.onclick = () => closeDialog();
+    content.append(cancel);
+
+    showDialog("Saved Fleets", content);
 });
 
 document.getElementById("save-button").addEventListener("click", () => {
