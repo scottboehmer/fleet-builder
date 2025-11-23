@@ -204,6 +204,12 @@ ul.available:empty::after {
   font-style: italic;
 }
 
+ul.saved-fleets:empty::before {
+  content: "No saved fleets";
+  color: var(--text-light);
+  font-style: italic;
+}
+
 ul.fleet:empty::after {
   content: "No items selected";
   color: var(--text-light);
@@ -403,6 +409,13 @@ header nav a[aria-current="true"] {
   width: min(80%, 800px);
 }
 
+@media only screen and (max-width: 720px) {
+  .modal-content {
+    width: 95%;
+    margin: 5% auto;
+  }
+}
+
 .fleet-summary {
   margin-bottom: 8px;
 }
@@ -460,4 +473,12 @@ details[open] > summary {
   display: inline-block;
   padding: 0.5rem;
   color: var(--text-light);
+}
+
+.save-dialog-input > input {
+  width: 100%;
+}
+
+.save-dialog-input {
+  padding-right: 8px;
 }

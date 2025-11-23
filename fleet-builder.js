@@ -444,10 +444,11 @@ class SavedFleets {
     saveFleet(fleet) {
         let counter = 1;
         let name = fleet.name;
-        while (this.savedFleets.findIndex(x => x == name) != -1) {
-            name = `${fleet.name} (${counter++})`;
+        let existing = this.savedFleets.findIndex(x => x == name);
+        while (existing != -1) {
+            this.#fleets.splice(existing, 1);
+            existing = this.savedFleets.findIndex(x => x == name);
         }
-        fleet.name = name;
         this.#fleets.push(fleet.toStorageValue());
         localStorage.setItem("savedFleets", JSON.stringify(this.#fleets));
     }
@@ -1099,11 +1100,11 @@ document.getElementById("copy-md-button").addEventListener("click", () => {
     }, 3000);
 });
 
-document.getElementById("open-button").addEventListener("click", () => {
-    let content = document.createElement("div");
+function getListOfSavedFleets(commands) {
     let list = document.createElement("ul");
     list.classList.add("item-list");
-    content.append(list);
+    list.classList.add("saved-fleets");
+
     savedFleets.savedFleets.forEach((fleet) => {
         let li = document.createElement("li");
 
@@ -1112,34 +1113,45 @@ document.getElementById("open-button").addEventListener("click", () => {
         d.innerText = fleet;
         li.append(d);
 
-        let b = document.createElement("button");
-        let span = document.createElement('span');
-        span.className = "material-symbols-outlined";
-        span.innerText = "file_open";
-        b.appendChild(span);
-        b.type = "button";
-        b.title = "Open saved fleet"
-        b.addEventListener("click", () => {
-            currentFleet.reset(savedFleets.loadFleet(fleet));
-            closeDialog();
+        commands.forEach((command) => {
+            let b = document.createElement("button");
+            let span = document.createElement("span");
+            span.className = "material-symbols-outlined";
+            span.innerText = command.icon;
+            b.appendChild(span);
+            b.type = "button";
+            b.title = command.title;
+            b.addEventListener("click", () => command.action(fleet, () => list.removeChild(li)));
+            li.append(b);
         });
-        li.append(b);
-        
-        let b2 = document.createElement("button");
-        let span2 = document.createElement('span');
-        span2.className = "material-symbols-outlined";
-        span2.innerText = "delete";
-        b2.appendChild(span2);
-        b2.type = "button";
-        b2.title = "Delete saved fleet"
-        b2.addEventListener("click", () => {
-            savedFleets.deleteFleet(fleet);
-            list.removeChild(li);
-        });
-        li.append(b2);
 
         list.append(li);
     });
+
+    return list;
+}
+
+document.getElementById("open-button").addEventListener("click", () => {
+    let content = document.createElement("div");
+    let commands = [];
+    commands.push({
+        icon: "file_open",
+        title: "Open saved fleet",
+        action: (fleet) => {
+            currentFleet.reset(savedFleets.loadFleet(fleet));
+            closeDialog();
+        }
+    });
+    commands.push({
+        icon: "delete",
+        title: "Delete saved fleet",
+        action: (fleet, removeSelf) => {
+            savedFleets.deleteFleet(fleet);
+            removeSelf();
+        }
+    });
+    let list = getListOfSavedFleets(commands);
+    content.append(list);
 
     let cancel = document.createElement("button");
     cancel.type = "button";
@@ -1152,33 +1164,66 @@ document.getElementById("open-button").addEventListener("click", () => {
 
 document.getElementById("save-button").addEventListener("click", () => {
     let content = document.createElement("div");
+    let commands = [];
+    commands.push({
+        icon: "file_save",
+        title: "Save fleet",
+        action: (fleet) => {
+            currentFleet.name = fleet;
+            savedFleets.saveFleet(currentFleet);
+            closeDialog();
+        }
+    });
+    let list = getListOfSavedFleets(commands);
+
+    let newNameLi = document.createElement("li");
     let form = document.createElement("div");
-    let label = document.createElement("label");
-    label.innerText = "List Name";
+    form.classList.add("primary-list-item");
+    form.classList.add("save-dialog-input")
     let input = document.createElement("input");
     input.type = "text";
+    input.name = "Fleet name";
     input.value = currentFleet.name;
+    form.append(input);
+    newNameLi.append(form);
+
+    let newNameSave = document.createElement("button");
+    let span = document.createElement("span");
+    span.className = "material-symbols-outlined";
+    span.innerText = "file_save";
+    newNameSave.appendChild(span);
+    newNameSave.type = "button";
+    newNameSave.title = "Save fleet";
+    newNameSave.addEventListener("click", () => {
+        currentFleet.name = input.value;
+        savedFleets.saveFleet(currentFleet);
+        closeDialog();
+    });
+    newNameLi.append(newNameSave);
+    list.append(newNameLi);
+
+    if (input.value.length == 0 || savedFleets.savedFleets.findIndex((x) => x == input.value) != -1) {
+        newNameSave.disabled = true;
+    } else {
+        newNameSave.disabled = false;
+    }
+    input.addEventListener("input", () => {
+        if (input.value.length == 0 || savedFleets.savedFleets.findIndex((x) => x == input.value) != -1) {
+            newNameSave.disabled = true;
+        } else {
+            newNameSave.disabled = false;
+        }
+    });
+
+    content.append(list);
 
     let cancel = document.createElement("button");
     cancel.type = "button";
     cancel.innerText = "Cancel";
     cancel.onclick = () => closeDialog();
-
-    let save = document.createElement("button");
-    save.type = "button";
-    save.innerText = "Save";
-    save.onclick = () => {
-        currentFleet.name = input.value;
-        savedFleets.saveFleet(currentFleet);
-        closeDialog();
-    }
-
-    form.append(label);
-    form.append(input);
-    content.append(form);
-    content.append(save);
     content.append(cancel);
-    showDialog("Save List", content);
+
+    showDialog("Save Fleet", content);
 });
 
 document.getElementById("select-all-sources").addEventListener("click", () => {
@@ -1286,3 +1331,8 @@ updateAvailableUnits();
 currentFleet.addListener(updateCurrentFleet);
 currentFleet.loadFromStorage(isAppMode());
 setupSettings();
+
+if (isAppMode() && isPreviewEnabled()) {
+    document.getElementById("open-button").classList.remove("hidden");
+    document.getElementById("save-button").classList.remove("hidden");
+}
