@@ -389,16 +389,11 @@ class Fleet {
     }
 
     #stringifyList() {
-        if (isPreviewEnabled()) {
-            var saveData = {
-                version: 1,
-                components: this.#list.map((component) => component.name)
-            }
-            return JSON.stringify(saveData);
+        var saveData = {
+            version: 1,
+            components: this.#list.map((component) => component.name)
         }
-        else {
-            return JSON.stringify(this.#list);
-        }
+        return JSON.stringify(saveData);
     }
 }
 
