@@ -234,7 +234,7 @@ function isElementAvailable(element, allowedFaction, allowedSources) {
     let available = false;
     if (element.faction == "any" || allowedFaction == "*" || element.faction == allowedFaction) {
         element.sources.forEach((source) => {
-            if (allowedSources.includes(source)) {
+            if (allowedSources.includes(source) && displayedComponentTypes.includes(element.type)) {
                 available = true;
                 if (element.type == "leviathan" && requiredSlots.length > 0) {
                     requiredSlots.forEach((rs) => {
@@ -242,6 +242,10 @@ function isElementAvailable(element, allowedFaction, allowedSources) {
                             available = false;
                         }
                     });
+                } else if (isPreviewEnabled() && requiredSlots.length > 0) {
+                    // When showing combined list, required slots hides all non-leviathan items
+                    // Maybe allow matches in the future, ex: torpedo bombers matching torpedoes
+                    available = false;
                 }
             }
         });
@@ -255,9 +259,9 @@ function updateGridOfCards() {
 
     const currentFaction = document.getElementById("faction-select").value;
 
-    getAllComponents().forEach((lev) => {
-        if (isElementAvailable(lev, currentFaction, selectedSources)) {
-            grid.appendChild(getCard(lev, addButton(lev), linkToElement(lev)));
+    getAllComponents().forEach((component) => {
+        if (isElementAvailable(component, currentFaction, selectedSources)) {
+            grid.appendChild(getCard(component, addButton(component), linkToElement(component)));
         }
     });
 }
@@ -273,22 +277,6 @@ function getCard(item, button, link) {
         nameHtml = getShipNameWithStyling(item);
     }
 
-    /*let text = assembleListText(nameHtml, item.points, description);
-    text.classList.add("tagged");
-    
-    var tag = getTag(item);
-    if (tag) {
-        text.dataset.tag = tag;
-    }
-
-    let secondary = assembleListSecondaryText(description);
-
-    let content = document.createElement('div');
-    content.classList.add("primary-list-item");
-    content.append(text);
-    content.append(secondary);
-    element.append(content);*/
-
     let textDiv = document.createElement("div");
     textDiv.classList.add("card-name");
 
@@ -296,8 +284,6 @@ function getCard(item, button, link) {
     let name = document.createElement("strong");
     name.innerHTML = nameHtml;
     nameAndCost.append(name);
-    //nameAndCost.append(" - ");
-    //nameAndCost.append(item.points > 0 ? item.points : "Unknown");
     textDiv.append(nameAndCost);
 
     let descriptionDiv = document.createElement("div");
@@ -332,7 +318,9 @@ function getCard(item, button, link) {
 }
 
 function updateAvailableUnits() {
-    updateGridOfCards();
+    if (isPreviewEnabled()) {
+        updateGridOfCards();
+    }
 
     let leviathans = document.getElementById("levs-list");
     leviathans.innerHTML = '';
@@ -1110,8 +1098,6 @@ function setupLeviathanFilters()
 {
     loadFiltersFromStorage();
 
-    let levsDetails = document.getElementById("levs-details");
-
     let filters = document.createElement("details");
     let filterSummary = document.createElement("summary");
     filterSummary.innerText = "Required Slots";
@@ -1158,12 +1144,95 @@ function setupLeviathanFilters()
         }
     });
 
-    levsDetails.insertBefore(filters, levsDetails.childNodes[1]);
+    if (isPreviewEnabled()) {
+        let carGridFilters = document.getElementById("card-grid-filters");
+        carGridFilters.append(filters);
+    }
+    else {
+        let levsDetails = document.getElementById("levs-details");
+        levsDetails.insertBefore(filters, levsDetails.childNodes[1]);
+    }
 }
+
+let displayedComponentTypes = ["leviathan", "admiral", "captain", "airplane", "al-gun"];
+
+let componentTypes = [
+    { id: "leviathan", display: "Leviathans" },
+    { id: "admiral", display: "Admirals" },
+    { id: "captain", display: "Captains" },
+    { id: "airplane", display: "Planes" },
+    { id: "al-gun", display: "Anti-Leviathan Guns" },
+];
+
+function setupComponentTypeFilters()
+{
+    //loadFiltersFromStorage();
+
+    let filters = document.createElement("details");
+    let filterSummary = document.createElement("summary");
+    filterSummary.innerText = "Component Types";
+    filters.append(filterSummary);
+    filters.classList.add("column-host");
+
+    let column1 = document.createElement("div");
+    column1.classList.add("column");
+    let column2 = document.createElement("div");
+    column2.classList.add("column");
+    filters.append(column1);
+    filters.append(column2);
+
+    componentTypes.forEach((filter, index) => {
+        let filterLabel = document.createElement("label");
+        let filterCheckbox = document.createElement("input");
+        filterCheckbox.type = "checkbox";
+        filterCheckbox.id = `chk-${filter.id}`;
+        if (displayedComponentTypes.indexOf(filter.id) != -1) {
+            filterCheckbox.checked = true;
+        }
+        filterCheckbox.addEventListener("change", () => {
+            if (filterCheckbox.checked) {
+                displayedComponentTypes.push(filter.id);
+            } else {
+                const index = displayedComponentTypes.findIndex(x => x == filter.id);
+                if (index >= 0) {
+                    displayedComponentTypes.splice(index, 1);
+                }
+            }
+            //saveFiltersToStorage();
+            updateAvailableUnits();
+        });
+        filterLabel.append(filterCheckbox);
+        filterLabel.append(filter.display);
+        if (index >= Math.round(componentTypes.length / 2.0)) {
+            column2.append(filterLabel);
+        } else {
+            column1.append(filterLabel);
+        }
+    });
+
+    if (isPreviewEnabled()) {
+        let carGridFilters = document.getElementById("card-grid-filters");
+        carGridFilters.append(filters);
+    }
+}
+
+function setupPreviewCardGrid() {
+    if (isPreviewEnabled()) {
+        document.getElementById("levs-details").classList.add("hidden");
+        document.getElementById("admirals-details").classList.add("hidden");
+        document.getElementById("captains-details").classList.add("hidden");
+        document.getElementById("planes-details").classList.add("hidden");
+        document.getElementById("alguns-details").classList.add("hidden");
+
+        document.getElementById("card-grid-preview").classList.remove("hidden");
+    }
+}
+setupPreviewCardGrid();
 
 let selectedSources = buildSourceList();
 loadStoredSourceList();
 setupSourceList();
+setupComponentTypeFilters();
 setupLeviathanFilters();
 updateAvailableUnits();
 
