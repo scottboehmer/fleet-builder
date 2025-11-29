@@ -6,6 +6,12 @@
   <description>Updates about the Leviathans Fleet Builder</description>
   <language>en-us</language>
   <item>
+    <title>Breach Numbers</title>
+    <link>https://scottboehmer.github.io/fleet-builder/posts/7.htm</link>
+    <description>Breach numbers have been added to ship pages.</description>
+    <pubDate>11/28/2025</pubDate>
+  </item>
+  <item>
     <title>Copy Markdown</title>
     <link>https://scottboehmer.github.io/fleet-builder/posts/6.htm</link>
     <description>Now featuring a convenient button for copying the current fleet.</description>
