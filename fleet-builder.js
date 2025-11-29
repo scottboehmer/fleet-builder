@@ -249,7 +249,91 @@ function isElementAvailable(element, allowedFaction, allowedSources) {
     return available;
 }
 
+function updateGridOfCards() {
+    let grid = document.getElementById("grid-test");
+    grid.innerHTML = '';
+
+    const currentFaction = document.getElementById("faction-select").value;
+
+    getAllComponents().forEach((lev) => {
+        if (isElementAvailable(lev, currentFaction, selectedSources)) {
+            grid.appendChild(getCard(lev, addButton(lev), linkToElement(lev)));
+        }
+    });
+}
+
+function getCard(item, button, link) {
+    let element = document.createElement('div');
+    element.classList.add("card");
+    element.classList.add("card-row");
+    let description = getComponentDescription(item);
+
+    let nameHtml = item.name;
+    if (item.type == "leviathan") {
+        nameHtml = getShipNameWithStyling(item);
+    }
+
+    /*let text = assembleListText(nameHtml, item.points, description);
+    text.classList.add("tagged");
+    
+    var tag = getTag(item);
+    if (tag) {
+        text.dataset.tag = tag;
+    }
+
+    let secondary = assembleListSecondaryText(description);
+
+    let content = document.createElement('div');
+    content.classList.add("primary-list-item");
+    content.append(text);
+    content.append(secondary);
+    element.append(content);*/
+
+    let textDiv = document.createElement("div");
+    textDiv.classList.add("card-name");
+
+    let nameAndCost = document.createElement("div");
+    let name = document.createElement("strong");
+    name.innerHTML = nameHtml;
+    nameAndCost.append(name);
+    //nameAndCost.append(" - ");
+    //nameAndCost.append(item.points > 0 ? item.points : "Unknown");
+    textDiv.append(nameAndCost);
+
+    let descriptionDiv = document.createElement("div");
+    descriptionDiv.classList.add("small");
+    let descriptionEm = document.createElement("em");
+    descriptionEm.innerText = description;
+    descriptionDiv.append(descriptionEm);
+    textDiv.append(descriptionDiv);
+
+    element.append(textDiv);
+
+    let buttonDiv = document.createElement("div");
+    buttonDiv.classList.add("card-buttons");
+    if (link) {
+        buttonDiv.append(link);
+    }
+    if (button) {
+        buttonDiv.append(button);
+    }
+    element.append(buttonDiv);
+
+    let costDiv = document.createElement("div");
+    costDiv.classList.add("card-cost");
+    costDiv.innerText = item.points > 0 ? `${item.points} Points` : "Unknown"
+    element.append(costDiv);
+
+    let imageDiv = document.createElement("div");
+    imageDiv.classList.add("card-image");
+    element.append(imageDiv);
+    
+    return element;
+}
+
 function updateAvailableUnits() {
+    updateGridOfCards();
+
     let leviathans = document.getElementById("levs-list");
     leviathans.innerHTML = '';
 
