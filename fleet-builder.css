@@ -202,6 +202,12 @@ ul.available:empty::after {
   font-style: italic;
 }
 
+.card-grid:empty::after {
+  content: "No items available";
+  color: var(--text-light);
+  font-style: italic;
+}
+
 ul.fleet:empty::after {
   content: "No items selected";
   color: var(--text-light);
