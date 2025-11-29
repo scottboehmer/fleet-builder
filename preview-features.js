@@ -12,14 +12,6 @@ function togglePreviewFeatures() {
     }
 
     if (isPreviewEnabled()) {
-        Array.from(document.getElementsByClassName("breach")).forEach(element => {
-            element.classList.remove("hidden");
-        });
-
-        Array.from(document.getElementsByClassName("slots-preview")).forEach(element => {
-            element.classList.add("slots");
-        });
-
         Array.from(document.getElementsByClassName("shot-difficulty")).forEach(element => {
             element.classList.remove("hidden");
         });
