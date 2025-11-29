@@ -12,6 +12,7 @@
   --header: #700000;
   --border: #700000;
   --accent: #9f1c1f;
+  --breach: #9f1c1f;
   --accent-hover: #d12529;
   --accent-text: #fcfef0;
 
@@ -34,6 +35,7 @@
     --header: #98aeb1;
     --border: #98aeb1;
     --accent: #9f1c1f;
+    --breach: #661214;
     --accent-hover: #d12529;
     --accent-text: #fcfef0;
   }
@@ -349,7 +351,7 @@ ul.slots li {
   display: inline-block;
   text-align: center;
   width: 40px;
-  background-color: var(--accent);
+  background-color: var(--breach);
   color: var(--accent-text);
 }
 
