@@ -35,6 +35,15 @@ function getComponentByName(name) {
     return null;
 }
 
+function getAllComponents() {
+    let rv = getLeviathanData()
+        .concat(getPlaneData())
+        .concat(getAdmiralData())
+        .concat(getCaptainData())
+        .concat(getALGunData());
+    return sortByPointsAndName(rv);
+}
+
 function planeCard(name, points, sources, link) {
     return { name: name, type: "airplane", faction: "any", points: points, sources: sources, link: link };
 }
