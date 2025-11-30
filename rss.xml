@@ -6,6 +6,12 @@
   <description>Updates about the Leviathans Fleet Builder</description>
   <language>en-us</language>
   <item>
+    <title>Preview: Visual List</title>
+    <link>https://scottboehmer.github.io/fleet-builder/posts/8.htm</link>
+    <description>Preview mode has images in the component list.</description>
+    <pubDate>11/30/2025</pubDate>
+  </item>
+  <item>
     <title>Breach Numbers</title>
     <link>https://scottboehmer.github.io/fleet-builder/posts/7.htm</link>
     <description>Breach numbers have been added to ship pages.</description>
