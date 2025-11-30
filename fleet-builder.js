@@ -306,6 +306,7 @@ function getCard(item, button, link) {
 
     let imageDiv = document.createElement("div");
     imageDiv.classList.add("card-image");
+    imageDiv.style.backgroundImage = `url(${getImageForComponent(item)})`;
     element.append(imageDiv);
     
     return element;

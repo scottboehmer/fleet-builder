@@ -84,6 +84,85 @@ function getLeviathanData() {
     return levData;
 }
 
+function getImageForComponent(component) {
+    if (component.type == "leviathan") {
+        switch (component.shipClass) {
+            case "Vladivostok": return "../images/vladivostok-540-300.jpg";
+            case "Aleksandr": return "../images/aleksandr-540-300.jpg";
+            case "Cathrine": return "../images/cathrine-540-300.jpg";
+            case "Kiev": return component.name == "Alexandra" ? "../images/alexandra-540-300.jpg" : "../images/kiev-540-300.jpg";
+            case "Pallada": return "../images/pallada-540-300.jpg";
+            case "Berkut": return "../images/berkut-540-300.jpg";
+            case "Novik": return "../images/novik-540-300.jpg";
+            case "Frontier": return "../images/frontier-540-300.jpg";
+            case "Adler": return "../images/adler-540-300.jpg";
+            case "Kawa": return "../images/kawa-540-300.jpg";
+            case "Leviathan": return "../images/leviathan-540-300.jpg";
+            case "Connaught": return "../images/connaught-540-300.jpg";
+            case "Defender": return "../images/defender-540-300.jpg";
+            case "Destrier": return component.name == "HML Punjab" ? "../images/hml-punjab-540-300.jpg" : "../images/destrier-540-300.jpg";
+            case "County": return "../images/county-540-300.jpg";
+            case "D-Class": return "../images/d-540-300.jpg";
+            case "G-Class": return "../images/g-540-300.jpg";
+            case "Cesare": return "../images/cesare-540-300.jpg";
+            case "Vulcano": return "../images/vulcano-540-300.jpg";
+            case "Mare Nostrum": return "../images/mare-nostrum-540-300.jpg";
+            case "Avventuriero": return component.name == "Irredentismo" ? "../images/irredentismo-540-300.jpg" : "../images/avventuriero-540-300.jpg";
+            case "Gloria": return "../images/gloria-540-300.jpg";
+            case "Constellazione": return "../images/constellazione-540-300.jpg";
+            case "Fiume": return "../images/fiume-540-300.jpg";
+            case "Prussia": return "../images/prussia-540-300.jpg";
+            case "Kaiser": return "../images/kaiser-540-300.jpg";
+            case "Saxony": return "../images/saxony-540-300.jpg";
+            case "Greif": return component.name == "SML Greif" ? "../images/sml-greif-540-300.jpg" : "../images/greif-540-300.jpg";
+            case "Koenigsberg": return "../images/koenigsberg-540-300.jpg";
+            case "Falke": return "../images/falke-540-300.jpg";
+            case "Bremen": return "../images/bremen-540-300.jpg";
+            case "Paris": return "../images/paris-540-300.jpg";
+            case "Bastille": return "../images/bastille-540-300.jpg";
+            case "Conquent": return "../images/conquent-540-300.jpg";
+            case "Faucon": return component.name == "Legion d'Honneur" ? "../images/legion-d-honneur-540-300.jpg" : "../images/faucon-540-300.jpg";
+            case "Liberté": return "../images/liberte-540-300.jpg";
+            case "Poisson": return "../images/poisson-540-300.jpg";
+            case "Grenouille": return "../images/grenouille-540-300.jpg";
+            case "Viking": return "../images/destrier-540-300.jpg";
+            case "Baltiska": return "../images/d-540-300.jpg";
+            case "Koenigsburg": return "../images/koenigsberg-540-300.jpg";
+            case "Hansa": return "../images/hansa-540-300.jpg";
+            case "Hindenburg": return "../images/hindenburg-540-300.jpg";
+            case "Vauban": return "../images/vauban-540-300.jpg";
+        }
+    } else if (component.type == "airplane") {
+        switch (component.name) {
+            case "Fighter, Green": return "../images/fighter-g-540-300.jpg";
+            case "Fighter, Veteran": return "../images/fighter-v-540-300.jpg";
+            case "Bomber, Green": return "../images/bomber-g-540-300.jpg";
+            case "Bomber, Veteran": return "../images/bomber-v-540-300.jpg";
+            case "Spotter, Green": return "../images/spotter-g-540-300.jpg";
+            case "Spotter, Veteran": return "../images/spotter-v-540-300.jpg";
+            case "Heavy Bomber, Green": return "../images/heavy-bomber-g-540-300.jpg";
+            case "Heavy Bomber, Veteran": return "../images/heavy-bomber-v-540-300.jpg";
+            case "Turret Fighter, Green": return "../images/turret-fighter-g-540-300.jpg";
+            case "Turret Fighter, Veteran": return "../images/turret-fighter-v-540-300.jpg";
+            case "Interceptor, Green": return "../images/interceptor-g-540-300.jpg";
+            case "Interceptor, Veteran": return "../images/interceptor-v-540-300.jpg";
+            case "Torpedo Bomber, Green": return "../images/torpedo-bomber-g-540-300.jpg";
+            case "Torpedo Bomber, Veteran": return "../images/torpedo-bomber-v-540-300.jpg";
+        }
+    } else if (component.type == "al-gun") {
+        switch (component.name) {
+            case "Semi-Mobile Anti-Leviathan Gun": return "../images/semi-mobile-al-gun-540-300.jpg";
+            case "Mobile Anti-Leviathan Gun": return "../images/mobile-al-gun-540-300.jpg";
+            case "High-Mobility Anti-Leviathan Gun": return "../images/high-mobility-al-gun-540-300.jpg";
+        }
+    } else if (component.type == "admiral") {
+        return "../images/admiral-540-300.jpg";
+    } else if (component.type == "captain") {
+        return "../images/captain-540-300.jpg";
+    }
+    return "../images/placeholder-540-300.jpg";
+}
+
 const levData = sortByPointsAndName([
     leviathanCard("Kamchatka", "Vladivostok", 4, "russian", false , 440, ["Vladivostok Battleship Pack"], "elements/1.htm", ["precision-crew", "saturation-guns", "steering-gear"]),
     leviathanCard("Siberia", "Vladivostok", 4, "russian", false , 430, ["Vladivostok Battleship Pack"], "elements/2.htm", ["precision-crew", "saturation-guns", "repair-crew", "steering-gear"]),
