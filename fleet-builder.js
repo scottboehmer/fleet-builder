@@ -1,14 +1,14 @@
-function isPreviewEnabled() {
+isPreviewEnabled = function () {
     try {
         var p = localStorage.getItem("preview-mode");
         if (p === "true") {
-            return true;
+            return () => true;
         }
     } catch (ex) {
         console.log("Error accessing local storage.");
     }
-    return false;
-}
+    return () => false;
+}();
 
 function isAppMode() {
     if (window.matchMedia('(display-mode: minimal-ui)').matches ||
