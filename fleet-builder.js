@@ -10,12 +10,6 @@ function isPreviewEnabled() {
     return false;
 }
 
-function isPreviewRequested() {
-    const params = new URLSearchParams(window.location.search);
-    const preview = params.get("preview");
-    return preview === "true";
-}
-
 function isAppMode() {
     if (window.matchMedia('(display-mode: minimal-ui)').matches ||
         window.matchMedia('(display-mode: standalone)').matches) {
@@ -884,33 +878,31 @@ function setupSourceList() {
 }
 
 function setupSettings() {
-    if (isPreviewEnabled() || isAppMode() || isPreviewRequested()) {
-        var settingsArea = document.getElementById("main-settings");
-        var label = document.createElement("label");
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        label.append(checkbox);
-        label.append("Enable preview features");
-        settingsArea.append(label);
+    var settingsArea = document.getElementById("main-settings");
+    var label = document.createElement("label");
+    var checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    label.append(checkbox);
+    label.append("Enable preview features");
+    settingsArea.append(label);
 
-        try {
-            var p = localStorage.getItem("preview-mode");
-            if (p === "true") {
-                checkbox.checked = true;
-            }
-        } catch (ex) {
-            console.log("Error accessing local storage.");
+    try {
+        var p = localStorage.getItem("preview-mode");
+        if (p === "true") {
+            checkbox.checked = true;
         }
-
-        checkbox.addEventListener("change", () => {
-            try {
-                localStorage.setItem("preview-mode", checkbox.checked ? "true" : "false");
-                window.location.reload();
-            } catch (ex) {
-                console.log("Error writing to local storage.");
-            }
-        });
+    } catch (ex) {
+        console.log("Error accessing local storage.");
     }
+
+    checkbox.addEventListener("change", () => {
+        try {
+            localStorage.setItem("preview-mode", checkbox.checked ? "true" : "false");
+            window.location.reload();
+        } catch (ex) {
+            console.log("Error writing to local storage.");
+        }
+    });
 }
 
 function loadStoredSourceList() {
