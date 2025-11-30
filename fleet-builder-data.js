@@ -87,80 +87,80 @@ function getLeviathanData() {
 function getImageForComponent(component) {
     if (component.type == "leviathan") {
         switch (component.shipClass) {
-            case "Vladivostok": return "../images/vladivostok-540-300.jpg";
-            case "Aleksandr": return "../images/aleksandr-540-300.jpg";
-            case "Cathrine": return "../images/cathrine-540-300.jpg";
-            case "Kiev": return component.name == "Alexandra" ? "../images/alexandra-540-300.jpg" : "../images/kiev-540-300.jpg";
-            case "Pallada": return "../images/pallada-540-300.jpg";
-            case "Berkut": return "../images/berkut-540-300.jpg";
-            case "Novik": return "../images/novik-540-300.jpg";
-            case "Frontier": return "../images/frontier-540-300.jpg";
-            case "Adler": return "../images/adler-540-300.jpg";
-            case "Kawa": return "../images/kawa-540-300.jpg";
-            case "Leviathan": return "../images/leviathan-540-300.jpg";
-            case "Connaught": return "../images/connaught-540-300.jpg";
-            case "Defender": return "../images/defender-540-300.jpg";
-            case "Destrier": return component.name == "HML Punjab" ? "../images/hml-punjab-540-300.jpg" : "../images/destrier-540-300.jpg";
-            case "County": return "../images/county-540-300.jpg";
-            case "D-Class": return "../images/d-540-300.jpg";
-            case "G-Class": return "../images/g-540-300.jpg";
-            case "Cesare": return "../images/cesare-540-300.jpg";
-            case "Vulcano": return "../images/vulcano-540-300.jpg";
-            case "Mare Nostrum": return "../images/mare-nostrum-540-300.jpg";
-            case "Avventuriero": return component.name == "Irredentismo" ? "../images/irredentismo-540-300.jpg" : "../images/avventuriero-540-300.jpg";
-            case "Gloria": return "../images/gloria-540-300.jpg";
-            case "Constellazione": return "../images/constellazione-540-300.jpg";
-            case "Fiume": return "../images/fiume-540-300.jpg";
-            case "Prussia": return "../images/prussia-540-300.jpg";
-            case "Kaiser": return "../images/kaiser-540-300.jpg";
-            case "Saxony": return "../images/saxony-540-300.jpg";
-            case "Greif": return component.name == "SML Greif" ? "../images/sml-greif-540-300.jpg" : "../images/greif-540-300.jpg";
-            case "Koenigsberg": return "../images/koenigsberg-540-300.jpg";
-            case "Falke": return "../images/falke-540-300.jpg";
-            case "Bremen": return "../images/bremen-540-300.jpg";
-            case "Paris": return "../images/paris-540-300.jpg";
-            case "Bastille": return "../images/bastille-540-300.jpg";
-            case "Conquent": return "../images/conquent-540-300.jpg";
-            case "Faucon": return component.name == "Legion d'Honneur" ? "../images/legion-d-honneur-540-300.jpg" : "../images/faucon-540-300.jpg";
-            case "Liberté": return "../images/liberte-540-300.jpg";
-            case "Poisson": return "../images/poisson-540-300.jpg";
-            case "Grenouille": return "../images/grenouille-540-300.jpg";
-            case "Viking": return "../images/destrier-540-300.jpg";
-            case "Baltiska": return "../images/d-540-300.jpg";
-            case "Koenigsburg": return "../images/koenigsberg-540-300.jpg";
-            case "Hansa": return "../images/hansa-540-300.jpg";
-            case "Hindenburg": return "../images/hindenburg-540-300.jpg";
-            case "Vauban": return "../images/vauban-540-300.jpg";
+            case "Vladivostok": return "/fleet-builder/images/vladivostok-540-300.jpg";
+            case "Aleksandr": return "/fleet-builder/images/aleksandr-540-300.jpg";
+            case "Cathrine": return "/fleet-builder/images/cathrine-540-300.jpg";
+            case "Kiev": return component.name == "Alexandra" ? "/fleet-builder/images/alexandra-540-300.jpg" : "/fleet-builder/images/kiev-540-300.jpg";
+            case "Pallada": return "/fleet-builder/images/pallada-540-300.jpg";
+            case "Berkut": return "/fleet-builder/images/berkut-540-300.jpg";
+            case "Novik": return "/fleet-builder/images/novik-540-300.jpg";
+            case "Frontier": return "/fleet-builder/images/frontier-540-300.jpg";
+            case "Adler": return "/fleet-builder/images/adler-540-300.jpg";
+            case "Kawa": return "/fleet-builder/images/kawa-540-300.jpg";
+            case "Leviathan": return "/fleet-builder/images/leviathan-540-300.jpg";
+            case "Connaught": return "/fleet-builder/images/connaught-540-300.jpg";
+            case "Defender": return "/fleet-builder/images/defender-540-300.jpg";
+            case "Destrier": return component.name == "HML Punjab" ? "/fleet-builder/images/hml-punjab-540-300.jpg" : "/fleet-builder/images/destrier-540-300.jpg";
+            case "County": return "/fleet-builder/images/county-540-300.jpg";
+            case "D-Class": return "/fleet-builder/images/d-540-300.jpg";
+            case "G-Class": return "/fleet-builder/images/g-540-300.jpg";
+            case "Cesare": return "/fleet-builder/images/cesare-540-300.jpg";
+            case "Vulcano": return "/fleet-builder/images/vulcano-540-300.jpg";
+            case "Mare Nostrum": return "/fleet-builder/images/mare-nostrum-540-300.jpg";
+            case "Avventuriero": return component.name == "Irredentismo" ? "/fleet-builder/images/irredentismo-540-300.jpg" : "/fleet-builder/images/avventuriero-540-300.jpg";
+            case "Gloria": return "/fleet-builder/images/gloria-540-300.jpg";
+            case "Constellazione": return "/fleet-builder/images/constellazione-540-300.jpg";
+            case "Fiume": return "/fleet-builder/images/fiume-540-300.jpg";
+            case "Prussia": return "/fleet-builder/images/prussia-540-300.jpg";
+            case "Kaiser": return "/fleet-builder/images/kaiser-540-300.jpg";
+            case "Saxony": return "/fleet-builder/images/saxony-540-300.jpg";
+            case "Greif": return component.name == "SML Greif" ? "/fleet-builder/images/sml-greif-540-300.jpg" : "/fleet-builder/images/greif-540-300.jpg";
+            case "Koenigsberg": return "/fleet-builder/images/koenigsberg-540-300.jpg";
+            case "Falke": return "/fleet-builder/images/falke-540-300.jpg";
+            case "Bremen": return "/fleet-builder/images/bremen-540-300.jpg";
+            case "Paris": return "/fleet-builder/images/paris-540-300.jpg";
+            case "Bastille": return "/fleet-builder/images/bastille-540-300.jpg";
+            case "Conquent": return "/fleet-builder/images/conquent-540-300.jpg";
+            case "Faucon": return component.name == "Legion d'Honneur" ? "/fleet-builder/images/legion-d-honneur-540-300.jpg" : "/fleet-builder/images/faucon-540-300.jpg";
+            case "Liberté": return "/fleet-builder/images/liberte-540-300.jpg";
+            case "Poisson": return "/fleet-builder/images/poisson-540-300.jpg";
+            case "Grenouille": return "/fleet-builder/images/grenouille-540-300.jpg";
+            case "Viking": return "/fleet-builder/images/destrier-540-300.jpg";
+            case "Baltiska": return "/fleet-builder/images/d-540-300.jpg";
+            case "Koenigsburg": return "/fleet-builder/images/koenigsberg-540-300.jpg";
+            case "Hansa": return "/fleet-builder/images/hansa-540-300.jpg";
+            case "Hindenburg": return "/fleet-builder/images/hindenburg-540-300.jpg";
+            case "Vauban": return "/fleet-builder/images/vauban-540-300.jpg";
         }
     } else if (component.type == "airplane") {
         switch (component.name) {
-            case "Fighter, Green": return "../images/fighter-g-540-300.jpg";
-            case "Fighter, Veteran": return "../images/fighter-v-540-300.jpg";
-            case "Bomber, Green": return "../images/bomber-g-540-300.jpg";
-            case "Bomber, Veteran": return "../images/bomber-v-540-300.jpg";
-            case "Spotter, Green": return "../images/spotter-g-540-300.jpg";
-            case "Spotter, Veteran": return "../images/spotter-v-540-300.jpg";
-            case "Heavy Bomber, Green": return "../images/heavy-bomber-g-540-300.jpg";
-            case "Heavy Bomber, Veteran": return "../images/heavy-bomber-v-540-300.jpg";
-            case "Turret Fighter, Green": return "../images/turret-fighter-g-540-300.jpg";
-            case "Turret Fighter, Veteran": return "../images/turret-fighter-v-540-300.jpg";
-            case "Interceptor, Green": return "../images/interceptor-g-540-300.jpg";
-            case "Interceptor, Veteran": return "../images/interceptor-v-540-300.jpg";
-            case "Torpedo Bomber, Green": return "../images/torpedo-bomber-g-540-300.jpg";
-            case "Torpedo Bomber, Veteran": return "../images/torpedo-bomber-v-540-300.jpg";
+            case "Fighter, Green": return "/fleet-builder/images/fighter-g-540-300.jpg";
+            case "Fighter, Veteran": return "/fleet-builder/images/fighter-v-540-300.jpg";
+            case "Bomber, Green": return "/fleet-builder/images/bomber-g-540-300.jpg";
+            case "Bomber, Veteran": return "/fleet-builder/images/bomber-v-540-300.jpg";
+            case "Spotter, Green": return "/fleet-builder/images/spotter-g-540-300.jpg";
+            case "Spotter, Veteran": return "/fleet-builder/images/spotter-v-540-300.jpg";
+            case "Heavy Bomber, Green": return "/fleet-builder/images/heavy-bomber-g-540-300.jpg";
+            case "Heavy Bomber, Veteran": return "/fleet-builder/images/heavy-bomber-v-540-300.jpg";
+            case "Turret Fighter, Green": return "/fleet-builder/images/turret-fighter-g-540-300.jpg";
+            case "Turret Fighter, Veteran": return "/fleet-builder/images/turret-fighter-v-540-300.jpg";
+            case "Interceptor, Green": return "/fleet-builder/images/interceptor-g-540-300.jpg";
+            case "Interceptor, Veteran": return "/fleet-builder/images/interceptor-v-540-300.jpg";
+            case "Torpedo Bomber, Green": return "/fleet-builder/images/torpedo-bomber-g-540-300.jpg";
+            case "Torpedo Bomber, Veteran": return "/fleet-builder/images/torpedo-bomber-v-540-300.jpg";
         }
     } else if (component.type == "al-gun") {
         switch (component.name) {
-            case "Semi-Mobile Anti-Leviathan Gun": return "../images/semi-mobile-al-gun-540-300.jpg";
-            case "Mobile Anti-Leviathan Gun": return "../images/mobile-al-gun-540-300.jpg";
-            case "High-Mobility Anti-Leviathan Gun": return "../images/high-mobility-al-gun-540-300.jpg";
+            case "Semi-Mobile Anti-Leviathan Gun": return "/fleet-builder/images/semi-mobile-al-gun-540-300.jpg";
+            case "Mobile Anti-Leviathan Gun": return "/fleet-builder/images/mobile-al-gun-540-300.jpg";
+            case "High-Mobility Anti-Leviathan Gun": return "/fleet-builder/images/high-mobility-al-gun-540-300.jpg";
         }
     } else if (component.type == "admiral") {
-        return "../images/admiral-540-300.jpg";
+        return "/fleet-builder/images/admiral-540-300.jpg";
     } else if (component.type == "captain") {
-        return "../images/captain-540-300.jpg";
+        return "/fleet-builder/images/captain-540-300.jpg";
     }
-    return "../images/placeholder-540-300.jpg";
+    return "/fleet-builder/images/placeholder-540-300.jpg";
 }
 
 const levData = sortByPointsAndName([
