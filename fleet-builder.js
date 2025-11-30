@@ -1183,51 +1183,51 @@ let componentTypes = [
 
 function setupComponentTypeFilters()
 {
-    loadTypeFiltersFromStorage();
-
-    let filters = document.createElement("details");
-    let filterSummary = document.createElement("summary");
-    filterSummary.innerText = "Component Types";
-    filters.append(filterSummary);
-    filters.classList.add("column-host");
-
-    let column1 = document.createElement("div");
-    column1.classList.add("column");
-    let column2 = document.createElement("div");
-    column2.classList.add("column");
-    filters.append(column1);
-    filters.append(column2);
-
-    componentTypes.forEach((filter, index) => {
-        let filterLabel = document.createElement("label");
-        let filterCheckbox = document.createElement("input");
-        filterCheckbox.type = "checkbox";
-        filterCheckbox.id = `chk-${filter.id}`;
-        if (displayedComponentTypes.indexOf(filter.id) != -1) {
-            filterCheckbox.checked = true;
-        }
-        filterCheckbox.addEventListener("change", () => {
-            if (filterCheckbox.checked) {
-                displayedComponentTypes.push(filter.id);
-            } else {
-                const index = displayedComponentTypes.findIndex(x => x == filter.id);
-                if (index >= 0) {
-                    displayedComponentTypes.splice(index, 1);
-                }
-            }
-            saveTypeFiltersToStorage();
-            updateAvailableUnits();
-        });
-        filterLabel.append(filterCheckbox);
-        filterLabel.append(filter.display);
-        if (index >= Math.round(componentTypes.length / 2.0)) {
-            column2.append(filterLabel);
-        } else {
-            column1.append(filterLabel);
-        }
-    });
-
     if (isPreviewEnabled()) {
+        loadTypeFiltersFromStorage();
+
+        let filters = document.createElement("details");
+        let filterSummary = document.createElement("summary");
+        filterSummary.innerText = "Component Types";
+        filters.append(filterSummary);
+        filters.classList.add("column-host");
+
+        let column1 = document.createElement("div");
+        column1.classList.add("column");
+        let column2 = document.createElement("div");
+        column2.classList.add("column");
+        filters.append(column1);
+        filters.append(column2);
+
+        componentTypes.forEach((filter, index) => {
+            let filterLabel = document.createElement("label");
+            let filterCheckbox = document.createElement("input");
+            filterCheckbox.type = "checkbox";
+            filterCheckbox.id = `chk-${filter.id}`;
+            if (displayedComponentTypes.indexOf(filter.id) != -1) {
+                filterCheckbox.checked = true;
+            }
+            filterCheckbox.addEventListener("change", () => {
+                if (filterCheckbox.checked) {
+                    displayedComponentTypes.push(filter.id);
+                } else {
+                    const index = displayedComponentTypes.findIndex(x => x == filter.id);
+                    if (index >= 0) {
+                        displayedComponentTypes.splice(index, 1);
+                    }
+                }
+                saveTypeFiltersToStorage();
+                updateAvailableUnits();
+            });
+            filterLabel.append(filterCheckbox);
+            filterLabel.append(filter.display);
+            if (index >= Math.round(componentTypes.length / 2.0)) {
+                column2.append(filterLabel);
+            } else {
+                column1.append(filterLabel);
+            }
+        });
+
         let carGridFilters = document.getElementById("card-grid-filters");
         carGridFilters.append(filters);
     }
