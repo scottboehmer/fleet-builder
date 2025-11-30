@@ -596,7 +596,7 @@ function updateCurrentFleet() {
     updateMarkdownDisplay();
 }
 
-function saveFiltersToStorage() {
+function saveSlotFiltersToStorage() {
     if (isAppMode()) {
         try {
             const json = JSON.stringify(requiredSlots);
@@ -607,7 +607,7 @@ function saveFiltersToStorage() {
     }
 }
 
-function loadFiltersFromStorage() {
+function loadSlotFiltersFromStorage() {
     if (isAppMode()) {
         try {
             const json = sessionStorage.getItem("slot-filters");
@@ -616,6 +616,30 @@ function loadFiltersFromStorage() {
             }
         } catch (ex) {
             console.log("Unable to load slot filters.");
+        }
+    }
+}
+
+function saveTypeFiltersToStorage() {
+    if (isAppMode()) {
+        try {
+            const json = JSON.stringify(displayedComponentTypes);
+            sessionStorage.setItem("type-filters", json);
+        } catch (ex) {
+            console.log("Unable to save type filters.");
+        }
+    }
+}
+
+function loadTypeFiltersFromStorage() {
+    if (isAppMode()) {
+        try {
+            const json = sessionStorage.getItem("type-filters");
+            if (json) {
+                displayedComponentTypes = JSON.parse(json);
+            }
+        } catch (ex) {
+            console.log("Unable to load type filters.");
         }
     }
 }
@@ -1096,7 +1120,7 @@ let potentialSlotFilters = [
 
 function setupLeviathanFilters()
 {
-    loadFiltersFromStorage();
+    loadSlotFiltersFromStorage();
 
     let filters = document.createElement("details");
     let filterSummary = document.createElement("summary");
@@ -1132,7 +1156,7 @@ function setupLeviathanFilters()
                     requiredSlots.splice(index, 1);
                 }
             }
-            saveFiltersToStorage();
+            saveSlotFiltersToStorage();
             updateAvailableUnits();
         });
         filterLabel.append(filterCheckbox);
@@ -1166,7 +1190,7 @@ let componentTypes = [
 
 function setupComponentTypeFilters()
 {
-    //loadFiltersFromStorage();
+    loadTypeFiltersFromStorage();
 
     let filters = document.createElement("details");
     let filterSummary = document.createElement("summary");
@@ -1198,7 +1222,7 @@ function setupComponentTypeFilters()
                     displayedComponentTypes.splice(index, 1);
                 }
             }
-            //saveFiltersToStorage();
+            saveTypeFiltersToStorage();
             updateAvailableUnits();
         });
         filterLabel.append(filterCheckbox);
