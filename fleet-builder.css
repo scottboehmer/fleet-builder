@@ -474,7 +474,7 @@ details[open] > summary {
 
 @media only screen and (max-width: 720px) {
   .card {
-    height: 240px;
+    height: 200px;
   }
 }
 
