@@ -158,10 +158,6 @@ function getShipNameWithStyling(ship, markdown) {
 }
 
 function getDisplayElements(item, button, link) {
-    if (isPreviewEnabled()) {
-        return getPreviewDisplayElements(item, button, link);
-    }
-
     let element = document.createElement('li');
     let description = getComponentDescription(item);
 
@@ -184,51 +180,6 @@ function getDisplayElements(item, button, link) {
     content.classList.add("primary-list-item");
     content.append(text);
     content.append(secondary);
-    element.append(content);
-
-    if (link) {
-        element.append(link);
-    }
-
-    if (button) {
-        element.append(button);
-    }
-    
-    return element;
-}
-
-function getPreviewDisplayElements(item, button, link) {
-    let element = document.createElement('li');
-    let description = getComponentDescription(item);
-
-    let nameHtml = item.name;
-    if (item.type == "leviathan") {
-        nameHtml = getShipNameWithStyling(item);
-    }
-
-    let text = assembleListText(nameHtml, item.points, description);
-    text.classList.add("tagged");
-    
-    var tag = getTag(item);
-    if (tag) {
-        text.dataset.tag = tag;
-    }
-
-    let secondary = assembleListSecondaryText(description);
-
-    let content = document.createElement('div');
-    content.classList.add("primary-list-item");
-    content.append(text);
-    content.append(secondary);
-
-    if (item.type == "leviathan") {
-        element.classList.add("preview");
-        let stats = document.createElement("div");
-        stats.innerHTML = `<b>SI</b> ${item.si} <b>TYPE</b> ${item.shipType} <b>MP</b> ${item.mp} <b>EHBT</b> ${item.ehbt}`;
-        stats.classList.add("small");
-        content.append(stats);
-    }
-
     element.append(content);
 
     if (link) {
@@ -356,6 +307,33 @@ function getCard(item, button, link) {
     let imageDiv = document.createElement("div");
     imageDiv.classList.add("card-image");
     imageDiv.style.backgroundImage = `url(${getImageForComponent(item)})`;
+
+    if (item.type == "leviathan") {
+        let siMarker = document.createElement("div");
+        siMarker.classList.add("stat-marker");
+        siMarker.classList.add("top-left-marker");
+        siMarker.innerText = "■ " + item.si;
+        imageDiv.append(siMarker);
+
+        let typeMarker = document.createElement("div");
+        typeMarker.classList.add("stat-marker");
+        typeMarker.classList.add("top-right-marker");
+        typeMarker.innerText = "▼ " + item.shipType;
+        imageDiv.append(typeMarker);
+
+        let speedMarker = document.createElement("div");
+        speedMarker.classList.add("stat-marker");
+        speedMarker.classList.add("bottom-left-marker");
+        speedMarker.innerText = "► " + item.mp;
+        imageDiv.append(speedMarker);
+
+        let ehbtMarker = document.createElement("div");
+        ehbtMarker.classList.add("stat-marker");
+        ehbtMarker.classList.add("bottom-right-marker");
+        ehbtMarker.innerText = "◎ " + item.ehbt;
+        imageDiv.append(ehbtMarker);
+    }
+
     element.append(imageDiv);
     
     return element;

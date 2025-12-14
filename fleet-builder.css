@@ -518,6 +518,59 @@ details[open] > summary {
   border-color: var(--border);
   border-style: solid;
   border-radius: var(--standard-border-radius);
+  display: grid;
+  grid-template-columns: max-content auto max-content;
+  grid-template-rows: max-content auto max-content;
+}
+
+.stat-marker {
+  background-color: var(--tag-bg);
+  color: var(--tag-text);
+  padding: 4px;
+  text-align: center;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  font-weight: bold;
+  min-width: 40px;
+  min-height: 20px;
+  align-items: baseline;
+}
+
+.stat-marker > img {
+  display: inline-block;
+  width: 18px;
+}
+
+.top-left-marker {
+  grid-row: 1;
+  grid-column: 1;
+  border-right: var(--tag-border) var(--border-width) solid;
+  border-bottom: var(--tag-border) var(--border-width) solid;
+  border-radius: 0 0 var(--standard-border-radius) 0;
+}
+
+.top-right-marker {
+  grid-row: 1;
+  grid-column: 3;
+  border-left: var(--tag-border) var(--border-width) solid;
+  border-bottom: var(--tag-border) var(--border-width) solid;
+  border-radius: 0 0 0 var(--standard-border-radius);
+}
+
+.bottom-left-marker {
+  grid-row: 3;
+  grid-column: 1;
+  border-right: var(--tag-border) var(--border-width) solid;
+  border-top: var(--tag-border) var(--border-width) solid;
+  border-radius: 0 var(--standard-border-radius) 0 0;
+}
+
+.bottom-right-marker {
+  grid-row: 3;
+  grid-column: 3;
+  border-left: var(--tag-border) var(--border-width) solid;
+  border-top: var(--tag-border) var(--border-width) solid;
+  border-radius: var(--standard-border-radius) 0 0 0;
 }
 
 .hidden {
