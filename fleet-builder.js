@@ -207,6 +207,20 @@ function addButton(component) {
     return add;
 }
 
+function cardAddButton(component) {
+    let add = document.createElement('button');
+    add.title = "Add to fleet";
+    add.type = "button";
+
+    let span = document.createElement('span');
+    //span.className = "material-symbols-outlined";
+    span.innerText = "add";
+    add.appendChild(span);
+
+    add.addEventListener("click", () => currentFleet.add(component));
+    return add;
+}
+
 function linkToElement(component) {
     if (component.link) {
         let link = document.createElement('a');
@@ -218,6 +232,23 @@ function linkToElement(component) {
         span.classList.add("material-symbols-outlined");
         span.classList.add("more-info-link");
         span.innerText = "article";
+        link.appendChild(span);
+        return link;
+    }
+    return null;
+}
+
+function cardLinkToElement(component) {
+    if (component.link) {
+        let link = document.createElement('a');
+        link.href = `${component.link}#builder`;
+        if (!isAppMode()) {
+            link.target = "_blank";
+        }
+        let span = document.createElement('span');
+        //span.classList.add("material-symbols-outlined");
+        span.classList.add("more-info-link");
+        span.innerText = "more info";
         link.appendChild(span);
         return link;
     }
@@ -255,7 +286,7 @@ function updateGridOfCards() {
 
     getAllComponents().forEach((component) => {
         if (isElementAvailable(component, currentFaction, selectedSources)) {
-            grid.appendChild(getCard(component, addButton(component), linkToElement(component)));
+            grid.appendChild(getCard(component, cardAddButton(component), cardLinkToElement(component)));
         }
     });
 }
