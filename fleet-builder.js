@@ -502,7 +502,7 @@ function updatePrintDisplay() {
     printArea.append(printHeader);
 
     let printDescription = document.createElement("em");
-    printDescription.innerText = "Create with the Leviathans Fleet Builder";
+    printDescription.innerText = "Created with the Leviathans Fleet Builder";
     printArea.append(printDescription);
 
     let table = document.createElement("table");
