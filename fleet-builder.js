@@ -224,7 +224,20 @@ function linkToElement(component) {
     return null;
 }
 
+function simplifiedString(original) {
+    let output = original.toLowerCase();
+    output = output.replaceAll("ß", "ss");
+    output = output.replaceAll("é", "e");
+    output = output.replaceAll("ö", "o");
+    output = output.replaceAll("ü", "u");
+    output = output.replaceAll("å", "a");
+    return output;
+}
+
 function isElementAvailable(element, allowedFaction, allowedSources) {
+    const rawFilterString = document.getElementById("text-filter").value;
+    const filterString = rawFilterString == null ? "" : rawFilterString.toLowerCase();
+
     let available = false;
     if (element.faction == "any" || allowedFaction == "*" || element.faction == allowedFaction) {
         element.sources.forEach((source) => {
@@ -243,6 +256,20 @@ function isElementAvailable(element, allowedFaction, allowedSources) {
                 }
             }
         });
+    }
+    if (available) {
+        let filterMatch = false;
+        if (element.name.toLowerCase().includes(filterString) || simplifiedString(element.name).includes(filterString))
+        {
+            filterMatch = true;
+        } else {
+            const description = getComponentDescription(element);
+            if (description.toLowerCase().includes(filterString) || simplifiedString(description).includes(filterString)) {
+                filterMatch = true;
+            }
+        }
+
+        available = filterMatch;
     }
     return available;
 }
@@ -1242,9 +1269,14 @@ function setupPreviewCardGrid() {
         document.getElementById("alguns-details").classList.add("hidden");
 
         document.getElementById("card-grid-preview").classList.remove("hidden");
+        document.getElementById("text-filter").classList.remove("hidden");
     }
 }
 setupPreviewCardGrid();
+
+document.getElementById("text-filter").addEventListener("input", () => {
+    updateAvailableUnits();
+});
 
 let selectedSources = buildSourceList();
 loadStoredSourceList();
