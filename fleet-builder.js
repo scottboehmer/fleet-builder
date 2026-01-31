@@ -1269,7 +1269,6 @@ function setupPreviewCardGrid() {
         document.getElementById("alguns-details").classList.add("hidden");
 
         document.getElementById("card-grid-preview").classList.remove("hidden");
-        document.getElementById("text-filter").classList.remove("hidden");
     }
 }
 setupPreviewCardGrid();

@@ -6,6 +6,12 @@
   <description>Updates about the Leviathans Fleet Builder</description>
   <language>en-us</language>
   <item>
+    <title>Search</title>
+    <link>https://scottboehmer.github.io/fleet-builder/posts/9.htm</link>
+    <description>You can now search the list of available components.</description>
+    <pubDate>1/30/2026</pubDate>
+  </item>
+  <item>
     <title>Preview: Visual List</title>
     <link>https://scottboehmer.github.io/fleet-builder/posts/8.htm</link>
     <description>Preview mode has images in the component list.</description>
