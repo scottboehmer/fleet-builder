@@ -57,6 +57,22 @@ body > header > *:only-child {
   margin-block-start: 0;
 }
 
+body > .wide {
+  padding: 0 max(2rem, calc((100% - 1800px) / 2));
+  grid-column: 1 / -1;
+}
+
+@media only screen and (max-width: 1080px) {
+  body > .wide {
+    padding: 0;
+    grid-column: 2;
+  }
+
+  .wide-only {
+    visibility: collapse;
+  }
+}
+
 .printable {
   display: none;
 }
@@ -445,7 +461,19 @@ details[open] > summary {
 
 .card-grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 25% 25% 25% 25%;
+}
+
+@media only screen and (max-width: 1440px) {
+  .card-grid {
+    grid-template-columns: 33% 33% 33%;
+  }
+}
+
+@media only screen and (max-width: 1080px) {
+  .card-grid {
+    grid-template-columns: 50% 50%;
+  }
 }
 
 @media only screen and (max-width: 720px) {
@@ -462,13 +490,17 @@ details[open] > summary {
 }
 
 .card {
-  background-color: var(--accent-bg);
+  background-color: var(--accent-shaded-bg);
   border-width: var(--border-width);
   border-color: var(--border);
   border-style: solid;
   border-radius: var(--standard-border-radius);
   padding: 0.5rem 1rem;
   height: 180px;
+}
+
+.card:hover {
+  background-color: var(--accent-bg);
 }
 
 @media only screen and (max-width: 720px) {
