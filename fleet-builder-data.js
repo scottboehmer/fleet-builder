@@ -283,8 +283,8 @@ const levData = sortByPointsAndName([
     leviathanCard("SML Essen", "Bremen", 1, "german", false , 150, ["Bremen Destroyer Pack"], "elements/109.htm", ["screen-crew", "torpedo"]),
     leviathanCard("Paris", "Paris", 4, "french", false , 460, ["Paris Battleship Pack", "2012 Ship Cards"], "elements/110.htm", ["saturation-guns", "torpedo", "steering-gear"]),
     leviathanCard("Jean Bart", "Paris", 4, "french", false , 400, ["Paris Battleship Pack", "2012 Ship Cards"], "elements/111.htm", ["saturation-guns", "torpedo", "steering-gear"]),
-    leviathanCard("Dunkerque", "Bastille", 4, "french", false , 420, ["Bastille Battleship Pack"], "elements/112.htm", ["saturation-guns", "he-torpedo", "steering-gear"]),
-    leviathanCard("Louvois", "Bastille", 4, "french", false , 430, ["Bastille Battleship Pack"], "elements/113.htm", ["saturation-guns", "he-torpedo", "steering-gear"]),
+    leviathanCard("Dunkerque", "Bastille", 4, "french", false , 420, ["Bastille Battleship Pack"], "elements/112.htm", ["saturation-guns", "torpedo", "steering-gear"]),
+    leviathanCard("Louvois", "Bastille", 4, "french", false , 430, ["Bastille Battleship Pack"], "elements/113.htm", ["saturation-guns", "torpedo", "steering-gear"]),
     leviathanCard("Calais", "Bastille", 4, "french", false , 420, ["French Fleet Box"], "elements/114.htm", ["saturation-guns", "torpedo", "steering-gear"]),
     leviathanCard("Bellegarde", "Bastille", 4, "french", false , 410, ["French Fleet Box"], "elements/115.htm", ["saturation-guns", "torpedo", "steering-gear"]),
     leviathanCard("Béarn", "Conquent", 3, "french", false , 320, ["Conquent Battlecruiser Pack", "2012 Ship Cards"], "elements/116.htm", []),
@@ -391,3 +391,4 @@ const alGunData = sortByPointsAndName([
     alGunCard("Mobile Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"], "elements/163.htm"),
     alGunCard("High-Mobility Anti-Leviathan Gun", 20, ["Operation Hannibal", "Operation Ragnar"], "elements/164.htm")
 ]);
+

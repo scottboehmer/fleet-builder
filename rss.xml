@@ -6,6 +6,12 @@
   <description>Updates about the Leviathans Fleet Builder</description>
   <language>en-us</language>
   <item>
+    <title>FAQ Updates</title>
+    <link>https://scottboehmer.github.io/fleet-builder/posts/10.htm</link>
+    <description>The site has been updated for the FAQ.</description>
+    <pubDate>2/26/2026</pubDate>
+  </item>
+  <item>
     <title>Search</title>
     <link>https://scottboehmer.github.io/fleet-builder/posts/9.htm</link>
     <description>You can now search the list of available components.</description>
