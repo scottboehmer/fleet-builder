@@ -193,21 +193,25 @@ function getDisplayElements(item, button, link) {
     return element;
 }
 
-function addButton(component) {
+function addButton(component, textOnly) {
     let add = document.createElement('button');
     add.title = "Add to fleet";
     add.type = "button";
 
     let span = document.createElement('span');
-    span.className = "material-symbols-outlined";
-    span.innerText = "add";
+    if (textOnly) {
+        span.innerText = "Add to Fleet"
+    } else {
+        span.className = "material-symbols-outlined";
+        span.innerText = "add";
+    }
     add.appendChild(span);
 
     add.addEventListener("click", () => currentFleet.add(component));
     return add;
 }
 
-function linkToElement(component) {
+function linkToElement(component, textOnly) {
     if (component.link) {
         let link = document.createElement('a');
         link.href = `${component.link}#builder`;
@@ -215,9 +219,13 @@ function linkToElement(component) {
             link.target = "_blank";
         }
         let span = document.createElement('span');
-        span.classList.add("material-symbols-outlined");
-        span.classList.add("more-info-link");
-        span.innerText = "article";
+        if (textOnly) {
+            span.innerText = "more information";
+        } else {
+            span.classList.add("material-symbols-outlined");
+            span.classList.add("more-info-link");
+            span.innerText = "article";
+        }
         link.appendChild(span);
         return link;
     }
@@ -282,7 +290,7 @@ function updateGridOfCards() {
 
     getAllComponents().forEach((component) => {
         if (isElementAvailable(component, currentFaction, selectedSources)) {
-            grid.appendChild(getCard(component, addButton(component), linkToElement(component)));
+            grid.appendChild(getCard(component, addButton(component, true), linkToElement(component, true)));
         }
     });
 }
@@ -316,15 +324,12 @@ function getCard(item, button, link) {
 
     element.append(textDiv);
 
-    let buttonDiv = document.createElement("div");
-    buttonDiv.classList.add("card-buttons");
+    let linkDiv = document.createElement("div");
+    linkDiv.classList.add("card-info-link");
     if (link) {
-        buttonDiv.append(link);
+        linkDiv.append(link);
     }
-    if (button) {
-        buttonDiv.append(button);
-    }
-    element.append(buttonDiv);
+    element.append(linkDiv);
 
     let costDiv = document.createElement("div");
     costDiv.classList.add("card-cost");
@@ -334,6 +339,9 @@ function getCard(item, button, link) {
     let imageDiv = document.createElement("div");
     imageDiv.classList.add("card-image");
     imageDiv.style.backgroundImage = `url(${getImageForComponent(item)})`;
+    if (button) {
+        imageDiv.append(button);
+    }
     element.append(imageDiv);
     
     return element;
