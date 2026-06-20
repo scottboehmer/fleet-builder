@@ -529,7 +529,6 @@ details[open] > summary {
 
 .card-cost {
   text-align: right;
-  /*align-content: start;*/
   font-weight: bold;
   grid-row: 1;
   grid-column: 2;
@@ -553,15 +552,14 @@ details[open] > summary {
   height: 100%;
   background-color: transparent;
   color: rgb(from var(--accent-text) r g b / 0.5);
-  position: relative;
+  display: grid;
+  align-items: end;
+  text-align: end;
 }
 
 .card-image > button > span {
   font-size: 1.5rem;
   font-weight: 800;
-  position: absolute;
-  bottom: 4px;
-  right: 4px;
 }
 
 .card-image > button:hover {
