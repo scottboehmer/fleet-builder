@@ -10,6 +10,10 @@ isPreviewEnabled = function () {
     return () => false;
 }();
 
+function useGridMode() {
+    return true;
+}
+
 function isAppMode() {
     if (window.matchMedia('(display-mode: minimal-ui)').matches ||
         window.matchMedia('(display-mode: standalone)').matches) {
@@ -257,7 +261,7 @@ function isElementAvailable(element, allowedFaction, allowedSources) {
                             available = false;
                         }
                     });
-                } else if (isPreviewEnabled() && requiredSlots.length > 0) {
+                } else if (useGridMode() && requiredSlots.length > 0) {
                     // When showing combined list, required slots hides all non-leviathan items
                     // Maybe allow matches in the future, ex: torpedo bombers matching torpedoes
                     available = false;
@@ -348,7 +352,7 @@ function getCard(item, button, link) {
 }
 
 function updateAvailableUnits() {
-    if (isPreviewEnabled()) {
+    if (useGridMode()) {
         updateGridOfCards();
     }
 
@@ -1196,7 +1200,7 @@ function setupLeviathanFilters()
         }
     });
 
-    if (isPreviewEnabled()) {
+    if (useGridMode()) {
         let carGridFilters = document.getElementById("card-grid-filters");
         carGridFilters.append(filters);
     }
@@ -1218,7 +1222,7 @@ let componentTypes = [
 
 function setupComponentTypeFilters()
 {
-    if (isPreviewEnabled()) {
+    if (useGridMode()) {
         loadTypeFiltersFromStorage();
 
         let filters = document.createElement("details");
@@ -1269,7 +1273,7 @@ function setupComponentTypeFilters()
 }
 
 function setupPreviewCardGrid() {
-    if (isPreviewEnabled()) {
+    if (useGridMode()) {
         document.getElementById("levs-details").classList.add("hidden");
         document.getElementById("admirals-details").classList.add("hidden");
         document.getElementById("captains-details").classList.add("hidden");
