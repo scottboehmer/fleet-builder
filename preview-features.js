@@ -12,9 +12,7 @@ function togglePreviewFeatures() {
     }
 
     if (isPreviewEnabled()) {
-        Array.from(document.getElementsByClassName("shot-difficulty")).forEach(element => {
-            element.classList.remove("hidden");
-        });
+        // Enable any features currently limited to preview mode
     }
 }
 
